@@ -1,0 +1,25 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+}
+
+html, body {
+  min-height: 100%;
+}
+
+body {
+  background: #f5f7fb;
+  color: #0b1220;
+}
+
+a {
+  text-decoration: none;
+}
+
+.prose li {
+  margin-left: 1rem;
+  list-style: disc;
+}

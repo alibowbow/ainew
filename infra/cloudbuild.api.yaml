@@ -1,0 +1,13 @@
+steps:
+  - name: gcr.io/cloud-builders/docker
+    args:
+      [
+        "build",
+        "-f",
+        "backend/Dockerfile.api",
+        "-t",
+        "${_IMAGE}",
+        "backend"
+      ]
+images:
+  - "${_IMAGE}"
