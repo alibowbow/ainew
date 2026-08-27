@@ -15,7 +15,7 @@
       --surface-2: #e3eae5;
       --line: #c9d1cd;
       --line-dark: #263748;
-      --muted: #6b7880;
+      --muted: #54636c;
       --muted-dark: #9faeb5;
       --lime: #c8f23c;
       --lime-soft: #e7f8a7;
@@ -1547,12 +1547,11 @@
       if (key === "index") return String(Math.round(value));
       return Number(value).toFixed(1) + "%";
     }
-    function scoreBar(key, value) {
+    function scoreBar(model, key, value) {
       if (value === undefined || value === null) return '<span class="dash">—</span>';
       const width = nonPercentScores.has(key) ? Math.min(100, Math.max(5, Number(value) / (key === "gdpval" ? 20 : 1))) : Math.min(100, Math.max(4, Number(value)));
-      return '<div class="score-cell" style="--family-color:' + familyColor(currentModel) + ';--bar-width:' + width + '%"><strong>' + scoreText(key, value) + '</strong><span class="score-bar"></span></div>';
+      return '<div class="score-cell" style="--family-color:' + familyColor(model) + ';--bar-width:' + width + '%"><strong>' + scoreText(key, value) + '</strong><span class="score-bar"></span></div>';
     }
-    let currentModel = models[0];
     function getVisibleModels() {
       return models.filter((model) => {
         const yearMatch = state.year === "all" || model.date.startsWith(state.year);
@@ -1591,14 +1590,13 @@
       const visible = historyEvents.filter((event) => state.historyEra === "all" || event.era === state.historyEra);
       $("#history-count").textContent = visible.length;
       $("#history-grid").innerHTML = visible.length ? visible.map((event) => '<article class="history-card" style="--history-color:' + event.color + '"><div class="history-card-top"><span class="history-date">' + event.date + '</span><span class="history-tag">' + event.tag + '</span></div><h3>' + event.title + '</h3><p>' + event.text + '</p><div class="history-impact"><span>WHY IT MATTERS</span><strong>' + event.impact + '</strong></div><a class="history-source" href="' + event.source + '" target="_blank" rel="noreferrer">' + event.sourceLabel + ' 열기 ↗</a></article>').join("") : '<div class="empty-state">이 시대 구간에 등록된 전환점이 없습니다.</div>';
-      $("[data-history-era]").forEach((button) => button.setAttribute("aria-pressed", button.dataset.historyEra === state.historyEra ? "true" : "false"));
+      $$("[data-history-era]").forEach((button) => button.setAttribute("aria-pressed", button.dataset.historyEra === state.historyEra ? "true" : "false"));
     }
 
     function renderTimeline() {
       const visible = getVisibleModels().sort((a, b) => a.date.localeCompare(b.date));
       $("#timeline-count").textContent = visible.length;
       $("#timeline-list").innerHTML = visible.length ? visible.map((model) => {
-        currentModel = model;
         return '<div class="timeline-item"><button type="button" class="timeline-node" data-open-model="' + model.id + '" style="--node-color:' + familyColor(model) + '"><span class="timeline-date">' + dateText(model.date) + '</span><strong>' + model.name + '</strong><small>' + model.provider + (model.current ? " · CURRENT" : "") + "</small></button></div>";
       }).join("") : '<div class="empty-state">이 조건에 해당하는 출시가 없습니다.</div>';
     }
@@ -1610,13 +1608,12 @@
         return;
       }
       $("#model-rows").innerHTML = rows.map((model) => {
-        currentModel = model;
         const gpqa = scoreValue(model, "gpqa");
         const swe = scoreValue(model, "swe");
         const math = scoreValue(model, "aime", "math");
         const visual = scoreValue(model, "mmmu", "osworld");
         const pinned = state.pinned.has(model.id);
-        return '<tr><td><div class="model-cell"><button type="button" class="model-open" data-open-model="' + model.id + '" style="--family-color:' + familyColor(model) + '"><span class="family-mark"></span><span><strong>' + model.name + '</strong><small>' + model.family + (model.current ? " · FRONTIER" : "") + '</small></span></button><button type="button" class="pin-btn" data-pin-model="' + model.id + '" aria-label="' + model.name + ' 비교 고정" aria-pressed="' + (pinned ? "true" : "false") + '">' + (pinned ? "✓" : "+") + '</button></div></td><td class="date-cell">' + dateText(model.date) + '</td><td><span class="access ' + (model.access === "Open" ? "open" : "") + '">' + model.access + "</span></td><td class=\"context-cell\">" + model.context + "</td><td>" + (gpqa ? scoreBar(gpqa.key, gpqa.value) : '<span class="dash">—</span>') + "</td><td>" + (swe ? scoreBar(swe.key, swe.value) : '<span class="dash">—</span>') + "</td><td>" + (math ? scoreBar(math.key, math.value) : '<span class="dash">—</span>') + "</td><td>" + (visual ? scoreBar(visual.key, visual.value) : '<span class="dash">—</span>') + "</td></tr>";
+        return '<tr><td><div class="model-cell"><button type="button" class="model-open" data-open-model="' + model.id + '" style="--family-color:' + familyColor(model) + '"><span class="family-mark"></span><span><strong>' + model.name + '</strong><small>' + model.family + (model.current ? " · FRONTIER" : "") + '</small></span></button><button type="button" class="pin-btn" data-pin-model="' + model.id + '" aria-label="' + model.name + ' 비교 고정" aria-pressed="' + (pinned ? "true" : "false") + '">' + (pinned ? "✓" : "+") + '</button></div></td><td class="date-cell">' + dateText(model.date) + '</td><td><span class="access ' + (model.access === "Open" ? "open" : "") + '">' + model.access + "</span></td><td class=\"context-cell\">" + model.context + "</td><td>" + (gpqa ? scoreBar(model, gpqa.key, gpqa.value) : '<span class="dash">—</span>') + "</td><td>" + (swe ? scoreBar(model, swe.key, swe.value) : '<span class="dash">—</span>') + "</td><td>" + (math ? scoreBar(model, math.key, math.value) : '<span class="dash">—</span>') + "</td><td>" + (visual ? scoreBar(model, visual.key, visual.value) : '<span class="dash">—</span>') + "</td></tr>";
       }).join("");
     }
     function renderPins() {
@@ -1637,9 +1634,12 @@
       renderPins();
       $$("[data-year]").forEach((button) => button.setAttribute("aria-pressed", button.dataset.year === state.year ? "true" : "false"));
     }
+    let lastActiveElement = null;
+
     function openModel(id) {
       const model = models.find((item) => item.id === id);
       if (!model) return;
+      lastActiveElement = document.activeElement;
       const modal = $("#model-modal");
       $("#modal-label").textContent = model.family.toUpperCase() + " / MODEL CARD";
       $("#modal-title").textContent = model.name;
@@ -1658,6 +1658,10 @@
       $("#model-modal").hidden = true;
       document.body.classList.remove("modal-open");
       if (location.hash && models.some((model) => "#" + model.id === location.hash)) history.replaceState(null, "", location.pathname + location.search);
+      if (lastActiveElement && typeof lastActiveElement.focus === "function") {
+        lastActiveElement.focus();
+        lastActiveElement = null;
+      }
     }
 
     $("#table-search").addEventListener("input", (event) => {
@@ -1685,14 +1689,36 @@
       if (event.target.id === "model-modal") closeModel();
     });
     document.addEventListener("keydown", (event) => {
+      const modal = $("#model-modal");
+      if (!modal.hidden) {
+        if (event.key === "Escape") {
+          event.preventDefault();
+          closeModel();
+          return;
+        }
+        if (event.key === "Tab") {
+          const focusables = $$('#model-modal a[href], #model-modal button:not([disabled]), #model-modal [tabindex]:not([tabindex="-1"])');
+          if (focusables.length > 0) {
+            const first = focusables[0];
+            const last = focusables[focusables.length - 1];
+            if (event.shiftKey && document.activeElement === first) {
+              event.preventDefault();
+              last.focus();
+            } else if (!event.shiftKey && document.activeElement === last) {
+              event.preventDefault();
+              first.focus();
+            }
+          }
+        }
+        return;
+      }
+
       if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === "k") {
         event.preventDefault();
         $("#table-search").focus();
+        return;
       }
-      if (event.key === "Escape" && !$("#model-modal").hidden) closeModel();
-    });
 
-    document.addEventListener("keydown", (event) => {
       const tag = event.target && event.target.tagName ? event.target.tagName.toLowerCase() : "";
       const typing = tag === "input" || tag === "textarea" || tag === "select";
       if (!typing && !event.metaKey && !event.ctrlKey && !event.altKey && event.key === "/") {
@@ -1701,11 +1727,12 @@
       }
       if (!typing && !event.metaKey && !event.ctrlKey && !event.altKey && event.key.toLowerCase() === "h") {
         event.preventDefault();
-        $("#history-controls button").focus();
+        const firstBtn = $("#history-controls button");
+        if (firstBtn) firstBtn.focus();
       }
       const historyTab = event.target.closest && event.target.closest("#history-controls");
       if (historyTab && (event.key === "ArrowRight" || event.key === "ArrowLeft")) {
-        const tabs = $("#history-controls button");
+        const tabs = $$("#history-controls button");
         const current = tabs.indexOf(event.target);
         if (current >= 0) {
           event.preventDefault();
