@@ -1,6 +1,6 @@
 # Model Atlas
 
-Model Atlas is a zero-build, single-file static research desk for the global history of AI, model release timelines, benchmark snapshots, and a secondary China open-model track.
+Model Atlas is a zero-build static catalog for AI history, models, modalities, and benchmark snapshots.
 
 ## Scope
 
@@ -8,7 +8,7 @@ Model Atlas is a zero-build, single-file static research desk for the global his
 - 28 source-linked global model releases from 2023–2026
 - Search, year/family filters, release sorting, model detail modal, and pinned comparison
 - Benchmark snapshots for SWE-bench, GPQA, AIME/Math, MMLU, MMMU, and BrowseComp
-- China open/open-weight track covering Qwen3.8, DeepSeek V4, GLM-5.3, Kimi K3, MiniMax M3/M2.5, and Tencent Hunyuan/Hy3
+- Region filters for global, China, Korea, US, and Europe
 - Explicit distinction between open-source licenses, open weights, custom licenses, and entries requiring model-card verification
 - Mobile drawer navigation, touch-sized controls, focus-visible styles, keyboard shortcuts, modal focus trapping, and light/dark theme persistence
 
@@ -23,7 +23,7 @@ Open index.html directly in a browser. No npm, build step, server, or environmen
 - Arrow keys: move within history and benchmark tabs
 - Esc: close the model dialog or mobile navigation
 
-## China research sources
+## Selected model sources
 
 - [Qwen3.8 official repository](https://github.com/QwenLM/Qwen3.8)
 - [DeepSeek V4 model card](https://huggingface.co/deepseek-ai/DeepSeek-V4-Pro)
@@ -35,4 +35,4 @@ Open index.html directly in a browser. No npm, build step, server, or environmen
 - [MiniMax-M2.5 model card](https://huggingface.co/MiniMaxAI/MiniMax-M2.5)
 - [Tencent Hunyuan Hy3 research page](https://hunyuan.tencent.com/research/hy3)
 
-Benchmark numbers are dated public snapshots and must not be treated as a single universal leaderboard. Always inspect the linked model card or release notes for harness, prompt, tool-use, and reasoning-budget details.
+Benchmark scores are condition-specific snapshots. Check the linked source for evaluation details.
