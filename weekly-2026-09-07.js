@@ -81,6 +81,7 @@ function applyWeekly20260907(models, metrics, rows, snapshots) {
   models.forEach(m=>{m.regionTags=m.region==='China'?['China'].concat(/^open-/.test(m.accessType)?['China open weights']:[]):m.region==='Korea'?['Korea']:[];});
   function metric(key,name,description){metrics[key]={key,name,description,rankable:false};}
   metric('liveCodeBenchUnspecified','LiveCodeBench · 버전 미기재','문제 기간·버전이 미기재인 제조사 수치. v2와 분리하고 순위를 부여하지 않습니다.');
+  metric('sweVerifiedOpenHands','SWE-bench Verified · OpenHands','Upstage OpenHands 평가. 공식 Bash-only 하니스와 별도 지표입니다.');
   metric('terminal21Meta','Terminal-Bench 2.1 · Meta','Meta native harness 평가. 4.0 및 다른 하니스와 분리합니다.');
   metric('terminal21Solar','Terminal-Bench 2.1 · Upstage','Upstage 발표 수치. 하니스·예산 미기재로 순위 제외.');
   metric('terminal21Ifm','Terminal-Bench 2.1 · IFM','IFM 모델 카드 수치. 하니스·예산 미기재로 순위 제외.');
@@ -122,10 +123,10 @@ function applyWeekly20260907(models, metrics, rows, snapshots) {
   add({modelId:'gemini-3-8-flash',benchmark:'hleVerified',score:54.9,benchmarkVersion:'HLE-Verified',source:google,sourceLabel:'Google 공식 발표',publishedAt:'2026-09-02',cohort:'google38-hle',cohortLabel:'Google · 2026-09-02'});
   add({modelId:'gemini-3-8-flash-cyber',benchmark:'cweBench',score:47.2,benchmarkVersion:'CWE-Bench · pass@1',source:google,sourceLabel:'Google 공식 발표 · Collinear 평가',publishedAt:'2026-09-02',cohort:'google38-cwe',cohortLabel:'Google · 2026-09-02 · Cyber'});
   // All six pairs are from the same Solar Pro 4 table. Unspecified settings remain explicit.
-  [['terminal21Solar',43.2,57,'Terminal-Bench v2.1'],['swe',69.2,70.6,'SWE-bench Verified'],['gpqa',85.6,89,'GPQA Diamond'],
+  [['terminal21Solar',43.2,57,'Terminal-Bench v2.1'],['sweVerifiedOpenHands',69.2,70.6,'SWE-bench Verified'],['gpqa',85.6,89,'GPQA Diamond'],
     ['mmluPro',86.2,86.3,'MMLU-Pro'],['liveCodeBenchUnspecified',87,87.8,'LiveCodeBench · 버전/기간 미기재'],['aime2026',95.7,95.3,'AIME 2026']]
     .forEach(([benchmark,open,pro,benchmarkVersion])=>[['solar-open-2',open],['solar-pro-4',pro]].forEach(([modelId,score])=>add({modelId,benchmark,score,benchmarkVersion,
-      harness:benchmark==='swe'?'OpenHands · 버전 미기재':'Upstage 발표 · 상세 하니스 미기재',source:solar,sourceLabel:'Upstage Solar Pro 4 비교표',
+      harness:benchmark==='sweVerifiedOpenHands'?'OpenHands · 버전 미기재':'Upstage 발표 · 상세 하니스 미기재',source:solar,sourceLabel:'Upstage Solar Pro 4 비교표',
       cohort:'solar-pro4-'+benchmark,cohortLabel:'Upstage · 확인 2026-09-07 · 평가일 미기재'})));
   [['gpqa',87.3,'GPQA Diamond'],['terminal21Ifm',70.2,'Terminal-Bench 2.1']].forEach(([benchmark,score,benchmarkVersion])=>add({
     modelId:'k2-horizon-375b-a23b',benchmark,score,benchmarkVersion,source:ifm,sourceLabel:'IFM 공식 모델 카드',cohort:'ifm-horizon-'+benchmark,cohortLabel:'IFM · 확인 2026-09-07 · 평가일 미기재'}));
