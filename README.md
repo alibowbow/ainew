@@ -5,7 +5,7 @@ Model Atlas is a zero-build static catalog for AI history, models, modalities, a
 ## Scope
 
 - Global AI history from the Dartmouth proposal/workshop through deep learning, AlphaGo, Transformer, foundation models, reasoning, and agents
-- 28 source-linked global model releases from 2023–2026
+- Source-linked model releases, previews, and research announcements, with separate availability milestones
 - Search, year/family filters, release sorting, model detail modal, and pinned comparison
 - Benchmark snapshots for SWE-bench, GPQA, AIME/Math, MMLU, MMMU, and BrowseComp
 - Region filters for global, China, Korea, US, and Europe
@@ -36,3 +36,9 @@ Open index.html directly in a browser. No npm, build step, server, or environmen
 - [Tencent Hunyuan Hy3 research page](https://hunyuan.tencent.com/research/hy3)
 
 Benchmark scores are condition-specific snapshots. Check the linked source for evaluation details.
+
+## Data verification
+
+Run `node tests/registry.test.cjs` for syntax, data integrity, filter regression, and benchmark-view checks.
+
+Latest source review: [2026-09-07](reviews/2026-09-07.md). The idempotent weekly data update is applied before UI initialization; source/evaluation dates are never replaced by the review date.
