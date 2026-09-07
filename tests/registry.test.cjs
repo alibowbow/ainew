@@ -8,7 +8,7 @@ const context = vm.createContext({window:{}, location:{hash:'#/catalog'}, consol
 const scripts = [...html.matchAll(/<script([^>]*)>([\s\S]*?)<\/script>/g)];
 for (const [, attributes, content] of scripts) {
   const src = attributes.match(/src="([^"]+)"/);
-  let code = src ? fs.readFileSync(path.join(root, src[1]), 'utf8') : content;
+  let code = src ? fs.readFileSync(path.join(root, src[1].split('?')[0]), 'utf8') : content;
   new vm.Script(code); // Check the entire script, including initialization.
   code = code.replace('shell();state.route=routeNow();bind();render();', '');
   vm.runInContext(code, context);
