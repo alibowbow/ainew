@@ -6,6 +6,7 @@ Model Atlas is a zero-build static catalog for AI history, models, modalities, a
 
 - Global AI history from the Dartmouth proposal/workshop through deep learning, AlphaGo, Transformer, foundation models, reasoning, and agents
 - Source-linked model releases, previews, and research announcements, with separate availability milestones
+- 3D asset/model generation across text-to-3D, image-to-3D, reconstruction, PBR, and controllable 3D workflows
 - Search, year/family filters, release sorting, model detail modal, and pinned comparison
 - Benchmark snapshots for SWE-bench, GPQA, AIME/Math, MMLU, MMMU, and BrowseComp
 - Region filters for global, China, Korea, US, and Europe
@@ -34,6 +35,10 @@ Open index.html directly in a browser. No npm, build step, server, or environmen
 - [MiniMax-M3 model card](https://huggingface.co/MiniMaxAI/MiniMax-M3)
 - [MiniMax-M2.5 model card](https://huggingface.co/MiniMaxAI/MiniMax-M2.5)
 - [Tencent Hunyuan Hy3 research page](https://hunyuan.tencent.com/research/hy3)
+- [Meshy 7 official announcement](https://www.meshy.ai/blog/meshy-7-image-to-3d-geometry-alignment)
+- [Microsoft TRELLIS.2 official repository](https://github.com/microsoft/TRELLIS.2)
+- [Meta SAM 3D Objects official repository](https://github.com/facebookresearch/sam-3d-objects)
+- [Stability AI Stable Fast 3D](https://stability.ai/news-updates/introducing-stable-fast-3d)
 
 Benchmark scores are condition-specific snapshots. Check the linked source for evaluation details.
 
