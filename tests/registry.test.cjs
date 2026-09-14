@@ -91,3 +91,26 @@ assert(/name="viewport"/.test(html));
 assert(/@media/.test(html));
 assert(/overflow-x\s*:\s*auto/.test(html));
 console.log(JSON.stringify({models:models.length,scores:rows.length,openModels:openCount,syntax:'pass',duplicates:'pass',filters:'pass',pagination:'pass',benchmarkViews:'pass',idempotence:'pass',responsiveStatic:'pass',mobileVisual:'not tested'},null,2));
+
+// All-source mode must expose every registered model without inventing a rank.
+get('state.metric="gpqa";state.benchmarkCohort="";state.benchmarkPage=1');
+const gpqaHtml=get('benchmarkView()');
+for(const r of rows.filter(r=>r.benchmark==='gpqa')) assert(gpqaHtml.includes('data-model="'+r.modelId+'"'),'hidden GPQA model '+r.modelId);
+assert(gpqaHtml.includes('통합 순위 없이'));
+assert(gpqaHtml.includes('점수 등록 49 / 전체 134개 모델'));
+get('state.metric="arena";state.benchmarkCohort="all"');
+let arenaHtml='';
+for(let page=1;page<=Math.ceil(rows.filter(r=>r.benchmark==='arena').length/12);page++){
+  get('state.benchmarkPage='+page);arenaHtml+=get('benchmarkView()');
+}
+for(const r of rows.filter(r=>r.benchmark==='arena')) assert(arenaHtml.includes('data-model="'+r.modelId+'"'));
+get('state.metric="liveCodeBench";state.benchmarkCohort="";state.benchmarkPage=1');
+assert(get('benchmarkView().includes("0개 모델 · 수치 미등록")'));
+const comparison=get('comparisonBenchmarks([modelById("gpt-6-astra"),modelById("deepseek-v4-1-flash"),modelById("meshy-7-1")])');
+assert(comparison.includes('벤치마크 비교'));
+assert(comparison.includes('90.6%'));
+assert(comparison.includes('DeepSeek Harness Minimal'));
+assert(comparison.includes('수치 미등록'));
+assert(!comparison.includes('NaN'));
+assert(get('comparisonBenchmarks([modelById("eleven-music-2-5")]).includes("아직 등록되지 않았습니다")'));
+console.log('All-source coverage, pagination, empty states and benchmark comparison: pass');
