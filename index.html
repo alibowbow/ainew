@@ -119,11 +119,11 @@ function benchmarkView(){
  groups.sort(function(a,b){return Number(b.mode==="official")-Number(a.mode==="official")||b.date.localeCompare(a.date)||a.label.localeCompare(b.label)});
  var selected=groups.find(function(g){return g.id===state.benchmarkCohort});
  var group=state.benchmarkCohort==="all"?null:selected||((groups[0]&&groups[0].mode==="official")?groups[0]:null);
- var list=group?all.filter(function(x){return x.r.cohort===group.id}):all.slice().sort(function(a,b){return a.m.name.localeCompare(b.m.name)||a.r.cohort.localeCompare(b.r.cohort)}),p=take(list,state.benchmarkPage,12,"benchmark");
+ var list=(group?all.filter(function(x){return x.r.cohort===group.id}):all.slice()).sort(function(a,b){return (metric.direction==="lower"?a.s-b.s:b.s-a.s)||a.m.name.localeCompare(b.m.name)||a.r.cohort.localeCompare(b.r.cohort)}),p=take(list,state.benchmarkPage,12,"benchmark");
  var mode=group?group.mode:"reference",offset=(Math.min(Math.max(1,state.benchmarkPage),Math.max(1,Math.ceil(list.length/12)))-1)*12;
  var max=Math.max.apply(null,[1].concat(list.map(function(x){return x.s+(x.r.uncertainty||0)}))),scale=list.length&&list.every(function(x){return x.r.unit==="%"&&x.s<=100})?100:Math.ceil(max/100)*100;
  var title=mode==="official"?"공식 전체 순위 · 등록 모델 발췌":mode==="reported"?"제조사 발표 표 · 점수 순서":"참고 수치 · 순위 제외";
- var note=!group&&list.length?"모든 출처의 등록 수치입니다. 평가 조건이 달라 통합 순위 없이 모델 이름순으로 표시합니다.":list.length?list[0].r.comparisonNote:"이 평가의 점수는 아직 등록되지 않았습니다. 점수가 있는 평가를 선택해 주세요.";
+ var note=!group&&list.length?"모든 출처의 등록 수치입니다. 평가 조건이 달라 통합 순위 없이 점수순으로 표시합니다.":list.length?list[0].r.comparisonNote:"이 평가의 점수는 아직 등록되지 않았습니다. 점수가 있는 평가를 선택해 주세요.";
  var options=Object.keys(METRICS).filter(function(k){return BENCHMARK_ROWS.some(function(r){return r.benchmark===k})||BENCHMARK_SNAPSHOTS.some(function(s){return s.key===k})});
  var audit=BENCHMARK_SNAPSHOTS.filter(function(s){return s.key===metric.key}).sort(function(a,b){return (b.checkedAt||"").localeCompare(a.checkedAt||"")})[0];
  var auditHtml=audit?'<details class="panel"><summary>공식 출처 확인 · '+esc(audit.checkedAt)+'</summary><p class="bench-note">'+esc(audit.note)+' <a href="'+esc(audit.source)+'" target="_blank" rel="noreferrer">공식 출처 ↗</a></p></details>':"";
