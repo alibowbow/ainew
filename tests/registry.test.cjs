@@ -4,6 +4,7 @@ const assert = require('node:assert/strict');
 const path = require('node:path');
 const root = path.join(__dirname, '..');
 const html = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
+const css = fs.readFileSync(path.join(root, 'atlas.css'), 'utf8');
 const context = vm.createContext({window:{}, location:{hash:'#/catalog'}, console});
 const scripts = [...html.matchAll(/<script([^>]*)>([\s\S]*?)<\/script>/g)];
 for (const [, attributes, content] of scripts) {
@@ -91,8 +92,8 @@ assert.equal(get('benchmarkRank([{s:90},{s:90},{s:80}],1,"reported")'),1);
 assert.equal(get('benchmarkRank([{s:90},{s:80}],1,"reference")'),'—');
 // Static responsive contracts, not a substitute for viewport/device testing.
 assert(/name="viewport"/.test(html));
-assert(/@media/.test(html));
-assert(/overflow-x\s*:\s*auto/.test(html));
+assert(/@media/.test(css));
+assert(/overflow-x\s*:\s*auto/.test(css));
 console.log(JSON.stringify({models:models.length,scores:rows.length,openModels:openCount,syntax:'pass',duplicates:'pass',filters:'pass',pagination:'pass',benchmarkViews:'pass',idempotence:'pass',responsiveStatic:'pass',mobileVisual:'not tested'},null,2));
 
 // All-source mode must expose every registered model without inventing a rank.
