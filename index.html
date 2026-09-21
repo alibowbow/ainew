@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="description" content="AI history, release catalog, and benchmark snapshots across language, image, video, voice, music, and 3D models.">
 <title>Model Atlas — AI History & Model Catalog</title>
-<link rel="stylesheet" href="atlas.css?v=20260921-design">
+<link rel="stylesheet" href="atlas.css?v=20260921-aa">
 </head>
 <body>
 <a class="skip" href="#content">본문으로 건너뛰기</a>
@@ -32,7 +32,7 @@ applyWeekly20260907(MODELS, METRICS, BENCHMARK_ROWS, BENCHMARK_SNAPSHOTS);
 applyWeekly20260914(MODELS, METRICS, BENCHMARK_ROWS, BENCHMARK_SNAPSHOTS);
 applyWeekly20260921(MODELS, METRICS, BENCHMARK_ROWS, BENCHMARK_SNAPSHOTS);
 const theme=storage.get("atlas.theme",null)||(window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light");
-const state={route:"overview",theme:theme,catalogCategory:"all",catalogRegion:"all",catalogAccess:"all",catalogSort:"latest",catalogQuery:"",catalogPage:1,mediaCategory:"all",mediaPage:1,historyEra:"all",historyExpanded:false,historyPage:1,historyQuery:"",historyPeriod:"all",benchmarkPage:1,benchmarkCohort:"",metric:"arena",pins:storage.get("atlas.pins",[]).filter(function(id){return MODELS.some(function(m){return m.id===id})}),modal:null,lastFocus:null};
+const state={route:"overview",theme:theme,catalogCategory:"all",catalogRegion:"all",catalogAccess:"all",catalogSort:"latest",catalogQuery:"",catalogPage:1,mediaCategory:"all",mediaPage:1,historyEra:"all",historyExpanded:false,historyPage:1,historyQuery:"",historyPeriod:"all",benchmarkPage:1,benchmarkCohort:"",benchmarkViewMode:"artificial-analysis",metric:"arena",pins:storage.get("atlas.pins",[]).filter(function(id){return MODELS.some(function(m){return m.id===id})}),modal:null,lastFocus:null};
 const $=function(s,root){return(root||document).querySelector(s)};
 const $$=function(s,root){return Array.prototype.slice.call((root||document).querySelectorAll(s))};
 const esc=function(v){return String(v===undefined||v===null?"":v).replace(/[&<>"']/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c]})};
@@ -97,7 +97,29 @@ function benchmarkRank(list,index,mode){
  var first=index;while(first>0&&list[first-1].s===list[index].s)first--;return first+1;
 }
 function rowScore(x){return String(x.r.scoreText||x.s)+(x.r.unit||"")}
+const AA_OFFICIAL_CHART={
+ image:"https://cdn.sanity.io/images/6vfeftx9/articles/d725515aca6618d7937e61c28a93ad12d1d0cc62-4640x3715.png?auto=format&w=1200",
+ source:"https://artificialanalysis.ai/articles/benchmarking-gpt-6-astra",
+ latest:"https://artificialanalysis.ai/evaluations/artificial-analysis-intelligence-index",
+ coding:"https://artificialanalysis.ai/agents/coding-agents",
+ publishedAt:"2026-09-09",checkedAt:"2026-09-21",
+ versions:"Intelligence Index v4.3 · Coding Agent Index v1.5",
+ alt:"Artificial Analysis 공식 막대그래프: Intelligence Index v4.3와 Coding Agent Index v1.5의 모델별 점수. 2026년 9월 9일 발표 자료."
+};
+function benchmarkTabs(){
+ return '<div class="filter-row benchmark-views" role="group" aria-label="벤치마크 보기">'+[["artificial-analysis","Artificial Analysis"],["registered","평가별 점수"]].map(function(x){return '<button type="button" class="filter '+(state.benchmarkViewMode===x[0]?"active":"")+'" data-benchmark-view="'+x[0]+'" aria-pressed="'+(state.benchmarkViewMode===x[0])+'">'+x[1]+'</button>'}).join("")+'</div>';
+}
 function benchmarkView(){
+ if(state.benchmarkViewMode==="registered")return registeredBenchmarkView();
+ var c=AA_OFFICIAL_CHART;
+ return pageHeader("벤치마크","ARTIFICIAL ANALYSIS",2,"공식 그래프")+benchmarkTabs()+'<section class="benchmark-panel aa-panel" aria-labelledby="aa-title">'+
+ '<div class="aa-heading"><div><h2 id="aa-title">지능 · 코딩 에이전트</h2><p class="bench-note">공식 발표 '+formatDate(c.publishedAt)+' · 확인 '+formatDate(c.checkedAt)+'</p></div><div class="aa-links"><a class="source-link" href="'+esc(c.latest)+'" target="_blank" rel="noreferrer">최신 지능 순위 ↗</a><a class="source-link" href="'+esc(c.coding)+'" target="_blank" rel="noreferrer">최신 코딩 순위 ↗</a></div></div>'+
+ '<figure class="aa-chart"><figcaption>'+esc(c.versions)+'<span>발표 당시 스냅샷</span></figcaption><div class="aa-chart-media" tabindex="0" role="region" aria-label="공식 막대그래프 · 좁은 화면에서 가로 스크롤 가능">'+
+ '<a href="'+esc(c.image)+'" target="_blank" rel="noreferrer" aria-label="공식 막대그래프 원본 크게 보기"><img data-official-chart src="'+esc(c.image)+'" alt="'+esc(c.alt)+'" width="1200" height="961" decoding="async" fetchpriority="high"></a>'+
+ '<p class="aa-image-error" role="status" hidden>그래프를 불러오지 못했습니다. 아래 공식 원문에서 확인해 주세요.</p></div></figure>'+
+ '<div class="aa-chart-footer"><a class="source-link" href="'+esc(c.source)+'" target="_blank" rel="noreferrer">출처: Artificial Analysis 공식 발표 ↗</a><a class="source-link" href="'+esc(c.image)+'" target="_blank" rel="noreferrer">원본 크게 보기 ↗</a></div></section>';
+}
+function registeredBenchmarkView(){
  var metric=METRICS[state.metric]||METRICS.arena,all=rows(metric),groups=[];
  all.forEach(function(x){if(!groups.some(function(g){return g.id===x.r.cohort}))groups.push({id:x.r.cohort,label:x.r.cohortLabel,mode:x.r.rankMode,date:x.r.snapshotDate||x.r.publishedAt||x.r.checkedAt||""})});
  groups.sort(function(a,b){return Number(b.mode==="official")-Number(a.mode==="official")||b.date.localeCompare(a.date)||a.label.localeCompare(b.label)});
@@ -116,7 +138,7 @@ function benchmarkView(){
  var controls='<div class="research-controls"><label>평가<select id="benchmarkMetric">'+options.map(function(k){return '<option value="'+esc(k)+'" '+(k===metric.key?"selected":"")+'>'+esc(METRICS[k].name)+" · "+new Set(BENCHMARK_ROWS.filter(function(r){return r.benchmark===k}).map(function(r){return r.modelId})).size+"개 모델"+(!BENCHMARK_ROWS.some(function(r){return r.benchmark===k})?" · 수치 미등록":"")+'</option>'}).join("")+'</select></label><label>출처 · 스냅샷<select id="benchmarkCohort"><option value="all" '+(!group?"selected":"")+'>전체 출처 · 모든 등록 모델</option>'+groups.map(function(g){return '<option value="'+esc(g.id)+'" '+(group&&g.id===group.id?"selected":"")+'>'+esc(g.label)+" · "+new Set(all.filter(function(x){return x.r.cohort===g.id}).map(function(x){return x.m.id})).size+"개 모델"+'</option>'}).join("")+'</select></label></div>';
  var chart='<div class="score-chart" aria-label="'+esc(metric.name)+' 점수순 그래프">'+p.items.map(function(x,i){var w=Math.max(0,x.s/scale*100),ci=x.r.uncertainty||0;return '<details class="score-entry"><summary class="score-row"><span class="score-rank">'+esc(benchmarkRank(list,offset+i,mode))+'</span><span class="score-label"><span class="provider-mark" aria-hidden="true">'+esc(x.m.provider.slice(0,2).toUpperCase())+'</span><span>'+name(x)+'</span></span><span class="score-track" aria-hidden="true"><span class="score-bar" style="width:'+w+'%"></span>'+(ci?'<span class="score-error" style="left:'+Math.max(0,(x.s-ci)/scale*100)+'%;width:'+(2*ci/scale*100)+'%"></span>':"")+'</span><strong>'+esc(rowScore(x))+'</strong><span class="score-chevron" aria-hidden="true">⌄</span></summary>'+condition(x)+'</details>'}).join("")+'</div>';
  var table='<details class="benchmark-support"><summary>현재 페이지 상세 표</summary><div class="benchmark-table" tabindex="0" role="region" aria-label="벤치마크 상세 표 · 가로 스크롤 가능"><table><caption>'+title+' · '+esc(metric.name)+'</caption><thead><tr><th scope="col">순위</th><th scope="col">모델 · 설정</th><th scope="col">점수</th><th scope="col">자료일 / 평가일</th><th scope="col">조건</th><th scope="col">출처</th></tr></thead><tbody>'+p.items.map(function(x,i){return '<tr><td>'+esc(benchmarkRank(list,offset+i,mode))+'</td><td>'+name(x)+'</td><td class="bench-score">'+esc(rowScore(x))+(x.r.votes?'<div class="bench-note">'+x.r.votes.toLocaleString()+'표</div>':"")+'</td><td>'+esc(x.r.snapshotDate||x.r.publishedAt||"미기재")+'<div class="bench-note">평가: '+esc(x.r.evaluationDate||"미기재")+'</div></td><td>'+esc(x.r.benchmarkVersion)+'<div class="bench-note">'+esc(x.r.harness)+' · '+esc(x.r.tools)+' · '+esc(x.r.reasoningBudget)+'</div></td><td><a href="'+esc(x.r.source)+'" target="_blank" rel="noreferrer">'+esc(x.r.sourceLabel)+' ↗</a><div class="bench-note">확인: '+esc(x.r.checkedAt||"미기재")+'</div>'+(x.r.methodologySource?'<a href="'+esc(x.r.methodologySource)+'" target="_blank" rel="noreferrer">평가 방법 ↗</a>':"")+'</td></tr>'}).join("")+'</tbody></table></div></details>';
- return pageHeader("벤치마크","MODEL BENCHMARKS",BENCHMARK_ROWS.length,"평가 수치")+'<section class="benchmark-panel">'+controls+'<div class="benchmark-context"><h2>'+esc(metric.name)+'</h2><span>'+(mode==="official"?"공식 순위":mode==="reported"?"발표 점수순":"참고 수치 · 순위 제외")+' · '+(metric.direction==="lower"?"낮을수록 좋음":"높을수록 좋음")+'</span></div>'+(list.length?chart+p.pager:'<div class="empty">확인된 수치가 없습니다.</div>')+'<details class="benchmark-support"><summary>평가 안내 · 출처</summary><p class="bench-note">'+esc(note)+'</p><p class="bench-note">막대 기준 0–'+scale+' · 오차 막대는 출처의 ± 범위</p><p class="bench-note">점수 등록 '+new Set(BENCHMARK_ROWS.map(function(r){return r.modelId})).size+' / 전체 '+MODELS.length+'개 모델 · 수치 미등록은 0점이 아닙니다.</p>'+auditHtml+'</details>'+(list.length?table:"")+'</section><details class="benchmark-discover"><summary>최근 추가 평가</summary><div class="filter-row" aria-label="최근 추가 평가">'+['arxivMath202608','brokenMath202608','legalResearchValidation','liveCodeBenchV6Gemma','arena'].map(function(k){return '<button type="button" class="filter '+(state.metric===k?'active':'')+'" data-metric="'+k+'">'+esc(METRICS[k].name)+'</button>'}).join('')+'</div></details>';
+ return pageHeader("벤치마크","MODEL BENCHMARKS",BENCHMARK_ROWS.length,"평가 수치")+benchmarkTabs()+'<section class="benchmark-panel">'+controls+'<div class="benchmark-context"><h2>'+esc(metric.name)+'</h2><span>'+(mode==="official"?"공식 순위":mode==="reported"?"발표 점수순":"참고 수치 · 순위 제외")+' · '+(metric.direction==="lower"?"낮을수록 좋음":"높을수록 좋음")+'</span></div>'+(list.length?chart+p.pager:'<div class="empty">확인된 수치가 없습니다.</div>')+'<details class="benchmark-support"><summary>평가 안내 · 출처</summary><p class="bench-note">'+esc(note)+'</p><p class="bench-note">막대 기준 0–'+scale+' · 오차 막대는 출처의 ± 범위</p><p class="bench-note">점수 등록 '+new Set(BENCHMARK_ROWS.map(function(r){return r.modelId})).size+' / 전체 '+MODELS.length+'개 모델 · 수치 미등록은 0점이 아닙니다.</p>'+auditHtml+'</details>'+(list.length?table:"")+'</section><details class="benchmark-discover"><summary>최근 추가 평가</summary><div class="filter-row" aria-label="최근 추가 평가">'+['arxivMath202608','brokenMath202608','legalResearchValidation','liveCodeBenchV6Gemma','arena'].map(function(k){return '<button type="button" class="filter '+(state.metric===k?'active':'')+'" data-metric="'+k+'">'+esc(METRICS[k].name)+'</button>'}).join('')+'</div></details>';
 }
 
 function mediaView(){
@@ -156,6 +178,7 @@ function closeModal(){$("#modalRoot").innerHTML="";document.body.classList.remov
 function pin(id){var i=state.pins.indexOf(id);if(i>-1){state.pins.splice(i,1);toast("비교 고정에서 제거했습니다.")}else{if(state.pins.length>=4){toast("비교는 최대 4개 모델까지 고정할 수 있습니다.");return}state.pins.push(id);toast("비교에 고정했습니다.")}save();render();if(state.modal&&state.modal.kind==="model")openModel(id);else if(state.modal&&state.modal.kind==="compare")openCompare()}
 function page(value){var a=value.split(":"),scope=a[0],n=Math.max(1,Number(a[1])||1);if(scope==="catalog")state.catalogPage=n;if(scope==="media")state.mediaPage=n;if(scope==="history")state.historyPage=n;if(scope==="benchmark")state.benchmarkPage=n;render();window.scrollTo({top:0,behavior:"auto"})}
 function bind(){
+ document.addEventListener("error",function(e){if(e.target&&e.target.matches&&e.target.matches("img[data-official-chart]")){e.target.hidden=true;var status=e.target.closest(".aa-chart-media").querySelector(".aa-image-error");if(status)status.hidden=false}},true);
  document.addEventListener("click",function(e){
   var back=e.target.closest("[data-close-modal=true]");if(back&&e.target===back){closeModal();return}
   var r=e.target.closest("[data-route]");if(r){e.preventDefault();if((r.dataset.route==="opensource"||r.dataset.route==="catalog")&&!r.dataset.category&&!r.dataset.region){state.catalogCategory="all";state.catalogQuery="";state.catalogAccess="all";state.catalogRegion="all";state.catalogSort="latest";state.catalogPage=1}else if(r.dataset.category){state.catalogCategory=r.dataset.category;state.catalogQuery="";state.catalogAccess="all";state.catalogRegion=r.dataset.region||"all";state.catalogSort="latest";state.catalogPage=1}else if(r.dataset.region){state.catalogRegion=r.dataset.region;state.catalogPage=1}go(r.dataset.route);return}
@@ -166,7 +189,8 @@ function bind(){
   var cc=e.target.closest("[data-catalog-category]");if(cc){state.catalogCategory=cc.dataset.catalogCategory;state.catalogPage=1;render();return}
   var mc=e.target.closest("[data-media-category]");if(mc){state.mediaCategory=mc.dataset.mediaCategory;state.mediaPage=1;render();return}
   var he=e.target.closest("[data-history-era]");if(he){state.historyEra=he.dataset.historyEra;state.historyExpanded=false;render();return}
-  var mt=e.target.closest("[data-metric]");if(mt){state.metric=mt.dataset.metric;state.benchmarkCohort="";state.benchmarkPage=1;render();return}
+  var bv=e.target.closest("[data-benchmark-view]");if(bv){state.benchmarkViewMode=bv.dataset.benchmarkView==="registered"?"registered":"artificial-analysis";render();return}
+  var mt=e.target.closest("[data-metric]");if(mt){state.benchmarkViewMode="registered";state.metric=mt.dataset.metric;state.benchmarkCohort="";state.benchmarkPage=1;render();return}
   var ac=e.target.closest("[data-action]");if(ac){if(ac.dataset.action==="theme"){state.theme=state.theme==="dark"?"light":"dark";save();render()}else if(ac.dataset.action==="expand-history"){state.historyExpanded=true;render()}else if(ac.dataset.action==="compare"){openCompare()}else if(ac.dataset.action==="close-modal"){closeModal()}return}
  });
  document.addEventListener("input",function(e){if(e.target&&e.target.id==="historySearch"){state.historyQuery=e.target.value;state.historyPage=1;render("#historySearch");return}if(e.target&&e.target.id==="catalogSearch"){state.catalogQuery=e.target.value;state.catalogPage=1;render("#catalogSearch")}});
