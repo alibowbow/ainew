@@ -11,7 +11,7 @@ Model Atlas is a zero-build static catalog for AI history, models, modalities, a
 - Benchmark snapshots for SWE-bench, GPQA, AIME/Math, MMLU, MMMU, and BrowseComp
 - Region filters for global, China, Korea, US, and Europe
 - Explicit distinction between open-source licenses, open weights, custom licenses, and entries requiring model-card verification
-- Mobile drawer navigation, touch-sized controls, focus-visible styles, keyboard shortcuts, modal focus trapping, and light/dark theme persistence
+- Responsive sticky top navigation, touch-sized controls, focus-visible styles, keyboard shortcuts, modal focus trapping, and light/dark theme persistence
 
 ## Run
 
@@ -20,9 +20,7 @@ Open index.html directly in a browser. No npm, build step, server, or environmen
 ## Keyboard
 
 - ⌘ K / Ctrl K or /: focus search
-- H: jump to global history
-- Arrow keys: move within history and benchmark tabs
-- Esc: close the model dialog or mobile navigation
+- Esc: close the model dialog
 
 ## Selected model sources
 
