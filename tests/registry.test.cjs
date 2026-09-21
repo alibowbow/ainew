@@ -27,7 +27,10 @@ for(const row of rows){
 const before = JSON.stringify({models,rows,snapshots:get('BENCHMARK_SNAPSHOTS')});
 get('applyWeekly20260907(MODELS,METRICS,BENCHMARK_ROWS,BENCHMARK_SNAPSHOTS)');
 get('applyWeekly20260914(MODELS,METRICS,BENCHMARK_ROWS,BENCHMARK_SNAPSHOTS)');
+get('applyWeekly20260921(MODELS,METRICS,BENCHMARK_ROWS,BENCHMARK_SNAPSHOTS)');
 assert.equal(JSON.stringify({models,rows,snapshots:get('BENCHMARK_SNAPSHOTS')}),before,'update must be idempotent');
+get('applyWeekly20260921(MODELS,METRICS,BENCHMARK_ROWS,BENCHMARK_SNAPSHOTS)');
+assert.equal(JSON.stringify({models,rows,snapshots:get('BENCHMARK_SNAPSHOTS')}),before,'standalone update must be idempotent');
 get('state.route="opensource"');
 const openCount=get('catalogList().length');
 assert(get('catalogList().every(isOpenModel)'));
@@ -70,7 +73,7 @@ assert(get('benchmarkView().includes("마지막 갱신 표기는 2025-09-05")'))
 get('state.metric="mmluPro"');
 assert(get('benchmarkView().includes("Solar Pro 4")'));
 assert(!get('benchmarkView().includes("NaN")'));
-assert(get('benchmarkView().includes("공식 출처 확인 · 2026-09-14")'));
+assert(get('benchmarkView().includes("공식 출처 확인 · 2026-09-21")'));
 get('state.metric="imageArena";state.benchmarkCohort="";state.benchmarkPage=1');
 assert(get('benchmarkView().includes("GPT Image 2.5 Sunburst")'));
 assert(get('benchmarkView().includes("Preliminary")'));
@@ -78,7 +81,7 @@ get('state.metric="terminal21DeepSeek";state.benchmarkCohort=""');
 assert(get('benchmarkView().includes("90.6%")'));
 assert(get('benchmarkView().includes("DeepSeek Harness Minimal")'));
 assert.equal(rows.filter(r=>r.cohort==='arena-2026-09-13').length,28);
-assert.equal(rows.filter(r=>r.modelId==='deepseek-v4-1-flash').length,14);
+assert.equal(rows.filter(r=>r.modelId==='deepseek-v4-1-flash').length,20);
 assert.equal(rows.filter(r=>r.benchmark==='sweVerifiedOpenHands').length,2);
 assert(rows.filter(r=>r.benchmark==='sweVerifiedOpenHands').every(r=>r.harness.includes('OpenHands')));
 assert(!rows.some(r=>r.benchmark==='swe'&&r.harness.includes('OpenHands')));
@@ -94,10 +97,13 @@ console.log(JSON.stringify({models:models.length,scores:rows.length,openModels:o
 
 // All-source mode must expose every registered model without inventing a rank.
 get('state.metric="gpqa";state.benchmarkCohort="";state.benchmarkPage=1');
-const gpqaHtml=get('benchmarkView()');
+let gpqaHtml='';
+for(let page=1;page<=Math.ceil(rows.filter(r=>r.benchmark==='gpqa').length/12);page++){
+  get('state.benchmarkPage='+page);gpqaHtml+=get('benchmarkView()');
+}
 for(const r of rows.filter(r=>r.benchmark==='gpqa')) assert(gpqaHtml.includes('data-model="'+r.modelId+'"'),'hidden GPQA model '+r.modelId);
 assert(gpqaHtml.includes('통합 순위 없이'));
-assert(gpqaHtml.includes('점수 등록 49 / 전체 134개 모델'));
+assert(gpqaHtml.includes('점수 등록 '+new Set(rows.map(r=>r.modelId)).size+' / 전체 '+models.length+'개 모델'));
 get('state.metric="arena";state.benchmarkCohort="all"');
 let arenaHtml='';
 for(let page=1;page<=Math.ceil(rows.filter(r=>r.benchmark==='arena').length/12);page++){
@@ -114,3 +120,38 @@ assert(comparison.includes('수치 미등록'));
 assert(!comparison.includes('NaN'));
 assert(get('comparisonBenchmarks([modelById("eleven-music-2-5")]).includes("아직 등록되지 않았습니다")'));
 console.log('All-source coverage, pagination, empty states and benchmark comparison: pass');
+
+// Weekly additions: no guessed dates, no open-world/open-source confusion.
+assert.equal(models.length,143);
+assert.equal(rows.length,234);
+assert.equal(get('modelById("gpt-6-astra-law").recordType'),'configuration');
+assert.equal(get('modelById("gpt-6-astra-law").releaseDate'),null);
+assert.equal(get('modelById("gpt-6-astra-law").apiDate'),null);
+for(const m of models.filter(m=>m.id.startsWith('happyoyster-'))){
+  assert.equal(m.category,'world');assert.equal(m.apiDate,null);
+  assert.equal(get('isOpenModel(modelById('+JSON.stringify(m.id)+'))'),false);
+  assert.deepEqual([...m.regionTags],['China']);
+}
+assert.equal(rows.filter(r=>r.cohort.startsWith('gemma4-card-')).length,25);
+assert.equal(rows.filter(r=>r.cohort.startsWith('matharena-')).length,18);
+assert(rows.filter(r=>r.checkedAt==='2026-09-21').every(r=>r.evaluationDate===null && r.rankMode==='reference'));
+get('state.mediaCategory="world";state.mediaPage=1');
+assert(get('mediaView().includes("HappyOyster")'));
+get('state.metric="arxivMath202608";state.benchmarkCohort="";state.benchmarkPage=1');
+const mathHtml=get('benchmarkView()');
+assert(mathHtml.includes('85.09 ± 6.54%'));
+assert(mathHtml.includes('참고 수치 · 순위 제외'));
+assert(mathHtml.indexOf('data-model="gpt-6-astra"')<mathHtml.indexOf('data-model="claude-fable-5-1"'));
+assert(mathHtml.indexOf('data-model="claude-fable-5-1"')<mathHtml.indexOf('data-model="deepseek-v4-1-flash"'));
+// Protect the user's score sorting, including lower-is-better metrics and cohorts.
+for(const direction of ['higher','lower']){
+  get('METRICS.arxivMath202608.direction='+JSON.stringify(direction));
+  const rendered=get('benchmarkView()');
+  const first=direction==='higher'?'gpt-6-astra':'deepseek-v4-1-flash';
+  assert.equal(rendered.match(/class="bench-model" data-model="([^"]+)"/)[1],first);
+}
+get('delete METRICS.arxivMath202608.direction;state.metric="mmluPro";state.benchmarkCohort="gemma4-card-mmluPro"');
+const cohortHtml=get('benchmarkView()');
+assert(cohortHtml.indexOf('data-model="gemma-4-31b"')<cohortHtml.indexOf('data-model="gemma-4-e2b"'));
+assert(get('comparisonBenchmarks([modelById("gemma-4-e2b")]).includes("60%")'));
+console.log('Weekly additions, date separation, score ordering, world filters and Gemma coverage: pass');

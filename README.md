@@ -53,4 +53,4 @@ Benchmark scores are condition-specific snapshots. Check the linked source for e
 
 Run `node tests/registry.test.cjs` for syntax, data integrity, filter regression, and benchmark-view checks.
 
-Latest source review: [2026-09-14](reviews/2026-09-14.md). Idempotent weekly data updates are applied before UI initialization; source/evaluation dates are never replaced by the review date.
+Latest source review: [2026-09-21](reviews/2026-09-21.md). Idempotent weekly data updates are applied before UI initialization; source/evaluation dates are never replaced by the review date. Latest-evaluation shortcuts preserve score ordering and condition-specific cohorts. World models remain distinct from mesh-producing 3D models and are available in the media filter.
