@@ -66,6 +66,15 @@ assert.equal(get('isOpenModel(modelById("gpt-image-2-5-flare"))'),false);
 assert.equal(get('modelById("gpt-live-1").category'),'voice');
 get('state.mediaCategory="all"');
 assert(get('mediaView().includes("3D")'));
+// Official AA images are the default; do not ship a local copy or a data URL.
+assert.equal(get('state.benchmarkViewMode'),'artificial-analysis');
+const aaHome=get('benchmarkView()');
+assert(aaHome.includes('data-official-chart src="https://cdn.sanity.io/'));
+assert(aaHome.includes('2026.09.09'));
+assert(aaHome.includes('Intelligence Index v4.3'));
+assert(!aaHome.includes('id="benchmarkMetric"'));
+assert(!aaHome.includes('data:image/'));
+get('state.benchmarkViewMode="registered"');
 get('state.metric="arena"');
 assert(get('benchmarkView().includes("Gemini 3.8 Flash")'));
 assert(get('benchmarkView().includes("2026-09-13")'));

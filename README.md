@@ -52,3 +52,11 @@ Benchmark scores are condition-specific snapshots. Check the linked source for e
 Run `node tests/registry.test.cjs` for syntax, data integrity, filter regression, and benchmark-view checks.
 
 Latest source review: [2026-09-21](reviews/2026-09-21.md). Idempotent weekly data updates are applied before UI initialization; source/evaluation dates are never replaced by the review date. Latest-evaluation shortcuts preserve score ordering and condition-specific cohorts. World models remain distinct from mesh-producing 3D models and are available in the media filter.
+
+## Default benchmark view
+
+The benchmark route opens with Artificial Analysis's official Intelligence Index v4.3 / Coding Agent Index v1.5 chart, embedded with an external `<img>` from its official article CDN. No image asset is uploaded or copied into this repository. The September 9, 2026 snapshot is dated separately from its verification date; current Intelligence and Coding leaderboards are linked alongside it. Evaluation scores, Text Arena, source filters, and score ordering remain available under `평가별 점수`.
+
+Source: https://artificialanalysis.ai/articles/benchmarking-gpt-6-astra
+
+On future benchmark reviews, check `AA_OFFICIAL_CHART` against the publisher's latest official chart. Update its image URL, article URL, publication date, versions, and verification date together. Do not label a static article image as a live leaderboard or replace it with a generic social-preview card. Preserve the entire chart, branding, model configurations, and axes; retain the external-image error state and source link.
