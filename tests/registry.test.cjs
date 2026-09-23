@@ -135,8 +135,8 @@ assert(get('comparisonBenchmarks([modelById("eleven-music-2-5")]).includes("아�
 console.log('All-source coverage, pagination, empty states and benchmark comparison: pass');
 
 // Weekly additions: no guessed dates, no open-world/open-source confusion.
-assert.equal(models.length,150);
-assert.equal(rows.length,279);
+assert.equal(models.length,152);
+assert.equal(rows.length,281);
 assert.equal(get('modelById("gpt-6-astra-law").recordType'),'configuration');
 assert.equal(get('modelById("gpt-6-astra-law").releaseDate'),null);
 assert.equal(get('modelById("gpt-6-astra-law").apiDate'),null);
@@ -198,3 +198,44 @@ assert(freshBench.includes('Claude Opus 5.5'));
 assert(freshBench.includes('참고 수치 · 순위 제외'));
 assert(freshBench.indexOf('data-model="claude-opus-5-5"')<freshBench.indexOf('data-model="gpt-6-sol"'));
 console.log('September 23 launches, provider separation, open-source filters and AA scoring: pass');
+
+// The September 23 TTS launch is distinct from Gemini 3.8 Flash text and 3.8 Live.
+for(const [id,apiId,languages] of [
+  ['gemini-3-8-flash-tts','gemini-3.8-flash-tts','130'],
+  ['gemini-3-8-flash-lite-tts','gemini-3.8-flash-lite-tts','101']
+]){
+  const m=models.find(x=>x.id===id);
+  assert(m,'missing TTS model '+id);
+  assert.equal(m.params,apiId);
+  assert.equal(m.category,'voice');
+  assert.equal(m.announcementDate,'2026-09-23');
+  assert.equal(m.releaseDate,'2026-09-23');
+  assert.equal(m.apiDate,'2026-09-23');
+  assert.equal(m.previewDate,null);
+  assert.equal(m.accessType,'api-only');
+  assert(m.highlight.includes(languages));
+  assert(!get('isOpenModel(modelById('+JSON.stringify(id)+'))'));
+}
+assert.equal(openCount,52);
+get('state.route="catalog";state.catalogCategory="voice";state.catalogRegion="all";state.catalogAccess="all";state.catalogQuery=""');
+assert(get('catalogList().some(m=>m.id==="gemini-3-8-flash-tts")'));
+assert(get('catalogList().some(m=>m.id==="gemini-3-8-flash-lite-tts")'));
+get('state.route="opensource";state.catalogCategory="all"');
+assert(!get('catalogList().some(m=>m.id==="gemini-3-8-flash-tts")'));
+get('state.route="catalog"');
+assert.equal(get('catalogList().length'),models.length);
+get('state.mediaCategory="voice";state.mediaPage=1');
+assert(get('mediaView().includes("Gemini 3.8 Flash TTS")'));
+for(const [key,score] of [['humeVoiceDesignOverall',71.4],['humeVoiceDesignAccent',60.8]]){
+  const r=rows.find(x=>x.modelId==='gemini-3-8-flash-tts'&&x.benchmark===key);
+  assert(r,'missing Hume metric '+key);
+  assert.equal(r.score,score);
+  assert.equal(r.unit,'점');
+  assert.equal(r.sourceType,'provider-reported');
+  assert.equal(r.evaluationDate,null);
+  assert(r.source.includes('blog.google'));
+  get('state.benchmarkViewMode="registered";state.metric='+JSON.stringify(key)+';state.benchmarkCohort=""');
+  assert(get('benchmarkView().includes("Gemini 3.8 Flash TTS")'));
+}
+assert(!rows.some(x=>x.modelId==='gemini-3-8-flash-lite-tts'),'do not guess a Flash-Lite quality score');
+console.log('Google TTS model IDs, voice routes, Hume score metadata and missing-score handling: pass');
