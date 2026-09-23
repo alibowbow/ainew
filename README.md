@@ -39,6 +39,12 @@ Open index.html directly in a browser. No npm, build step, server, or environmen
 - [Tripo 3.1 official release article](https://www.tripo3d.ai/research/the-teapot-test-from-showing-to-making)
 - [OpenAI GPT Image 2.5 announcement](https://openai.com/index/introducing-chatgpt-images-2-5/)
 - [OpenAI GPT-Live-1 API announcement](https://openai.com/index/introducing-gpt-live-1-in-the-api/)
+- [OpenAI GPT-6 Sol / Luna API change log](https://developers.openai.com/api/docs/changelog)
+- [Claude Opus 5.5 model overview](https://platform.claude.com/docs/en/models/opus-5-5/overview)
+- [Grok 4.7 official announcement](https://x.ai/news/grok-4-7)
+- [MiMo-V2.6-Pro-RL official model card](https://huggingface.co/XiaomiMiMo/MiMo-V2.6-Pro-RL)
+- [MiMo-V2.6-Flash-RL official model card](https://huggingface.co/XiaomiMiMo/MiMo-V2.6-Flash-RL)
+- [MiMo-V2.6-Distill-Qwen-9B official model card](https://huggingface.co/XiaomiMiMo/MiMo-V2.6-Distill-Qwen-9B)
 - [Eleven Music v2.5 official announcement](https://elevenlabs.io/blog/music-v2-5-model)
 - [Sakana Fugu Max / Ultra v2 official announcement](https://sakana.ai/fugu-max-release/)
 - [Microsoft TRELLIS.2 official repository](https://github.com/microsoft/TRELLIS.2)
@@ -51,12 +57,12 @@ Benchmark scores are condition-specific snapshots. Check the linked source for e
 
 Run `node tests/registry.test.cjs` for syntax, data integrity, filter regression, and benchmark-view checks.
 
-Latest source review: [2026-09-21](reviews/2026-09-21.md). Idempotent weekly data updates are applied before UI initialization; source/evaluation dates are never replaced by the review date. Latest-evaluation shortcuts preserve score ordering and condition-specific cohorts. World models remain distinct from mesh-producing 3D models and are available in the media filter.
+Latest source review: [2026-09-23](reviews/2026-09-23.md). Idempotent weekly data updates are applied before UI initialization; source/evaluation dates are never replaced by the review date. Latest-evaluation shortcuts preserve score ordering and condition-specific cohorts. World models remain distinct from mesh-producing 3D models and are available in the media filter.
 
 ## Default benchmark view
 
-The benchmark route opens with Artificial Analysis's official Intelligence Index v4.3 / Coding Agent Index v1.5 chart, embedded with an external `<img>` from its official article CDN. No image asset is uploaded or copied into this repository. The September 9, 2026 snapshot is dated separately from its verification date; current Intelligence and Coding leaderboards are linked alongside it. Evaluation scores, Text Arena, source filters, and score ordering remain available under `평가별 점수`.
+The benchmark route opens with Artificial Analysis's September 22, 2026 Intelligence Index evaluation breakdown chart, embedded with an external `<img>` from its official article CDN. No image asset is uploaded or copied into this repository. Its publication date is distinct from its September 23 verification date; current Intelligence and Coding leaderboards are linked alongside it. Evaluation scores default to the recent Artificial Analysis Index excerpt, and Text Arena, source filters, and score ordering remain available under `평가별 점수`.
 
-Source: https://artificialanalysis.ai/articles/benchmarking-gpt-6-astra
+Source: https://artificialanalysis.ai/articles/gpt-6-sol-and-luna-push-the-cost-efficiency-frontier
 
 On future benchmark reviews, check `AA_OFFICIAL_CHART` against the publisher's latest official chart. Update its image URL, article URL, publication date, versions, and verification date together. Do not label a static article image as a live leaderboard or replace it with a generic social-preview card. Preserve the entire chart, branding, model configurations, and axes; retain the external-image error state and source link.

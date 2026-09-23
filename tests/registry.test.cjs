@@ -29,8 +29,10 @@ const before = JSON.stringify({models,rows,snapshots:get('BENCHMARK_SNAPSHOTS')}
 get('applyWeekly20260907(MODELS,METRICS,BENCHMARK_ROWS,BENCHMARK_SNAPSHOTS)');
 get('applyWeekly20260914(MODELS,METRICS,BENCHMARK_ROWS,BENCHMARK_SNAPSHOTS)');
 get('applyWeekly20260921(MODELS,METRICS,BENCHMARK_ROWS,BENCHMARK_SNAPSHOTS)');
+get('applyWeekly20260923(MODELS,METRICS,BENCHMARK_ROWS,BENCHMARK_SNAPSHOTS)');
 assert.equal(JSON.stringify({models,rows,snapshots:get('BENCHMARK_SNAPSHOTS')}),before,'update must be idempotent');
 get('applyWeekly20260921(MODELS,METRICS,BENCHMARK_ROWS,BENCHMARK_SNAPSHOTS)');
+get('applyWeekly20260923(MODELS,METRICS,BENCHMARK_ROWS,BENCHMARK_SNAPSHOTS)');
 assert.equal(JSON.stringify({models,rows,snapshots:get('BENCHMARK_SNAPSHOTS')}),before,'standalone update must be idempotent');
 get('state.route="opensource"');
 const openCount=get('catalogList().length');
@@ -70,8 +72,9 @@ assert(get('mediaView().includes("3D")'));
 assert.equal(get('state.benchmarkViewMode'),'artificial-analysis');
 const aaHome=get('benchmarkView()');
 assert(aaHome.includes('data-official-chart src="https://cdn.sanity.io/'));
-assert(aaHome.includes('2026.09.09'));
-assert(aaHome.includes('Intelligence Index v4.3'));
+assert(aaHome.includes('2026.09.22'));
+assert(aaHome.includes('Intelligence Index'));
+assert(aaHome.includes('gpt-6-sol-and-luna-push-the-cost-efficiency-frontier'));
 assert(!aaHome.includes('id="benchmarkMetric"'));
 assert(!aaHome.includes('data:image/'));
 get('state.benchmarkViewMode="registered"');
@@ -83,7 +86,7 @@ assert(get('benchmarkView().includes("마지막 갱신 표기는 2025-09-05")'))
 get('state.metric="mmluPro"');
 assert(get('benchmarkView().includes("Solar Pro 4")'));
 assert(!get('benchmarkView().includes("NaN")'));
-assert(get('benchmarkView().includes("공식 출처 확인 · 2026-09-21")'));
+assert(get('benchmarkView().includes("공식 출처 확인 · 2026-09-23")'));
 get('state.metric="imageArena";state.benchmarkCohort="";state.benchmarkPage=1');
 assert(get('benchmarkView().includes("GPT Image 2.5 Sunburst")'));
 assert(get('benchmarkView().includes("Preliminary")'));
@@ -132,8 +135,8 @@ assert(get('comparisonBenchmarks([modelById("eleven-music-2-5")]).includes("아�
 console.log('All-source coverage, pagination, empty states and benchmark comparison: pass');
 
 // Weekly additions: no guessed dates, no open-world/open-source confusion.
-assert.equal(models.length,143);
-assert.equal(rows.length,234);
+assert.equal(models.length,150);
+assert.equal(rows.length,279);
 assert.equal(get('modelById("gpt-6-astra-law").recordType'),'configuration');
 assert.equal(get('modelById("gpt-6-astra-law").releaseDate'),null);
 assert.equal(get('modelById("gpt-6-astra-law").apiDate'),null);
@@ -165,3 +168,33 @@ const cohortHtml=get('benchmarkView()');
 assert(cohortHtml.indexOf('data-model="gemma-4-31b"')<cohortHtml.indexOf('data-model="gemma-4-e2b"'));
 assert(get('comparisonBenchmarks([modelById("gemma-4-e2b")]).includes("60%")'));
 console.log('Weekly additions, date separation, score ordering, world filters and Gemma coverage: pass');
+
+// New launches, independently measured variants, and provider-reported evaluations.
+for(const id of ['gpt-6-sol','gpt-6-luna','claude-opus-5-5','grok-4-7','mimo-v2-6-pro-rl','mimo-v2-6-flash-rl','mimo-v2-6-distill-qwen-9b']){
+  assert(get('modelById('+JSON.stringify(id)+')'),'missing '+id);
+}
+assert.equal(get('modelById("claude-opus-5-5").releaseDate'),'2026-09-22');
+assert.equal(get('modelById("gpt-6-sol").apiDate'),'2026-09-22');
+for(const id of ['mimo-v2-6-pro-rl','mimo-v2-6-flash-rl','mimo-v2-6-distill-qwen-9b']){
+  assert.equal(get('modelById('+JSON.stringify(id)+').apiDate'),null);
+  assert.equal(get('modelById('+JSON.stringify(id)+').license'),'MIT');
+  assert(get('isOpenModel(modelById('+JSON.stringify(id)+'))'));
+  assert(get('modelById('+JSON.stringify(id)+').regionTags.includes("China open weights")'));
+}
+get('state.route="opensource";state.catalogRegion="all";state.catalogAccess="all";state.catalogCategory="all";state.catalogQuery=""');
+assert(get('catalogList().some(m=>m.id==="mimo-v2-6-pro-rl")'));
+assert(!get('catalogList().some(m=>m.id==="claude-opus-5-5")'));
+get('state.route="catalog"');
+assert.equal(get('catalogList().length'),models.length,'open filter leaks after new entries');
+assert.equal(rows.filter(r=>r.benchmark==='aaIntelligence432').length,20);
+assert(rows.filter(r=>r.benchmark==='aaIntelligence432').every(r=>r.unit==='점'&&r.sourceType==='independent-leaderboard'));
+assert.equal(rows.find(r=>r.modelId==='claude-opus-5-5'&&r.benchmark==='aaIntelligence432'&&r.modelVariant==='max').score,58);
+assert.equal(rows.find(r=>r.modelId==='gpt-6-sol'&&r.benchmark==='deepSWE').score,68.8);
+assert.equal(rows.find(r=>r.modelId==='mimo-v2-6-distill-qwen-9b'&&r.benchmark==='sweVerifiedMiMoDistill').score,61.1);
+assert(!rows.some(r=>r.benchmark==='swe'&&r.modelId==='mimo-v2-6-distill-qwen-9b'));
+get('state.benchmarkViewMode="registered";state.metric="aaIntelligence432";state.benchmarkPage=1;state.benchmarkCohort=""');
+const freshBench=get('benchmarkView()');
+assert(freshBench.includes('Claude Opus 5.5'));
+assert(freshBench.includes('참고 수치 · 순위 제외'));
+assert(freshBench.indexOf('data-model="claude-opus-5-5"')<freshBench.indexOf('data-model="gpt-6-sol"'));
+console.log('September 23 launches, provider separation, open-source filters and AA scoring: pass');
