@@ -14,7 +14,10 @@ function applyWeekly20260923(models, metrics, rows, snapshots) {
     flash:'https://huggingface.co/XiaomiMiMo/MiMo-V2.6-Flash-RL',
     distill:'https://huggingface.co/XiaomiMiMo/MiMo-V2.6-Distill-Qwen-9B',
     aa:'https://artificialanalysis.ai/changelog',
-    aaMethod:'https://artificialanalysis.ai/evaluations/artificial-analysis-intelligence-index'
+    aaMethod:'https://artificialanalysis.ai/evaluations/artificial-analysis-intelligence-index',
+    googleTts:'https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-3-8-text-to-speech/',
+    googleFlashTts:'https://ai.google.dev/gemini-api/docs/models/gemini-3.8-flash-tts',
+    googleLiteTts:'https://ai.google.dev/gemini-api/docs/models/gemini-3.8-flash-lite-tts'
   };
   function model(value){
     const data=Object.assign({current:true,checkedAt,announcementDate:null,releaseDate:null,previewDate:null,apiDate:null,
@@ -49,6 +52,20 @@ function applyWeekly20260923(models, metrics, rows, snapshots) {
     access:'Open weights / MIT',accessType:'open-source-license',license:'MIT',params:'9B · Qwen3.5-9B 기반 SFT',context:unknown,
     modality:'텍스트 · 이미지 → 텍스트',highlight:'에이전트 연구를 위한 공개 증류 체크포인트',source:urls.distill,sourceLabel:'Xiaomi MiMo 공식 증류 모델 카드',
     note:'MiMo-V2.6-Pro/Flash와 별개인 9B SFT 모델. API 최초 제공일과 컨텍스트 한도는 확인되지 않았습니다.'});
+  [
+    ['gemini-3-8-flash-tts','Gemini 3.8 Flash TTS','gemini-3.8-flash-tts',urls.googleFlashTts,
+      '130개 언어 · 창작용 음성 디자인·2인 대화',
+      'Hume Voice Design 전체 71.4, 악센트 60.8은 Google 발표 수치입니다. Voice Arena의 언어별 순위는 숫자가 공개되지 않아 추가하지 않았습니다.'],
+    ['gemini-3-8-flash-lite-tts','Gemini 3.8 Flash-Lite TTS','gemini-3.8-flash-lite-tts',urls.googleLiteTts,
+      '101개 언어 · 대량 제작용 음성 합성',
+      'Google 발표에서 Hume 음성 품질 지수 2위로 소개했지만 점수는 공개하지 않아 수치를 등록하지 않았습니다.']
+  ].forEach(([id,name,params,source,highlight,note])=>model({
+    id,name,family:'Gemini 3.8 Audio',provider:'Google DeepMind',region:'US',category:'voice',
+    date:'2026-09-23',announcementDate:'2026-09-23',releaseDate:'2026-09-23',previewDate:null,apiDate:'2026-09-23',
+    access:'Closed / API',accessType:'api-only',license:'Google Gemini API 이용약관',params,context:'8,192 tokens (입력)',
+    modality:'텍스트 → 음성',highlight,source,sourceLabel:'Google Gemini API 모델 사양',
+    note:note+' 출시일부터 Gemini API·AI Studio 단계적 제공; 기업용 Gemini Enterprise API는 추후 예정.'
+  }));
 
   function metric(key,name,description){metrics[key]={key,name,description,rankable:false};}
   function add(value){
@@ -124,6 +141,16 @@ function applyWeekly20260923(models, metrics, rows, snapshots) {
   ]);
   metric('sweVerifiedMiMoDistill','SWE-bench Verified · MiMo SFT','Xiaomi 증류 체크포인트 avg@3; 다른 SWE-bench 조건과 분리');
   metric('terminal21MiMoDistill','Terminal-Bench 2.1 · MiMo SFT','Xiaomi 증류 체크포인트 avg@1; 4.0과 분리');
+  metric('humeVoiceDesignOverall','Hume Voice Design · 전체','Google의 2026-09-23 발표에 인용된 음성 디자인 평가. 백분율이 아닌 공개 원문 수치.');
+  metric('humeVoiceDesignAccent','Hume Voice Design · 악센트','Google의 2026-09-23 발표에 인용된 악센트 모델링 평가. 백분율이 아닌 공개 원문 수치.');
+  [['humeVoiceDesignOverall',71.4,'전체'],['humeVoiceDesignAccent',60.8,'악센트']].forEach(([benchmark,score,label])=>add({
+    modelId:'gemini-3-8-flash-tts',benchmark,score,unit:'점',publishedAt:'2026-09-23',
+    benchmarkVersion:'Hume AI Voice Design Benchmark · Google 2026-09-23 발표',
+    harness:'Google 공식 발표에 상세 평가 실행 환경 미기재',tools:'미기재 · TTS 음성 생성',
+    reasoningBudget:'해당 없음 · 음성 합성',source:urls.googleTts,sourceLabel:'Google Gemini 3.8 TTS 발표',
+    cohort:'google-tts-20260923-'+benchmark,cohortLabel:'Google 공식 발표 · Hume Voice Design '+label,
+    comparisonNote:'Google이 인용한 Hume 평가의 제공사 보고 수치입니다. 평가 실행일·원시 데이터·세부 하니스는 미공개이며 다른 음성 순위와 합치지 않습니다.'
+  }));
   metric('aaCodingAgent15','Artificial Analysis Coding Agent Index · 2026-09-22','독립 에이전트 지표 v1.5 · 네이티브 하니스 차이');
   [['gpt-6-sol',57,'max','Codex',urls.openaiScores,'2026-09-22'],
    ['gpt-6-luna',41,'max','Codex',urls.openaiScores,'2026-09-22'],
@@ -141,6 +168,8 @@ function applyWeekly20260923(models, metrics, rows, snapshots) {
   const audit={
     aaIntelligence432:[urls.aa,'9월 19일 방법론 v4.3.2 업데이트, 21–22일 모델별 결과. 새 모델과 effort별 공식 발췌만 등록; 전체 순위가 아님.'],
     aaCodingAgent15:['https://artificialanalysis.ai/agents/coding-agents','제공사별 네이티브 코딩 하니스가 달라 별도 조건으로 유지.'],
+    humeVoiceDesignOverall:[urls.googleTts,'Gemini 3.8 Flash TTS 71.4; Google 발표 인용. Flash-Lite의 Hume 음성 품질 2위는 숫자가 없어 점수 행을 등록하지 않음.'],
+    humeVoiceDesignAccent:[urls.googleTts,'Gemini 3.8 Flash TTS 악센트 모델링 60.8; Google 발표 인용. 실행일·상세 하니스는 확인되지 않음.'],
     terminal4:['https://www.tbench.ai/benchmarks','제공사별 4.0 점수는 하니스/effort가 다르므로 출처별로 분리.'],
     sweVerifiedMiMoDistill:[urls.distill,'증류 SFT 모델 avg@3 61.1%; 에이전트 하니스 미공개.'],
     arena:['https://arena.ai/leaderboard/text','이번 검토에서 새 독립 Text Arena 스냅샷 수치를 확인하지 못해 기존 순위를 유지.'],
