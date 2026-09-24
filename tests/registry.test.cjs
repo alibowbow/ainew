@@ -239,3 +239,36 @@ for(const [key,score] of [['humeVoiceDesignOverall',71.4],['humeVoiceDesignAccen
 }
 assert(!rows.some(x=>x.modelId==='gemini-3-8-flash-lite-tts'),'do not guess a Flash-Lite quality score');
 console.log('Google TTS model IDs, voice routes, Hume score metadata and missing-score handling: pass');
+
+const priceStatuses=new Set(['verified','provider-dependent','no-public-rate','unverified']);
+const firstPartyHosts=new Set(['developers.openai.com','platform.claude.com','ai.google.dev','api-docs.deepseek.com','docs.x.ai','docs.meshy.ai','docs.z.ai','platform.minimaxi.com','help.aliyun.com']);
+for(const m of models){
+  const p=m.apiPricing;
+  assert(p&&priceStatuses.has(p.status), 'missing price status: '+m.id);
+  assert.equal(p.checkedAt,'2026-09-24');
+  if(p.status==='verified'){
+    assert(firstPartyHosts.has(new URL(p.source).hostname),'unofficial price source: '+m.id);
+    assert(['USD','CNY','CREDITS'].includes(p.currency) && p.unit && p.rates.length,'incomplete price: '+m.id);
+    assert(p.rates.every(r=>r.label && Number.isFinite(r.amount) && r.amount>0),'invalid price: '+m.id);
+  } else {
+    assert(!p.rates && p.note,'unknown price must not invent rates: '+m.id);
+  }
+}
+assert(models.filter(m=>m.apiPricing.status==='verified').length>=50);
+assert.equal(get('modelById("gemini-3-8-flash-tts").apiPricing.rates[1].amount'),9);
+assert.equal(get('modelById("gemini-3-8-flash-lite-tts").apiPricing.rates[1].amount'),6);
+assert.equal(get('modelById("gpt-6-sol").apiPricing.rates[0].amount'),2);
+assert.equal(get('modelById("glm53-flash").apiPricing.rates[0].amount'),0.15);
+assert.equal(get('modelById("speech-2-8").apiPricing.currency'),'CNY');
+assert.equal(get('modelById("meshy-7-1").apiPricing.currency'),'CREDITS');
+assert.equal(get('modelById("gemma-4-31b").apiPricing.status'),'provider-dependent');
+assert.equal(get('modelById("minimax-music-2-6").apiPricing.status'),'no-public-rate');
+assert(get('apiPriceSummary(modelById("meshy-7-1")).includes("20 크레딧")'));
+assert(get('apiPriceDetails(modelById("gpt-6-sol")).includes("공식 요금표")'));
+assert(get('card(modelById("gpt-6-sol")).includes("API 요금")'));
+assert(get('catalogView().includes("API 요금")'));
+assert(css.includes('.model-price{') && css.includes('.pricing-rates{'));
+const pricingBefore=JSON.stringify(models.map(m=>m.apiPricing));
+get('applyApiPricing20260924(MODELS)');
+assert.equal(JSON.stringify(models.map(m=>m.apiPricing)),pricingBefore,'pricing update must be idempotent');
+console.log('Pricing coverage, official sources, units, open-weights and price rendering: pass');
