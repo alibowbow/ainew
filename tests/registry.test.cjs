@@ -34,6 +34,8 @@ assert.equal(JSON.stringify({models,rows,snapshots:get('BENCHMARK_SNAPSHOTS')}),
 get('applyWeekly20260921(MODELS,METRICS,BENCHMARK_ROWS,BENCHMARK_SNAPSHOTS)');
 get('applyWeekly20260923(MODELS,METRICS,BENCHMARK_ROWS,BENCHMARK_SNAPSHOTS)');
 assert.equal(JSON.stringify({models,rows,snapshots:get('BENCHMARK_SNAPSHOTS')}),before,'standalone update must be idempotent');
+get('applyImageDesign20260927(MODELS,METRICS,BENCHMARK_ROWS)');
+assert.equal(JSON.stringify({models,rows,snapshots:get('BENCHMARK_SNAPSHOTS')}),before,'image-design update must be idempotent');
 get('state.route="opensource"');
 const openCount=get('catalogList().length');
 assert(get('catalogList().every(isOpenModel)'));
@@ -72,6 +74,8 @@ assert(get('mediaView().includes("3D")'));
 assert.equal(get('state.benchmarkViewMode'),'artificial-analysis');
 const aaHome=get('benchmarkView()');
 assert(aaHome.includes('data-official-chart src="https://cdn.sanity.io/'));
+assert(aaHome.includes('<img data-official-chart src="https://huggingface.co/inclusionAI/Ming-Image-0.1-Design/resolve/main/assets/uiux_leaderboard.webp"'));
+assert(aaHome.includes('data-metric="aaImageUiuxDesign"'));
 assert(aaHome.includes('2026.09.22'));
 assert(aaHome.includes('Intelligence Index'));
 assert(aaHome.includes('gpt-6-sol-and-luna-push-the-cost-efficiency-frontier'));
@@ -135,8 +139,8 @@ assert(get('comparisonBenchmarks([modelById("eleven-music-2-5")]).includes("아�
 console.log('All-source coverage, pagination, empty states and benchmark comparison: pass');
 
 // Weekly additions: no guessed dates, no open-world/open-source confusion.
-assert.equal(models.length,152);
-assert.equal(rows.length,281);
+assert.equal(models.length,166);
+assert.equal(rows.length,308);
 assert.equal(get('modelById("gpt-6-astra-law").recordType'),'configuration');
 assert.equal(get('modelById("gpt-6-astra-law").releaseDate'),null);
 assert.equal(get('modelById("gpt-6-astra-law").apiDate'),null);
@@ -216,7 +220,7 @@ for(const [id,apiId,languages] of [
   assert(m.highlight.includes(languages));
   assert(!get('isOpenModel(modelById('+JSON.stringify(id)+'))'));
 }
-assert.equal(openCount,52);
+assert.equal(openCount,66);
 get('state.route="catalog";state.catalogCategory="voice";state.catalogRegion="all";state.catalogAccess="all";state.catalogQuery=""');
 assert(get('catalogList().some(m=>m.id==="gemini-3-8-flash-tts")'));
 assert(get('catalogList().some(m=>m.id==="gemini-3-8-flash-lite-tts")'));
@@ -241,11 +245,11 @@ assert(!rows.some(x=>x.modelId==='gemini-3-8-flash-lite-tts'),'do not guess a Fl
 console.log('Google TTS model IDs, voice routes, Hume score metadata and missing-score handling: pass');
 
 const priceStatuses=new Set(['verified','provider-dependent','no-public-rate','unverified']);
-const firstPartyHosts=new Set(['developers.openai.com','platform.claude.com','ai.google.dev','api-docs.deepseek.com','docs.x.ai','docs.meshy.ai','docs.z.ai','platform.minimaxi.com','help.aliyun.com']);
+const firstPartyHosts=new Set(['developers.openai.com','platform.claude.com','ai.google.dev','api-docs.deepseek.com','docs.x.ai','docs.meshy.ai','docs.z.ai','platform.minimaxi.com','help.aliyun.com','ideogram.ai','fal.ai']);
 for(const m of models){
   const p=m.apiPricing;
   assert(p&&priceStatuses.has(p.status), 'missing price status: '+m.id);
-  assert.equal(p.checkedAt,'2026-09-24');
+  assert.equal(p.checkedAt,m.checkedAt==='2026-09-27'?'2026-09-27':'2026-09-24');
   if(p.status==='verified'){
     assert(firstPartyHosts.has(new URL(p.source).hostname),'unofficial price source: '+m.id);
     assert(['USD','CNY','CREDITS'].includes(p.currency) && p.unit && p.rates.length,'incomplete price: '+m.id);
@@ -270,5 +274,37 @@ assert(get('catalogView().includes("API 요금")'));
 assert(css.includes('.model-price{') && css.includes('.pricing-rates{'));
 const pricingBefore=JSON.stringify(models.map(m=>m.apiPricing));
 get('applyApiPricing20260924(MODELS)');
-assert.equal(JSON.stringify(models.map(m=>m.apiPricing)),pricingBefore,'pricing update must be idempotent');
+get('applyImageDesign20260927(MODELS,METRICS,BENCHMARK_ROWS)');
+assert.equal(JSON.stringify(models.map(m=>m.apiPricing)),pricingBefore,'pricing and image update must be idempotent');
 console.log('Pricing coverage, official sources, units, open-weights and price rendering: pass');
+
+// The screenshot and the live independent global table are different cohorts.
+const imageIds=['ming-image-0-1-design','ideogram-4-quality','ideogram-4','hunyuan-image-3-instruct',
+  'flux-2-dev','flux-2-dev-flash','flux-2-dev-turbo','hidream-o1-image','ideogram-4-instant',
+  'hunyuan-image-3','ideogram-4-fast-quality','z-image-turbo','cosmos3-super-text2image','ernie-image'];
+for(const id of imageIds)assert(get('modelById('+JSON.stringify(id)+')'),'missing image model '+id);
+assert.equal(rows.filter(r=>r.benchmark==='aaImageUiuxDesign').length,13);
+assert.equal(rows.filter(r=>r.benchmark==='aaImageOpenWeightsOverall').length,14);
+assert(!rows.some(r=>r.modelId==='ming-image-0-1-design-layer'),'no invented layer score');
+assert(!rows.some(r=>r.modelId==='cosmos3-super-text2image'&&r.benchmark==='aaImageUiuxDesign'),'truncated variant cannot be attributed');
+assert.equal(get('modelById("ideogram-4").license'),'Ideogram 4 Non-Commercial Model Agreement');
+assert.equal(get('modelById("ming-image-0-1-design").license'),'MIT');
+assert.equal(get('modelById("ideogram-4").apiPricing.rates[0].amount'),0.06);
+assert.equal(get('modelById("flux-2-dev-turbo").apiPricing.unit'),'메가픽셀');
+assert.equal(get('modelById("hunyuan-image-3-instruct").releaseDate'),'2026-01-26');
+assert.equal(get('modelById("ming-image-0-1-design").releaseDate'),null);
+get('state.route="catalog";state.catalogCategory="image";state.catalogQuery="";state.catalogRegion="all";state.catalogAccess="all"');
+assert(imageIds.every(id=>get('catalogList()').some(m=>m.id===id)));
+get('state.route="opensource"');
+assert(imageIds.every(id=>get('catalogList()').some(m=>m.id===id)));
+get('state.route="catalog";state.catalogCategory="all"');
+assert.equal(get('catalogList().length'),models.length,'image open filter leaks into catalogue');
+get('state.benchmarkViewMode="registered";state.metric="aaImageUiuxDesign";state.benchmarkCohort="";state.benchmarkPage=1');
+const designPage=get('benchmarkView()');
+assert(designPage.includes('Ming-Image-0.1-Design'));
+assert(designPage.includes('참고 수치 · 순위 제외'));
+assert(designPage.indexOf('data-model="ming-image-0-1-design"')<designPage.indexOf('data-model="ideogram-4-quality"'));
+get('state.metric="aaImageOpenWeightsOverall";state.benchmarkCohort="";state.benchmarkPage=1');
+assert(get('benchmarkView()').includes('공식 순위'));
+assert(!rows.some(r=>r.benchmark==='aaImageUiuxDesign'&&r.evaluationDate));
+console.log('Image card, screenshot provenance, independent overall rank, pricing and filter isolation: pass');

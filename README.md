@@ -59,6 +59,8 @@ Run `node tests/registry.test.cjs` for syntax, data integrity, filter regression
 
 Latest source review: [2026-09-23](reviews/2026-09-23.md). Idempotent weekly data updates are applied before UI initialization; source/evaluation dates are never replaced by the review date. Latest-evaluation shortcuts preserve score ordering and condition-specific cohorts. World models remain distinct from mesh-producing 3D models and are available in the media filter.
 
+Image-design review: [2026-09-27](reviews/2026-09-27-image-design.md). The benchmark home also embeds the provider-published UI/UX Design open-weight snapshot using an external `<img>` and links to its registered scores. These are separate from Artificial Analysis's current overall text-to-image leaderboard and from the September 22 Intelligence chart.
+
 ## Default benchmark view
 
 The benchmark route opens with Artificial Analysis's September 22, 2026 Intelligence Index evaluation breakdown chart, embedded with an external `<img>` from its official article CDN. No image asset is uploaded or copied into this repository. Its publication date is distinct from its September 23 verification date; current Intelligence and Coding leaderboards are linked alongside it. Evaluation scores default to the recent Artificial Analysis Index excerpt, and Text Arena, source filters, and score ordering remain available under `평가별 점수`.
