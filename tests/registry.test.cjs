@@ -31,10 +31,12 @@ get('applyWeekly20260914(MODELS,METRICS,BENCHMARK_ROWS,BENCHMARK_SNAPSHOTS)');
 get('applyWeekly20260921(MODELS,METRICS,BENCHMARK_ROWS,BENCHMARK_SNAPSHOTS)');
 get('applyWeekly20260923(MODELS,METRICS,BENCHMARK_ROWS,BENCHMARK_SNAPSHOTS)');
 get('applyWeekly20260928(MODELS,METRICS,BENCHMARK_ROWS,BENCHMARK_SNAPSHOTS)');
+get('applySonnet20260929(MODELS,METRICS,BENCHMARK_ROWS,BENCHMARK_SNAPSHOTS)');
 assert.equal(JSON.stringify({models,rows,snapshots:get('BENCHMARK_SNAPSHOTS')}),before,'update must be idempotent');
 get('applyWeekly20260921(MODELS,METRICS,BENCHMARK_ROWS,BENCHMARK_SNAPSHOTS)');
 get('applyWeekly20260923(MODELS,METRICS,BENCHMARK_ROWS,BENCHMARK_SNAPSHOTS)');
 get('applyWeekly20260928(MODELS,METRICS,BENCHMARK_ROWS,BENCHMARK_SNAPSHOTS)');
+get('applySonnet20260929(MODELS,METRICS,BENCHMARK_ROWS,BENCHMARK_SNAPSHOTS)');
 assert.equal(JSON.stringify({models,rows,snapshots:get('BENCHMARK_SNAPSHOTS')}),before,'standalone update must be idempotent');
 get('applyImageDesign20260927(MODELS,METRICS,BENCHMARK_ROWS)');
 assert.equal(JSON.stringify({models,rows,snapshots:get('BENCHMARK_SNAPSHOTS')}),before,'image-design update must be idempotent');
@@ -141,8 +143,8 @@ assert(get('comparisonBenchmarks([modelById("eleven-music-2-5")]).includes("아�
 console.log('All-source coverage, pagination, empty states and benchmark comparison: pass');
 
 // Weekly additions: no guessed dates, no open-world/open-source confusion.
-assert.equal(models.length,172);
-assert.equal(rows.length,326);
+assert.equal(models.length,173);
+assert.equal(rows.length,354);
 assert.equal(get('modelById("gpt-6-astra-law").recordType'),'configuration');
 assert.equal(get('modelById("gpt-6-astra-law").releaseDate'),null);
 assert.equal(get('modelById("gpt-6-astra-law").apiDate'),null);
@@ -192,7 +194,7 @@ assert(get('catalogList().some(m=>m.id==="mimo-v2-6-pro-rl")'));
 assert(!get('catalogList().some(m=>m.id==="claude-opus-5-5")'));
 get('state.route="catalog"');
 assert.equal(get('catalogList().length'),models.length,'open filter leaks after new entries');
-assert.equal(rows.filter(r=>r.benchmark==='aaIntelligence432').length,23);
+assert.equal(rows.filter(r=>r.benchmark==='aaIntelligence432').length,28);
 assert(rows.filter(r=>r.benchmark==='aaIntelligence432').every(r=>r.unit==='점'&&r.sourceType==='independent-leaderboard'));
 assert.equal(rows.find(r=>r.modelId==='claude-opus-5-5'&&r.benchmark==='aaIntelligence432'&&r.modelVariant==='max').score,58);
 assert.equal(rows.find(r=>r.modelId==='gpt-6-sol'&&r.benchmark==='deepSWE').score,68.8);
@@ -277,7 +279,7 @@ const firstPartyHosts=new Set(['developers.openai.com','platform.claude.com','ai
 for(const m of models){
   const p=m.apiPricing;
   assert(p&&priceStatuses.has(p.status), 'missing price status: '+m.id);
-  assert(['2026-09-24','2026-09-27','2026-09-28'].includes(p.checkedAt),'unexpected price check date: '+m.id);
+  assert(['2026-09-24','2026-09-27','2026-09-28','2026-09-29'].includes(p.checkedAt),'unexpected price check date: '+m.id);
   if(p.status==='verified'){
     assert(firstPartyHosts.has(new URL(p.source).hostname),'unofficial price source: '+m.id);
     assert(['USD','CNY','CREDITS'].includes(p.currency) && p.unit && p.rates.length,'incomplete price: '+m.id);
@@ -304,6 +306,7 @@ const pricingBefore=JSON.stringify(models.map(m=>m.apiPricing));
 get('applyApiPricing20260924(MODELS)');
 get('applyImageDesign20260927(MODELS,METRICS,BENCHMARK_ROWS)');
 get('applyWeekly20260928(MODELS,METRICS,BENCHMARK_ROWS,BENCHMARK_SNAPSHOTS)');
+get('applySonnet20260929(MODELS,METRICS,BENCHMARK_ROWS,BENCHMARK_SNAPSHOTS)');
 assert.equal(JSON.stringify(models.map(m=>m.apiPricing)),pricingBefore,'pricing and image update must be idempotent');
 console.log('Pricing coverage, official sources, units, open-weights and price rendering: pass');
 
@@ -338,3 +341,36 @@ get('state.metric="aaImageOpenWeightsOverall";state.benchmarkCohort="";state.ben
 assert(get('benchmarkView()').includes('공식 순위'));
 assert(!rows.some(r=>r.benchmark==='aaImageUiuxDesign'&&r.evaluationDate));
 console.log('Image card, screenshot provenance, independent overall rank, pricing and filter isolation: pass');
+
+// Sonnet 5.5: launch date, exact pricing, variants and source-separated benchmarks.
+const sonnet=models.find(m=>m.id==='claude-sonnet-5-5');
+assert.equal(sonnet.releaseDate,'2026-09-28');
+assert.equal(sonnet.apiDate,'2026-09-28');
+assert.equal(sonnet.checkedAt,'2026-09-29');
+assert.equal(sonnet.context,'1M tokens');
+assert.equal(sonnet.apiPricing.rates[0].amount,2);
+assert.equal(sonnet.apiPricing.rates[1].amount,10);
+assert.equal(sonnet.apiPricing.rates[2].amount,0.2);
+assert(!get('isOpenModel(modelById("claude-sonnet-5-5"))'));
+const sonnetRows=rows.filter(r=>r.modelId===sonnet.id);
+assert.equal(sonnetRows.length,28);
+assert(sonnetRows.every(r=>r.evaluationDate===null&&r.rankMode==='reference'));
+assert.deepEqual(Array.from(sonnetRows.filter(r=>r.benchmark==='aaIntelligence432'),r=>r.score),[56,52,47,41,36]);
+assert.equal(sonnetRows.find(r=>r.benchmark==='frontierCode'&&r.modelVariant==='max').score,46.2);
+assert.equal(sonnetRows.find(r=>r.benchmark==='frontierCode'&&r.modelVariant==='xhigh').score,52.1);
+assert.equal(sonnetRows.find(r=>r.benchmark==='terminal4'&&r.sourceType==='provider-reported').score,70.6);
+assert.equal(sonnetRows.find(r=>r.benchmark==='terminal4'&&r.sourceType==='independent-leaderboard').score,64);
+assert.equal(sonnetRows.find(r=>r.benchmark==='swePro').score,81.3);
+assert.equal(sonnetRows.find(r=>r.benchmark==='hle').score,56.9);
+assert(!sonnetRows.some(r=>r.benchmark==='swe'),'do not conflate Pro with Verified');
+assert.equal(metrics.aaOmniscienceHallucination.direction,'lower');
+get('state.benchmarkViewMode="artificial-analysis"');
+assert(get('benchmarkView().includes("Claude Sonnet 5.5")'));
+assert(get('benchmarkView().includes("max · <strong>56점")'));
+get('state.benchmarkViewMode="registered";state.metric="frontierCode";state.benchmarkCohort="sonnet55-launch-20260928";state.benchmarkPage=1');
+const sonnetFrontier=get('benchmarkView()');
+assert(sonnetFrontier.indexOf('52.1%')<sonnetFrontier.indexOf('46.2%'));
+const sonnetBefore=JSON.stringify({models,rows,snapshots:get('BENCHMARK_SNAPSHOTS')});
+get('applySonnet20260929(MODELS,METRICS,BENCHMARK_ROWS,BENCHMARK_SNAPSHOTS)');
+assert.equal(JSON.stringify({models,rows,snapshots:get('BENCHMARK_SNAPSHOTS')}),sonnetBefore);
+console.log('Sonnet 5.5 pricing, provider/AA separation, reasoning variants, sorting and idempotence: pass');
