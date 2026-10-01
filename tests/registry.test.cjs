@@ -32,11 +32,13 @@ get('applyWeekly20260921(MODELS,METRICS,BENCHMARK_ROWS,BENCHMARK_SNAPSHOTS)');
 get('applyWeekly20260923(MODELS,METRICS,BENCHMARK_ROWS,BENCHMARK_SNAPSHOTS)');
 get('applyWeekly20260928(MODELS,METRICS,BENCHMARK_ROWS,BENCHMARK_SNAPSHOTS)');
 get('applySonnet20260929(MODELS,METRICS,BENCHMARK_ROWS,BENCHMARK_SNAPSHOTS)');
+get('applyLaunches20261001(MODELS,METRICS,BENCHMARK_ROWS,BENCHMARK_SNAPSHOTS)');
 assert.equal(JSON.stringify({models,rows,snapshots:get('BENCHMARK_SNAPSHOTS')}),before,'update must be idempotent');
 get('applyWeekly20260921(MODELS,METRICS,BENCHMARK_ROWS,BENCHMARK_SNAPSHOTS)');
 get('applyWeekly20260923(MODELS,METRICS,BENCHMARK_ROWS,BENCHMARK_SNAPSHOTS)');
 get('applyWeekly20260928(MODELS,METRICS,BENCHMARK_ROWS,BENCHMARK_SNAPSHOTS)');
 get('applySonnet20260929(MODELS,METRICS,BENCHMARK_ROWS,BENCHMARK_SNAPSHOTS)');
+get('applyLaunches20261001(MODELS,METRICS,BENCHMARK_ROWS,BENCHMARK_SNAPSHOTS)');
 assert.equal(JSON.stringify({models,rows,snapshots:get('BENCHMARK_SNAPSHOTS')}),before,'standalone update must be idempotent');
 get('applyImageDesign20260927(MODELS,METRICS,BENCHMARK_ROWS)');
 assert.equal(JSON.stringify({models,rows,snapshots:get('BENCHMARK_SNAPSHOTS')}),before,'image-design update must be idempotent');
@@ -143,8 +145,8 @@ assert(get('comparisonBenchmarks([modelById("eleven-music-2-5")]).includes("아�
 console.log('All-source coverage, pagination, empty states and benchmark comparison: pass');
 
 // Weekly additions: no guessed dates, no open-world/open-source confusion.
-assert.equal(models.length,173);
-assert.equal(rows.length,354);
+assert.equal(models.length,175);
+assert.equal(rows.length,372);
 assert.equal(get('modelById("gpt-6-astra-law").recordType'),'configuration');
 assert.equal(get('modelById("gpt-6-astra-law").releaseDate'),null);
 assert.equal(get('modelById("gpt-6-astra-law").apiDate'),null);
@@ -279,7 +281,7 @@ const firstPartyHosts=new Set(['developers.openai.com','platform.claude.com','ai
 for(const m of models){
   const p=m.apiPricing;
   assert(p&&priceStatuses.has(p.status), 'missing price status: '+m.id);
-  assert(['2026-09-24','2026-09-27','2026-09-28','2026-09-29'].includes(p.checkedAt),'unexpected price check date: '+m.id);
+  assert(['2026-09-24','2026-09-27','2026-09-28','2026-09-29','2026-10-01'].includes(p.checkedAt),'unexpected price check date: '+m.id);
   if(p.status==='verified'){
     assert(firstPartyHosts.has(new URL(p.source).hostname),'unofficial price source: '+m.id);
     assert(['USD','CNY','CREDITS'].includes(p.currency) && p.unit && p.rates.length,'incomplete price: '+m.id);
@@ -307,6 +309,7 @@ get('applyApiPricing20260924(MODELS)');
 get('applyImageDesign20260927(MODELS,METRICS,BENCHMARK_ROWS)');
 get('applyWeekly20260928(MODELS,METRICS,BENCHMARK_ROWS,BENCHMARK_SNAPSHOTS)');
 get('applySonnet20260929(MODELS,METRICS,BENCHMARK_ROWS,BENCHMARK_SNAPSHOTS)');
+get('applyLaunches20261001(MODELS,METRICS,BENCHMARK_ROWS,BENCHMARK_SNAPSHOTS)');
 assert.equal(JSON.stringify(models.map(m=>m.apiPricing)),pricingBefore,'pricing and image update must be idempotent');
 console.log('Pricing coverage, official sources, units, open-weights and price rendering: pass');
 
@@ -374,3 +377,37 @@ const sonnetBefore=JSON.stringify({models,rows,snapshots:get('BENCHMARK_SNAPSHOT
 get('applySonnet20260929(MODELS,METRICS,BENCHMARK_ROWS,BENCHMARK_SNAPSHOTS)');
 assert.equal(JSON.stringify({models,rows,snapshots:get('BENCHMARK_SNAPSHOTS')}),sonnetBefore);
 console.log('Sonnet 5.5 pricing, provider/AA separation, reasoning variants, sorting and idempotence: pass');
+
+// Argon is limited preview; Sol is in the API. Only first-party numeric scores ship.
+const argon=models.find(m=>m.id==='gemini-4-argon');
+const sol61=models.find(m=>m.id==='gpt-6-1-sol');
+assert.equal(argon.previewDate,'2026-09-30');
+assert.equal(argon.releaseDate,null);
+assert.equal(argon.apiDate,null);
+assert.equal(argon.apiPricing.status,'no-public-rate');
+assert.equal(sol61.releaseDate,'2026-09-29');
+assert.equal(sol61.apiDate,'2026-09-29');
+assert.deepEqual(Array.from(sol61.apiPricing.rates,r=>r.amount),[2,0.1,2.5,10]);
+assert.equal(rows.filter(r=>r.modelId===argon.id).length,13);
+assert.equal(rows.filter(r=>r.modelId===sol61.id).length,5);
+assert(!rows.some(r=>r.modelId===sol61.id&&r.benchmark==='deepSWE'),'unsupported third-party score');
+assert.equal(rows.find(r=>r.modelId===argon.id&&r.benchmark==='deepSWE').score,77.9);
+assert.equal(rows.find(r=>r.modelId===sol61.id&&r.benchmark==='solHealthBenchProfessional').score,64.2);
+assert(rows.filter(r=>[argon.id,sol61.id].includes(r.modelId)).every(r=>r.sourceType==='provider-reported'&&r.rankMode==='reference'&&r.evaluationDate===null));
+get('state.route="catalog";state.catalogCategory="all";state.catalogRegion="all";state.catalogAccess="all";state.catalogQuery=""');
+assert.equal(get('catalogList().length'),models.length);
+get('state.route="opensource"');
+assert(!get('catalogList().some(m=>m.id==="gemini-4-argon"||m.id==="gpt-6-1-sol")'));
+get('state.route="catalog"');
+assert.equal(get('catalogList().length'),models.length);
+get('state.benchmarkViewMode="artificial-analysis"');
+const launchPanel=get('benchmarkView()');
+assert(launchPanel.includes('Gemini 4 Argon')&&launchPanel.includes('GPT-6.1 Sol'));
+assert(launchPanel.includes('DeepSWE v1.1 · 77.9%'));
+assert(launchPanel.includes('HealthBench Professional · 64.2%'));
+assert(css.includes('.modal-head{position:sticky;top:0;'));
+assert.equal((html.match(/aria-label="(?:상세|비교) 창 닫기">닫기/g)||[]).length,2);
+const launchesBefore=JSON.stringify({models,rows,snapshots:get('BENCHMARK_SNAPSHOTS')});
+get('applyLaunches20261001(MODELS,METRICS,BENCHMARK_ROWS,BENCHMARK_SNAPSHOTS)');
+assert.equal(JSON.stringify({models,rows,snapshots:get('BENCHMARK_SNAPSHOTS')}),launchesBefore);
+console.log('Argon/Sol release status, pricing, official scores, close controls and idempotence: pass');
