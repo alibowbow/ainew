@@ -181,7 +181,7 @@ function applyBenchmarkAudit20261001(models, metrics, rows, snapshots) {
     ['deepseek-v4-pro','deepseek-v4-pro',[['max',36],['non-reasoning',20]],null]
   ];
   const replaced=new Set(specs.map(s=>s[0]).concat('mimo-v2-6-pro-rl'));
-  for(let i=rows.length-1;i>=0;i--)if(rows[i].benchmark==='aaIntelligence432'&&replaced.has(rows[i].modelId))rows.splice(i,1);
+  for(let i=rows.length-1;i>=0;i--)if(rows[i].benchmark==='aaIntelligence432'&&replaced.has(rows[i].modelId)&&rows[i].cohort!=='aa-intelligence-20261001')rows.splice(i,1);
   specs.forEach(([id,slug,scores,publishedAt])=>scores.forEach(([effort,score])=>{
     if(!models.some(m=>m.id===id))throw new Error('Unknown audited AA model '+id);
     const fallback=id.startsWith('claude-');
