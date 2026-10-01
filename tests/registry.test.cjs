@@ -406,6 +406,7 @@ assert(launchPanel.includes('Gemini 4 Argon')&&launchPanel.includes('GPT-6.1 Sol
 assert(launchPanel.includes('DeepSWE v1.1 · 77.9%'));
 assert(launchPanel.includes('HealthBench Professional · 64.2%'));
 assert(css.includes('.modal-head{position:sticky;top:0;'));
+assert(html.includes('atlas.css?v=20261001-modal'),'stylesheet URL must invalidate old cached CSS');
 assert.equal((html.match(/aria-label="(?:상세|비교) 창 닫기">닫기/g)||[]).length,2);
 const launchesBefore=JSON.stringify({models,rows,snapshots:get('BENCHMARK_SNAPSHOTS')});
 get('applyLaunches20261001(MODELS,METRICS,BENCHMARK_ROWS,BENCHMARK_SNAPSHOTS)');
