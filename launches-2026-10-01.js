@@ -24,7 +24,7 @@ function applyLaunches20261001(models, metrics, rows, snapshots) {
     highlight:'Astra에 근접한 코딩·컴퓨터 사용 성능과 낮은 캐시 입력 비용',source:solDocs,sourceLabel:'OpenAI GPT-6.1 Sol 공식 모델 사양',
     note:'9월 29일 API·Codex·ChatGPT Work에 제공. 일반 Chat 대화창 제공은 출시 발표에 포함되지 않습니다. 272K를 초과하는 입력은 전체 요청에 다른 단가가 적용됩니다. 발표: '+sol,
     apiPricing:{status:'verified',checkedAt,currency:'USD',unit:'100만 토큰',tier:'표준 API · 입력 272K 이하',source:solDocs,
-      rates:[['입력',2],['캐시 입력',0.1],['캐시 쓰기',2.5],['출력',10]].map(([label,amount])=>({label,amount})),
+      rates:[['입력',2],['출력',10],['캐시 입력',0.1],['캐시 쓰기',2.5]].map(([label,amount])=>({label,amount})),
       note:'입력 272K 초과 요청은 전체 입력·캐시 단가 2배, 출력 단가 1.5배. Fast 2배, Batch/Flex 50% 할인, 지역 처리 추가 요금은 별도.'}});
   function metric(key,name,description,direction='higher') {
     metrics[key]={key,name,description,direction,rankable:false};
