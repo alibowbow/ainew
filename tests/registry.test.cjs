@@ -27,20 +27,33 @@ for(const row of rows){
 }
 const before = JSON.stringify({models,rows,snapshots:get('BENCHMARK_SNAPSHOTS')});
 get('applyWeekly20260907(MODELS,METRICS,BENCHMARK_ROWS,BENCHMARK_SNAPSHOTS)');
+get('applyBenchmarkAudit20261001(MODELS,METRICS,BENCHMARK_ROWS,BENCHMARK_SNAPSHOTS)');
 get('applyWeekly20260914(MODELS,METRICS,BENCHMARK_ROWS,BENCHMARK_SNAPSHOTS)');
+get('applyBenchmarkAudit20261001(MODELS,METRICS,BENCHMARK_ROWS,BENCHMARK_SNAPSHOTS)');
 get('applyWeekly20260921(MODELS,METRICS,BENCHMARK_ROWS,BENCHMARK_SNAPSHOTS)');
+get('applyBenchmarkAudit20261001(MODELS,METRICS,BENCHMARK_ROWS,BENCHMARK_SNAPSHOTS)');
 get('applyWeekly20260923(MODELS,METRICS,BENCHMARK_ROWS,BENCHMARK_SNAPSHOTS)');
+get('applyBenchmarkAudit20261001(MODELS,METRICS,BENCHMARK_ROWS,BENCHMARK_SNAPSHOTS)');
 get('applyWeekly20260928(MODELS,METRICS,BENCHMARK_ROWS,BENCHMARK_SNAPSHOTS)');
+get('applyBenchmarkAudit20261001(MODELS,METRICS,BENCHMARK_ROWS,BENCHMARK_SNAPSHOTS)');
 get('applySonnet20260929(MODELS,METRICS,BENCHMARK_ROWS,BENCHMARK_SNAPSHOTS)');
+get('applyBenchmarkAudit20261001(MODELS,METRICS,BENCHMARK_ROWS,BENCHMARK_SNAPSHOTS)');
 get('applyLaunches20261001(MODELS,METRICS,BENCHMARK_ROWS,BENCHMARK_SNAPSHOTS)');
+get('applyBenchmarkAudit20261001(MODELS,METRICS,BENCHMARK_ROWS,BENCHMARK_SNAPSHOTS)');
 assert.equal(JSON.stringify({models,rows,snapshots:get('BENCHMARK_SNAPSHOTS')}),before,'update must be idempotent');
 get('applyWeekly20260921(MODELS,METRICS,BENCHMARK_ROWS,BENCHMARK_SNAPSHOTS)');
+get('applyBenchmarkAudit20261001(MODELS,METRICS,BENCHMARK_ROWS,BENCHMARK_SNAPSHOTS)');
 get('applyWeekly20260923(MODELS,METRICS,BENCHMARK_ROWS,BENCHMARK_SNAPSHOTS)');
+get('applyBenchmarkAudit20261001(MODELS,METRICS,BENCHMARK_ROWS,BENCHMARK_SNAPSHOTS)');
 get('applyWeekly20260928(MODELS,METRICS,BENCHMARK_ROWS,BENCHMARK_SNAPSHOTS)');
+get('applyBenchmarkAudit20261001(MODELS,METRICS,BENCHMARK_ROWS,BENCHMARK_SNAPSHOTS)');
 get('applySonnet20260929(MODELS,METRICS,BENCHMARK_ROWS,BENCHMARK_SNAPSHOTS)');
+get('applyBenchmarkAudit20261001(MODELS,METRICS,BENCHMARK_ROWS,BENCHMARK_SNAPSHOTS)');
 get('applyLaunches20261001(MODELS,METRICS,BENCHMARK_ROWS,BENCHMARK_SNAPSHOTS)');
+get('applyBenchmarkAudit20261001(MODELS,METRICS,BENCHMARK_ROWS,BENCHMARK_SNAPSHOTS)');
 assert.equal(JSON.stringify({models,rows,snapshots:get('BENCHMARK_SNAPSHOTS')}),before,'standalone update must be idempotent');
 get('applyImageDesign20260927(MODELS,METRICS,BENCHMARK_ROWS)');
+get('applyBenchmarkAudit20261001(MODELS,METRICS,BENCHMARK_ROWS,BENCHMARK_SNAPSHOTS)');
 assert.equal(JSON.stringify({models,rows,snapshots:get('BENCHMARK_SNAPSHOTS')}),before,'image-design update must be idempotent');
 get('state.route="opensource"');
 const openCount=get('catalogList().length');
@@ -48,7 +61,7 @@ assert(get('catalogList().every(isOpenModel)'));
 get('state.route="catalog"');
 assert.equal(get('catalogList().length'),models.length,'open filter leaks across routes');
 get('state.catalogRegion="Korea"');
-assert.equal(get('catalogList().length'),2);
+assert.equal(get('catalogList().length'),3);
 get('state.catalogRegion="China";state.catalogAccess="open"');
 assert(get('catalogList().every(m=>m.region==="China"&&isOpenModel(m))'));
 get('state.catalogRegion="all";state.catalogAccess="all";state.catalogQuery="Muse Spark 1.3"');
@@ -82,9 +95,10 @@ const aaHome=get('benchmarkView()');
 assert(aaHome.includes('data-official-chart src="https://cdn.sanity.io/'));
 assert(aaHome.includes('<img data-official-chart src="https://huggingface.co/inclusionAI/Ming-Image-0.1-Design/resolve/main/assets/uiux_leaderboard.webp"'));
 assert(aaHome.includes('data-metric="aaImageUiuxDesign"'));
-assert(aaHome.includes('2026.09.22'));
+assert(aaHome.includes('2026.09.30'));
+assert(aaHome.includes('2026.10.01'));
 assert(aaHome.includes('Intelligence Index'));
-assert(aaHome.includes('gpt-6-sol-and-luna-push-the-cost-efficiency-frontier'));
+assert(aaHome.includes('gemini-4-argon-google-top-three-labs'));
 assert(!aaHome.includes('id="benchmarkMetric"'));
 assert(!aaHome.includes('data:image/'));
 get('state.benchmarkViewMode="registered"');
@@ -104,7 +118,7 @@ get('state.metric="terminal21DeepSeek";state.benchmarkCohort=""');
 assert(get('benchmarkView().includes("90.6%")'));
 assert(get('benchmarkView().includes("DeepSeek Harness Minimal")'));
 assert.equal(rows.filter(r=>r.cohort==='arena-2026-09-13').length,28);
-assert.equal(rows.filter(r=>r.modelId==='deepseek-v4-1-flash').length,21);
+assert.equal(rows.filter(r=>r.modelId==='deepseek-v4-1-flash').length,22);
 assert.equal(rows.filter(r=>r.benchmark==='sweVerifiedOpenHands').length,2);
 assert(rows.filter(r=>r.benchmark==='sweVerifiedOpenHands').every(r=>r.harness.includes('OpenHands')));
 assert(!rows.some(r=>r.benchmark==='swe'&&r.harness.includes('OpenHands')));
@@ -145,8 +159,8 @@ assert(get('comparisonBenchmarks([modelById("eleven-music-2-5")]).includes("아�
 console.log('All-source coverage, pagination, empty states and benchmark comparison: pass');
 
 // Weekly additions: no guessed dates, no open-world/open-source confusion.
-assert.equal(models.length,175);
-assert.equal(rows.length,372);
+assert.equal(models.length,190);
+assert.equal(rows.length,459);
 assert.equal(get('modelById("gpt-6-astra-law").recordType'),'configuration');
 assert.equal(get('modelById("gpt-6-astra-law").releaseDate'),null);
 assert.equal(get('modelById("gpt-6-astra-law").apiDate'),null);
@@ -196,9 +210,9 @@ assert(get('catalogList().some(m=>m.id==="mimo-v2-6-pro-rl")'));
 assert(!get('catalogList().some(m=>m.id==="claude-opus-5-5")'));
 get('state.route="catalog"');
 assert.equal(get('catalogList().length'),models.length,'open filter leaks after new entries');
-assert.equal(rows.filter(r=>r.benchmark==='aaIntelligence432').length,28);
+assert.equal(rows.filter(r=>r.benchmark==='aaIntelligence432').length,54);
 assert(rows.filter(r=>r.benchmark==='aaIntelligence432').every(r=>r.unit==='점'&&r.sourceType==='independent-leaderboard'));
-assert.equal(rows.find(r=>r.modelId==='claude-opus-5-5'&&r.benchmark==='aaIntelligence432'&&r.modelVariant==='max').score,58);
+assert.equal(rows.find(r=>r.modelId==='claude-opus-5-5'&&r.benchmark==='aaIntelligence432'&&r.modelVariant==='max · default fallback').score,58);
 assert.equal(rows.find(r=>r.modelId==='gpt-6-sol'&&r.benchmark==='deepSWE').score,68.8);
 assert.equal(rows.find(r=>r.modelId==='mimo-v2-6-distill-qwen-9b'&&r.benchmark==='sweVerifiedMiMoDistill').score,61.1);
 assert(!rows.some(r=>r.benchmark==='swe'&&r.modelId==='mimo-v2-6-distill-qwen-9b'));
@@ -206,7 +220,7 @@ get('state.benchmarkViewMode="registered";state.metric="aaIntelligence432";state
 const freshBench=get('benchmarkView()');
 assert(freshBench.includes('Claude Opus 5.5'));
 assert(freshBench.includes('참고 수치 · 순위 제외'));
-assert(freshBench.indexOf('data-model="claude-opus-5-5"')<freshBench.indexOf('data-model="gpt-6-sol"'));
+assert(freshBench.indexOf('data-model="claude-opus-5-5"')<freshBench.indexOf('data-model="gpt-6-1-sol"'));
 console.log('September 23 launches, provider separation, open-source filters and AA scoring: pass');
 
 // The September 23 TTS launch is distinct from Gemini 3.8 Flash text and 3.8 Live.
@@ -253,7 +267,8 @@ console.log('Google TTS model IDs, voice routes, Hume score metadata and missing
 // September 21–28 official launches, pricing and evaluation conditions.
 for(const id of ['aikido-altar-1','qwen-image-2-1','lfm2-5-vl-3b','lfm2-5-vl-3b-dspark','gemini-3-8-live','mercury-2-5']){
   assert(get('modelById('+JSON.stringify(id)+')'),'missing weekly model '+id);
-  assert.equal(get('modelById('+JSON.stringify(id)+').checkedAt'),'2026-09-28');
+  const m=get('modelById('+JSON.stringify(id)+')');
+  assert.equal(m.checkedAt,m.date>='2026-09-01'?'2026-10-01':'2026-09-28');
 }
 assert.equal(get('modelById("aikido-altar-1").recordType'),'derivative');
 assert.equal(get('modelById("aikido-altar-1").apiDate'),null);
@@ -277,7 +292,7 @@ assert.equal(get('catalogList().length'),models.length,'weekly open filter leaks
 console.log('September 28 launches, lineage, prices, benchmark metadata and filter isolation: pass');
 
 const priceStatuses=new Set(['verified','provider-dependent','no-public-rate','unverified']);
-const firstPartyHosts=new Set(['developers.openai.com','platform.claude.com','ai.google.dev','cloud.google.com','api-docs.deepseek.com','docs.x.ai','docs.meshy.ai','docs.z.ai','platform.minimaxi.com','help.aliyun.com','ideogram.ai','fal.ai','www.inceptionlabs.ai']);
+const firstPartyHosts=new Set(['developers.openai.com','platform.claude.com','ai.google.dev','cloud.google.com','api-docs.deepseek.com','docs.x.ai','docs.meshy.ai','docs.z.ai','platform.minimaxi.com','www.upstage.ai','help.aliyun.com','ideogram.ai','fal.ai','www.inceptionlabs.ai']);
 for(const m of models){
   const p=m.apiPricing;
   assert(p&&priceStatuses.has(p.status), 'missing price status: '+m.id);
@@ -306,10 +321,15 @@ assert(get('catalogView().includes("API 요금")'));
 assert(css.includes('.model-price{') && css.includes('.pricing-rates{'));
 const pricingBefore=JSON.stringify(models.map(m=>m.apiPricing));
 get('applyApiPricing20260924(MODELS)');
+get('applyBenchmarkAudit20261001(MODELS,METRICS,BENCHMARK_ROWS,BENCHMARK_SNAPSHOTS)');
 get('applyImageDesign20260927(MODELS,METRICS,BENCHMARK_ROWS)');
+get('applyBenchmarkAudit20261001(MODELS,METRICS,BENCHMARK_ROWS,BENCHMARK_SNAPSHOTS)');
 get('applyWeekly20260928(MODELS,METRICS,BENCHMARK_ROWS,BENCHMARK_SNAPSHOTS)');
+get('applyBenchmarkAudit20261001(MODELS,METRICS,BENCHMARK_ROWS,BENCHMARK_SNAPSHOTS)');
 get('applySonnet20260929(MODELS,METRICS,BENCHMARK_ROWS,BENCHMARK_SNAPSHOTS)');
+get('applyBenchmarkAudit20261001(MODELS,METRICS,BENCHMARK_ROWS,BENCHMARK_SNAPSHOTS)');
 get('applyLaunches20261001(MODELS,METRICS,BENCHMARK_ROWS,BENCHMARK_SNAPSHOTS)');
+get('applyBenchmarkAudit20261001(MODELS,METRICS,BENCHMARK_ROWS,BENCHMARK_SNAPSHOTS)');
 assert.equal(JSON.stringify(models.map(m=>m.apiPricing)),pricingBefore,'pricing and image update must be idempotent');
 console.log('Pricing coverage, official sources, units, open-weights and price rendering: pass');
 
@@ -349,16 +369,16 @@ console.log('Image card, screenshot provenance, independent overall rank, pricin
 const sonnet=models.find(m=>m.id==='claude-sonnet-5-5');
 assert.equal(sonnet.releaseDate,'2026-09-28');
 assert.equal(sonnet.apiDate,'2026-09-28');
-assert.equal(sonnet.checkedAt,'2026-09-29');
+assert.equal(sonnet.checkedAt,'2026-10-01');
 assert.equal(sonnet.context,'1M tokens');
 assert.equal(sonnet.apiPricing.rates[0].amount,2);
 assert.equal(sonnet.apiPricing.rates[1].amount,10);
 assert.equal(sonnet.apiPricing.rates[2].amount,0.2);
 assert(!get('isOpenModel(modelById("claude-sonnet-5-5"))'));
 const sonnetRows=rows.filter(r=>r.modelId===sonnet.id);
-assert.equal(sonnetRows.length,28);
+assert.equal(sonnetRows.length,27);
 assert(sonnetRows.every(r=>r.evaluationDate===null&&r.rankMode==='reference'));
-assert.deepEqual(Array.from(sonnetRows.filter(r=>r.benchmark==='aaIntelligence432'),r=>r.score),[56,52,47,41,36]);
+assert.deepEqual(Array.from(sonnetRows.filter(r=>r.benchmark==='aaIntelligence432'),r=>r.score).sort((a,b)=>b-a),[56,52,47,41]);
 assert.equal(sonnetRows.find(r=>r.benchmark==='frontierCode'&&r.modelVariant==='max').score,46.2);
 assert.equal(sonnetRows.find(r=>r.benchmark==='frontierCode'&&r.modelVariant==='xhigh').score,52.1);
 assert.equal(sonnetRows.find(r=>r.benchmark==='terminal4'&&r.sourceType==='provider-reported').score,70.6);
@@ -369,16 +389,17 @@ assert(!sonnetRows.some(r=>r.benchmark==='swe'),'do not conflate Pro with Verifi
 assert.equal(metrics.aaOmniscienceHallucination.direction,'lower');
 get('state.benchmarkViewMode="artificial-analysis"');
 assert(get('benchmarkView().includes("Claude Sonnet 5.5")'));
-assert(get('benchmarkView().includes("max · <strong>56점")'));
+assert(get('benchmarkView()').includes('aa-current-score">56</td>'));
 get('state.benchmarkViewMode="registered";state.metric="frontierCode";state.benchmarkCohort="sonnet55-launch-20260928";state.benchmarkPage=1');
 const sonnetFrontier=get('benchmarkView()');
 assert(sonnetFrontier.indexOf('52.1%')<sonnetFrontier.indexOf('46.2%'));
 const sonnetBefore=JSON.stringify({models,rows,snapshots:get('BENCHMARK_SNAPSHOTS')});
 get('applySonnet20260929(MODELS,METRICS,BENCHMARK_ROWS,BENCHMARK_SNAPSHOTS)');
+get('applyBenchmarkAudit20261001(MODELS,METRICS,BENCHMARK_ROWS,BENCHMARK_SNAPSHOTS)');
 assert.equal(JSON.stringify({models,rows,snapshots:get('BENCHMARK_SNAPSHOTS')}),sonnetBefore);
 console.log('Sonnet 5.5 pricing, provider/AA separation, reasoning variants, sorting and idempotence: pass');
 
-// Argon is limited preview; Sol is in the API. Only first-party numeric scores ship.
+// Argon remains limited preview; the audited scores include source-labelled AA results.
 const argon=models.find(m=>m.id==='gemini-4-argon');
 const sol61=models.find(m=>m.id==='gpt-6-1-sol');
 assert.equal(argon.previewDate,'2026-09-30');
@@ -389,12 +410,12 @@ assert.equal(sol61.releaseDate,'2026-09-29');
 assert.equal(sol61.apiDate,'2026-09-29');
 assert.deepEqual(Array.from(sol61.apiPricing.rates,r=>r.amount),[2,10,0.1,2.5]);
 assert(get('card(modelById("gpt-6-1-sol")).includes("입력 $2 · 출력 $10")'));
-assert.equal(rows.filter(r=>r.modelId===argon.id).length,13);
-assert.equal(rows.filter(r=>r.modelId===sol61.id).length,5);
+assert.equal(rows.filter(r=>r.modelId===argon.id).length,21);
+assert.equal(rows.filter(r=>r.modelId===sol61.id).length,10);
 assert(!rows.some(r=>r.modelId===sol61.id&&r.benchmark==='deepSWE'),'unsupported third-party score');
 assert.equal(rows.find(r=>r.modelId===argon.id&&r.benchmark==='deepSWE').score,77.9);
 assert.equal(rows.find(r=>r.modelId===sol61.id&&r.benchmark==='solHealthBenchProfessional').score,64.2);
-assert(rows.filter(r=>[argon.id,sol61.id].includes(r.modelId)).every(r=>r.sourceType==='provider-reported'&&r.rankMode==='reference'&&r.evaluationDate===null));
+assert(rows.filter(r=>[argon.id,sol61.id].includes(r.modelId)).every(r=>['provider-reported','independent-leaderboard'].includes(r.sourceType)&&r.rankMode==='reference'&&r.evaluationDate===null));
 get('state.route="catalog";state.catalogCategory="all";state.catalogRegion="all";state.catalogAccess="all";state.catalogQuery=""');
 assert.equal(get('catalogList().length'),models.length);
 get('state.route="opensource"');
@@ -404,13 +425,66 @@ assert.equal(get('catalogList().length'),models.length);
 get('state.benchmarkViewMode="artificial-analysis"');
 const launchPanel=get('benchmarkView()');
 assert(launchPanel.includes('Gemini 4 Argon')&&launchPanel.includes('GPT-6.1 Sol'));
-assert(launchPanel.includes('DeepSWE v1.1 · 77.9%'));
-assert(launchPanel.includes('HealthBench Professional · 64.2%'));
+assert(launchPanel.includes('AA Intelligence Index'));
+assert(launchPanel.includes('low <b>42</b>'));
+assert(launchPanel.includes('max <b>52</b>'));
+assert(launchPanel.includes('aa-current-score\">53</td>'));
 assert(css.includes('.modal-head{position:sticky;top:0;'));
-assert(html.includes('atlas.css?v=20261001-history-v2'),'stylesheet URL must invalidate old cached CSS');
+assert(html.includes('atlas.css?v=20261001-audit-v1'),'stylesheet URL must invalidate old cached CSS');
 assert(html.includes('launches-2026-10-01.js?v=2'),'launch data URL must invalidate old cached JS');
 assert.equal((html.match(/aria-label="(?:상세|비교) 창 닫기">닫기/g)||[]).length,2);
 const launchesBefore=JSON.stringify({models,rows,snapshots:get('BENCHMARK_SNAPSHOTS')});
 get('applyLaunches20261001(MODELS,METRICS,BENCHMARK_ROWS,BENCHMARK_SNAPSHOTS)');
+get('applyBenchmarkAudit20261001(MODELS,METRICS,BENCHMARK_ROWS,BENCHMARK_SNAPSHOTS)');
 assert.equal(JSON.stringify({models,rows,snapshots:get('BENCHMARK_SNAPSHOTS')}),launchesBefore);
 console.log('Argon/Sol release status, pricing, official scores, close controls and idempotence: pass');
+
+// October 1 audit: exact efforts, unavailable values and API/checkpoint lineage.
+const auditedAA=rows.filter(r=>r.benchmark==='aaIntelligence432');
+function effortScores(id){return Object.fromEntries(auditedAA.filter(r=>r.modelId===id).map(r=>[r.modelVariant.split(' · ')[0],r.score]));}
+assert.deepEqual(effortScores('gpt-6-1-sol'),{high:50,low:42,max:52,medium:48,xhigh:51});
+assert.deepEqual(effortScores('gpt-6-astra'),{high:51,low:46,max:53,medium:50,xhigh:52});
+assert.deepEqual(effortScores('gpt-6-luna'),{high:33,low:22,max:38,medium:30,none:18,xhigh:35});
+assert.equal(effortScores('gpt-6-sol').high,42);
+assert.equal(effortScores('gpt-6-sol').none,29);
+assert(!Object.hasOwn(effortScores('claude-sonnet-5-5'),'low'),'Sonnet Low is unpublished');
+assert.equal(effortScores('gemini-4-argon').high,53);
+assert.equal(effortScores('claude-fable-5-1').max,53,'do not mix old Index versions');
+assert.equal(effortScores('muse-spark-1-3').max,48);
+assert.equal(effortScores('deepseek-v4-1-flash').max,39);
+assert.equal(effortScores('glm53').max,45);
+assert(auditedAA.every(r=>r.checkedAt==='2026-10-01'&&r.evaluationDate===null&&r.benchmarkVersion.endsWith('v4.3.2')));
+assert(!auditedAA.some(r=>r.modelId==='mimo-v2-6-pro-rl'||r.modelId==='mimo-v2-6-flash-rl'));
+for(const tier of ['pro','flash']){
+  const api=models.find(m=>m.id==='mimo-v2-6-'+tier+'-api');
+  assert.equal(api.recordType,'configuration');
+  assert.equal(api.baseModelId,'mimo-v2-6-'+tier+'-rl');
+  assert.equal(api.releaseDate,null);
+  assert(!get('isOpenModel(modelById('+JSON.stringify(api.id)+'))'));
+}
+assert.equal(rows.filter(r=>r.modelId==='mimo-v2-6-pro-rl').length,17);
+assert.equal(rows.filter(r=>r.modelId==='mimo-v2-6-flash-rl').length,16);
+assert.equal(rows.filter(r=>r.modelId==='mimo-v2-6-distill-qwen-9b').length,11);
+assert.equal(metrics.museStreamingFinalWer.direction,'lower');
+assert.equal(rows.find(r=>r.modelId==='muse-voice-transcribe'&&r.benchmark==='museStreamingFinalWer').score,3.1);
+assert.equal(rows.find(r=>r.modelId==='gemini-3-8-live-extended-thinking'&&r.benchmark==='aaSpeechToSpeechQuality').score,82.6);
+assert.equal(models.find(m=>m.id==='solar-mini-4').apiPricing.rates[0].amount,0.10);
+assert.equal(effortScores('solar-mini-4')['provider default'],24);
+assert.equal(rows.find(r=>r.modelId==='solar-mini-4'&&r.benchmark==='aaIntelligenceQuoted432').score,24.1);
+assert.equal(models.find(m=>m.id==='mercury-voice').category,'reasoning','Mercury Voice is a text LLM in a voice pipeline');
+assert.equal(models.find(m=>m.id==='mercury-voice').releaseDate,'2026-09-29');
+assert(models.filter(m=>m.date>='2026-09-01').every(m=>m.benchmarkReview&&m.benchmarkReview.checkedAt==='2026-10-01'));
+assert.equal(models.find(m=>m.id==='gemini-3-8-flash-lite-tts').benchmarkReview.aaStatus,'not-applicable');
+assert.equal(models.find(m=>m.id==='decision-model-preview').benchmarkReview.aaStatus,'unconfirmed');
+get('state.benchmarkViewMode="artificial-analysis"');
+const currentHome=get('benchmarkView()');
+assert.equal((currentHome.match(/<tr(?: class="aa-highlight")?><th scope="row">/g)||[]).length,new Set(auditedAA.map(r=>r.modelId)).size);
+assert(currentHome.includes('low <b>42</b>')&&currentHome.includes('medium <b>48</b>')&&currentHome.includes('max <b>52</b>'));
+assert(currentHome.indexOf('aa-current-title')<currentHome.indexOf('aa-title'),'current scores precede the snapshot graph');
+assert(!currentHome.includes('HealthBench Professional · 64.2%'),'different benchmarks stay in model details');
+assert(html.includes('benchmarks-audit-2026-10-01.js?v=1'));
+assert(get('benchmarkReviewDetails(modelById("claude-sonnet-5-5"))').includes('현재 미공개'));
+const auditBefore=JSON.stringify({models,rows,snapshots:get('BENCHMARK_SNAPSHOTS')});
+get('applyBenchmarkAudit20261001(MODELS,METRICS,BENCHMARK_ROWS,BENCHMARK_SNAPSHOTS)');
+assert.equal(JSON.stringify({models,rows,snapshots:get('BENCHMARK_SNAPSHOTS')}),auditBefore);
+console.log('October 1 efforts, AA version, unavailable score, API lineage, specialist metrics and current view: pass');
