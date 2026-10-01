@@ -31,3 +31,15 @@ html[data-theme=dark] .button:not(.secondary),html[data-theme=dark] .filter.acti
 .aa-image-error{padding:30px 20px;color:#526078;margin:0;font-size:.9375rem}
 .aa-chart-footer{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px 20px;margin-top:12px}
 @media(max-width:800px){.aa-heading{align-items:flex-start;flex-direction:column;gap:8px}.aa-chart-media img{min-width:900px}.aa-links{gap:4px 16px}}
+/* Keep the close action within reach while long model details scroll. */
+.modal-head{position:sticky;top:0;z-index:3;align-items:center;margin:-32px -32px 0;padding:22px 32px 16px;background:var(--s);border-bottom:1px solid var(--line);border-radius:19px 19px 0 0;box-shadow:0 8px 18px -18px #0008}
+.modal-head>div{min-width:0}
+.modal-close{display:inline-flex;align-items:center;justify-content:center;gap:5px;width:auto;min-width:78px;padding:0 12px;min-height:44px;border-radius:10px;background:var(--blue);color:#fff;font-size:.875rem;font-weight:700;white-space:nowrap}
+.modal-close span{font-size:1.35rem;font-weight:400;line-height:1}
+.modal-close:hover{filter:brightness(1.08)}
+html[data-theme=dark] .modal-close{color:#071827}
+@media(max-width:520px){.modal-head{margin:-22px -22px 0;padding:14px 22px 12px}.modal-head h2{font-size:1.25rem}}
+.recent-launches{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:16px 0}
+.recent-launch{display:flex;flex-direction:column;align-items:flex-start;min-width:0;padding:18px;border:1px solid var(--line);border-radius:12px;background:var(--s2);text-align:left}
+.recent-launch:hover{border-color:var(--blue)}.recent-launch strong{font-size:1.05rem}.recent-launch span,.recent-launch small{color:var(--muted)}.recent-launch b{margin:10px 0 2px;font-size:1.15rem}
+@media(max-width:520px){.recent-launches{grid-template-columns:1fr}}
