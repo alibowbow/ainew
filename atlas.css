@@ -43,3 +43,32 @@ html[data-theme=dark] .modal-close{color:#071827}
 .recent-launch{display:flex;flex-direction:column;align-items:flex-start;min-width:0;padding:18px;border:1px solid var(--line);border-radius:12px;background:var(--s2);text-align:left}
 .recent-launch:hover{border-color:var(--blue)}.recent-launch strong{font-size:1.05rem}.recent-launch span,.recent-launch small{color:var(--muted)}.recent-launch b{margin:10px 0 2px;font-size:1.15rem}
 @media(max-width:520px){.recent-launches{grid-template-columns:1fr}}
+
+/* Compact the history view so more dated events fit in a standard viewport. */
+@media(max-width:1200px){
+.site-header{padding:10px 0;gap:8px 14px}
+.route-tabs button{min-height:40px;padding:8px 12px}
+.search-wrap input{height:40px}
+}
+.page-banner{padding:18px 24px;margin-bottom:16px;border-radius:16px}
+.panel:has(>.history-controls){margin-bottom:14px}
+.history-controls{padding:12px 14px;gap:10px 12px;margin-bottom:0}
+.history-controls label{gap:4px}
+.history-controls input,.history-controls select{height:40px}
+.history-track{padding:0 18px}
+.history-event{grid-template-columns:96px 8px minmax(0,1fr);gap:14px;padding:18px 0}
+.history-date{padding-top:2px}
+.history-copy h3{font-size:1.18rem;margin:4px 0 8px}
+.history-copy p{font-size:.9375rem;line-height:1.65;margin:5px 0}
+.history-copy .history-impact{font-size:.875rem;line-height:1.6}
+.history-copy a{min-height:38px;padding:6px 0;line-height:1.4}
+@media(max-width:800px){
+.page-banner{padding:16px 18px}
+.history-event{padding:16px 0}
+.history-copy h3{margin:4px 0 6px}
+}
+@media(max-width:520px){
+.site-header{padding:8px 0;gap:8px}
+.history-track{padding:0 14px}
+.history-event{padding:14px 0}
+}
