@@ -15,7 +15,7 @@ html[data-theme=dark]{color-scheme:dark;--bg:#101722;--s:#192230;--s2:#222f41;--
 html[data-theme=dark] .button:not(.secondary),html[data-theme=dark] .filter.active,html[data-theme=dark] .filter.active .number,html[data-theme=dark] .compare-dock button{color:#101722}
 
 /* Official charts stay on the publisher CDN; preserve the complete figure. */
-.aa-current{margin-bottom:18px}
+.aa-official-current{margin-bottom:18px}
 .aa-live-chart{border-top:1px solid var(--line)}
 .aa-live-row{display:grid;grid-template-columns:34px minmax(190px,1.2fr) minmax(90px,1fr) 50px;align-items:center;gap:16px;width:100%;min-height:64px;padding:8px 4px;border-bottom:1px solid var(--line);text-align:left}
 .aa-live-row:hover{background:var(--bg)}
@@ -116,4 +116,34 @@ html[data-theme=dark] .modal-close{color:#071827}
 .brand-mark{width:30px;height:30px;border-radius:8px}
 .stage[data-route=history] .route-tabs{grid-row:2}
 .history-title{padding:6px 0;margin-bottom:6px}
+}
+
+/* Current scores stay readable without placing large launch cards above them. */
+.aa-current{margin:10px 0 16px;padding:12px 14px;background:var(--s);border:1px solid var(--line);border-radius:12px}
+.aa-current-head{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.aa-current-head h2{margin:0;font-size:1.125rem;line-height:1.35}
+.aa-current-head h2 small{font-size:.8125rem;color:var(--muted);font-weight:500}
+.aa-current-head p{margin:3px 0 0}
+.aa-current-head>.filter{flex:none;min-height:44px;padding:6px 10px}
+.aa-sol-focus{display:flex;flex-wrap:wrap;align-items:center;gap:4px 14px;padding:8px 0;border-bottom:1px solid var(--line)}
+.aa-sol-focus>button{min-height:44px;padding:0;text-align:left;color:var(--blue);font-weight:750}
+.aa-sol-focus>div{display:flex;flex-wrap:wrap;gap:4px 13px;font-size:.875rem}
+.aa-sol-focus span{white-space:nowrap}.aa-sol-focus b{color:var(--ink);font-variant-numeric:tabular-nums}
+.aa-current-table{width:100%;table-layout:fixed;border-collapse:collapse;font-size:.9375rem}
+.aa-current-table th,.aa-current-table td{padding:0;border-bottom:1px solid var(--line);text-align:left}
+.aa-current-table thead th{padding:6px 0;font-size:.8125rem;color:var(--muted);font-weight:500}
+.aa-current-table th:first-child{width:auto;overflow-wrap:break-word}
+.aa-current-table th:nth-child(2){width:52px}.aa-current-table th:nth-child(3){width:126px}.aa-current-table th:nth-child(4){width:44px}
+.aa-current-table tbody th{font-weight:600}.aa-current-table tbody button{display:block;width:100%;min-height:44px;padding:6px 8px 6px 0;text-align:left;line-height:1.35;overflow-wrap:break-word}
+.aa-current-table tbody button:hover{color:var(--blue)}
+.aa-current-table td:last-child a{display:flex;min-height:44px;align-items:center;justify-content:center;text-decoration:none}
+.aa-current-table .aa-current-score{font-size:1.0625rem;font-weight:750;font-variant-numeric:tabular-nums}
+.aa-highlight{background:var(--blue2)}.aa-current-note{margin:9px 0 0}
+.model-benchmark-review{padding:8px 0;border-bottom:1px solid var(--line)}
+@media(max-width:600px){
+.aa-current{padding:10px 12px}.aa-current-head{align-items:flex-start;gap:6px}
+.aa-current-head h2{font-size:1rem}.aa-current-head .bench-note{font-size:.75rem}
+.aa-current-table th:nth-child(2){width:42px}.aa-current-table th:nth-child(3){width:68px}
+.aa-current-table{font-size:.875rem}.aa-current-table .aa-current-score{font-size:1rem}
+.aa-sol-focus{display:block;padding:4px 0 10px}.aa-sol-focus>button{min-height:36px}.aa-sol-focus>div{gap:4px 12px;font-size:.8125rem}
 }
