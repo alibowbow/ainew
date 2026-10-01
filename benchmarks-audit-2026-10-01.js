@@ -100,6 +100,52 @@ function applyBenchmarkAudit20261001(models, metrics, rows, snapshots) {
   argon.context='1M tokens · AA 확인';
   argon.note='9월 30일 발표와 Fairwind 제한 접근을 구분합니다. AA는 1M 입력 컨텍스트를 기록했습니다. 공개 API·모델 ID·최초 API 제공일은 미발표입니다.';
 
+  // September releases found by reviewing the complete AA change log.
+  upsert(model({id:'step-5-preview',name:'Step 5 Preview',family:'Step 5',provider:'StepFun',region:'China',regionTags:['China'],
+    category:'reasoning',date:'2026-09-18',releaseDate:null,previewDate:'2026-09-18',apiDate:null,
+    context:'1M tokens',modality:'텍스트 · 이미지 → 텍스트',access:'API 프리뷰 · 최초 API 제공일 미확인',
+    source:aa+'models/step-5',sourceLabel:'Artificial Analysis Step 5 Preview 평가',sourceStatus:'independent',
+    highlight:'StepFun의 멀티모달 추론 프리뷰',note:'프리뷰 날짜·입출력·컨텍스트는 AA 모델 페이지 기준입니다. 제공사 요금 원문은 미확인입니다.'}));
+  [
+    ['ling-3-0-flash-fin','Ling-3.0-flash-Fin','2026-09-11','reasoning','5.1B','텍스트 → 텍스트','금융 조사·도구 사용·스프레드시트 작업'],
+    ['ling-3-0-flash-vl','Ling-3.0-flash-VL','2026-09-10','multimodal','5.5B','텍스트 · 이미지 · 영상 → 텍스트','시각 문맥과 추론·행동·검증 결합']
+  ].forEach(([id,name,date,category,active,modality,highlight])=>{
+    const source='https://huggingface.co/inclusionAI/'+name;
+    upsert(model({id,name,date,category,modality,highlight,family:'Ling 3.0',provider:'Ant Group / InclusionAI',
+      region:'China',regionTags:['China','China open weights'],params:'124B total / '+active+' active',context:'256K tokens',
+      access:'Open weights / MIT',accessType:'open-source-license',license:'MIT',source,sourceLabel:'InclusionAI 공식 모델 카드',
+      note:'사양·라이선스는 공식 카드, 출시일은 AA 모델 페이지 기준입니다. 최초 API 제공일은 미확인입니다.',
+      apiPricing:{status:'provider-dependent',checkedAt,source,note:'공개 가중치. 직접 호스팅 비용과 선택한 API 공급자의 단가는 별도입니다.'}}));
+  });
+  [
+    ['k2-horizon-0-9b','K2 Horizon 0.9B','K2-Horizon-0.9B','0.9B','131,072 tokens'],
+    ['k2-horizon-3-7b','K2 Horizon 3.7B','K2-Horizon-3.7B','3.7B','524,288 tokens'],
+    ['k2-horizon-7b','K2 Horizon 7B','K2-Horizon-7B','7B','524,288 tokens'],
+    ['k2-horizon-mova-36b-a4b','K2 Horizon MoVA 36B A4B','K2-Horizon-MoVA-36B-A4B','36B total / 4B active','524,288 tokens']
+  ].forEach(([id,name,repo,params,context])=>{
+    const source='https://huggingface.co/IFM/'+repo;
+    upsert(model({id,name,params,context,date:'2026-09-03',family:'K2 Horizon',provider:'IFM',region:'Global',category:'reasoning',
+      modality:'텍스트 → 텍스트',access:'Open weights / Apache-2.0',accessType:'open-source-license',license:'Apache-2.0',
+      source,sourceLabel:'IFM 공식 모델 카드',highlight:'K2 Horizon의 소형·중형 공개 가중치 모델',
+      note:'최종 가중치는 공개되어 있습니다. 출시일은 AA 모델 페이지 기준이며 학습 코드·중간 체크포인트의 향후 공개를 완료로 표시하지 않습니다.',
+      apiPricing:{status:'provider-dependent',checkedAt,source,note:'공개 가중치. 직접 호스팅 비용과 선택한 API 공급자의 단가는 별도입니다.'}}));
+  });
+  const k2Large=models.find(m=>m.id==='k2-horizon-375b-a23b');
+  Object.assign(k2Large,{date:'2026-09-03',releaseDate:'2026-09-03',
+    note:'최종 가중치 공개 확인. 출시일은 AA 모델 페이지 기준입니다. 학습 코드·중간 체크포인트의 향후 공개를 완료로 표시하지 않습니다. 지역은 미확인입니다.'});
+  const miniSource='https://huggingface.co/openbmb/MiniCPM5-2B';
+  upsert(model({id:'minicpm5-2b',name:'MiniCPM5-2B',family:'MiniCPM5',provider:'OpenBMB',region:'China',regionTags:['China','China open weights'],
+    category:'llm',date:'2026-09-07',params:'2.6B total · AA 사양',context:'131K tokens',modality:'텍스트 → 텍스트',
+    access:'Open weights / Apache-2.0',accessType:'open-source-license',license:'Apache-2.0',source:miniSource,sourceLabel:'OpenBMB 공식 모델 카드',
+    highlight:'소형 공개 가중치 언어 모델',note:'출시일·총 파라미터 수는 AA 모델 페이지 기준입니다. 최초 API 제공일은 미확인입니다.',
+    apiPricing:{status:'provider-dependent',checkedAt,source:miniSource,note:'공개 가중치. 직접 호스팅 비용과 선택한 API 공급자의 단가는 별도입니다.'}}));
+  upsert(model({id:'jt-4-1-flash-236b-a21b',name:'JT-4.1 Flash 236B A21B',family:'JT 4.1',provider:'China Mobile',
+    region:'China',regionTags:['China'],category:'reasoning',date:'',announcementDate:null,releaseDate:null,
+    params:'236B A21B · 모델 명칭',context:'262K tokens',modality:'텍스트 → 텍스트',source:aa+'models/jt236b',
+    sourceStatus:'independent',sourceLabel:'Artificial Analysis JT-4.1 Flash 평가',highlight:'9월 29일 AA가 새로 게시한 추론 평가',
+    note:'AA는 2026년 7월 출시로 표기하지만 정확한 날짜는 미확인입니다. AA의 $0 표시는 제공사 무료 API 요금으로 확정하지 않습니다.'}));
+  for(const id of ['fugu-max','fugu-ultra-v2'])models.find(m=>m.id===id).recordType='configuration';
+
   // Replace stale/unsupported AA records rather than leaving duplicate snapshots.
   // Dates of model release and of methodology changes are not evaluation dates.
   const specs=[
@@ -121,7 +167,18 @@ function applyBenchmarkAudit20261001(models, metrics, rows, snapshots) {
     ['claude-opus-5-5','claude-opus-5-5',[['low',42],['medium',51],['high',54],['xhigh',56],['max',58]],'2026-09-22'],
     ['claude-sonnet-5-5','claude-sonnet-5-5',[['medium',41],['high',47],['xhigh',52],['max',56]],'2026-09-28'],
     ['grok-4-7','grok-4-7',[['high',46],['xhigh',46]],'2026-09-22'],
-    ['mercury-2-5','mercury-2-5',[['provider default',12]],'2026-09-24']
+    ['mercury-2-5','mercury-2-5',[['provider default',12]],'2026-09-23'],
+    ['step-5-preview','step-5',[['provider default',44]],'2026-09-18'],
+    ['ling-3-0-flash-fin','ling-3-0-flash-fin',[['provider default',23]],'2026-09-16'],
+    ['ling-3-0-flash-vl','ling-3-0-flash-vl',[['provider default',25]],'2026-09-10'],
+    ['k2-horizon-0-9b','k2-horizon-0-9b',[['provider default',3]],'2026-09-13'],
+    ['k2-horizon-3-7b','k2-horizon-3-7b',[['provider default',16]],'2026-09-13'],
+    ['k2-horizon-7b','k2-horizon-7b',[['provider default',21]],'2026-09-13'],
+    ['k2-horizon-mova-36b-a4b','k2-horizon-mova-36b-a4b',[['provider default',25]],'2026-09-13'],
+    ['k2-horizon-375b-a23b','k2-horizon-375b-a23b',[['provider default',31]],'2026-09-03'],
+    ['minicpm5-2b','minicpm5-2b',[['provider default',12]],'2026-09-07'],
+    ['jt-4-1-flash-236b-a21b','jt236b',[['reasoning',34]],'2026-09-29'],
+    ['deepseek-v4-pro','deepseek-v4-pro',[['max',36],['non-reasoning',20]],null]
   ];
   const replaced=new Set(specs.map(s=>s[0]).concat('mimo-v2-6-pro-rl'));
   for(let i=rows.length-1;i>=0;i--)if(rows[i].benchmark==='aaIntelligence432'&&replaced.has(rows[i].modelId))rows.splice(i,1);
@@ -237,6 +294,10 @@ function applyBenchmarkAudit20261001(models, metrics, rows, snapshots) {
     m.checkedAt=checkedAt;
     m.benchmarkReview={checkedAt,source:m.source,aaStatus:measured?'verified':specialist.has(m.category)?'not-applicable':'unconfirmed',
       note:measured?'AA v4.3.2 점수·추론 설정 확인':specialist.has(m.category)?'일반 텍스트 지능 지표 적용 대상 아님 · 해당 분야 평가 참조':'현재 공개 AA v4.3.2 점수 미확인'};
+  });
+  specs.forEach(([id,slug])=>{
+    const m=models.find(m=>m.id===id);
+    if((m.date||'')<'2026-09-01')m.benchmarkReview={checkedAt,scope:'benchmark-only',source:aa+'models/'+slug,aaStatus:'verified',note:'AA v4.3.2 점수·추론 설정 확인'};
   });
   const snapshot={id:'aa-review-20261001',key:'aaIntelligence432',name:metrics.aaIntelligence432.name,checkedAt,snapshotDate:null,
     source:method,sourceLabel:'Artificial Analysis v4.3.2 방법론',version:'v4.3.2 · 2026-10-01 원문 확인',
