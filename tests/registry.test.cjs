@@ -159,8 +159,8 @@ assert(get('comparisonBenchmarks([modelById("eleven-music-2-5")]).includes("아�
 console.log('All-source coverage, pagination, empty states and benchmark comparison: pass');
 
 // Weekly additions: no guessed dates, no open-world/open-source confusion.
-assert.equal(models.length,190);
-assert.equal(rows.length,459);
+assert.equal(models.length,199);
+assert.equal(rows.length,471);
 assert.equal(get('modelById("gpt-6-astra-law").recordType'),'configuration');
 assert.equal(get('modelById("gpt-6-astra-law").releaseDate'),null);
 assert.equal(get('modelById("gpt-6-astra-law").apiDate'),null);
@@ -210,7 +210,7 @@ assert(get('catalogList().some(m=>m.id==="mimo-v2-6-pro-rl")'));
 assert(!get('catalogList().some(m=>m.id==="claude-opus-5-5")'));
 get('state.route="catalog"');
 assert.equal(get('catalogList().length'),models.length,'open filter leaks after new entries');
-assert.equal(rows.filter(r=>r.benchmark==='aaIntelligence432').length,54);
+assert.equal(rows.filter(r=>r.benchmark==='aaIntelligence432').length,66);
 assert(rows.filter(r=>r.benchmark==='aaIntelligence432').every(r=>r.unit==='점'&&r.sourceType==='independent-leaderboard'));
 assert.equal(rows.find(r=>r.modelId==='claude-opus-5-5'&&r.benchmark==='aaIntelligence432'&&r.modelVariant==='max · default fallback').score,58);
 assert.equal(rows.find(r=>r.modelId==='gpt-6-sol'&&r.benchmark==='deepSWE').score,68.8);
@@ -240,7 +240,7 @@ for(const [id,apiId,languages] of [
   assert(m.highlight.includes(languages));
   assert(!get('isOpenModel(modelById('+JSON.stringify(id)+'))'));
 }
-assert.equal(openCount,70);
+assert.equal(openCount,77);
 get('state.route="catalog";state.catalogCategory="voice";state.catalogRegion="all";state.catalogAccess="all";state.catalogQuery=""');
 assert(get('catalogList().some(m=>m.id==="gemini-3-8-flash-tts")'));
 assert(get('catalogList().some(m=>m.id==="gemini-3-8-flash-lite-tts")'));
@@ -453,6 +453,20 @@ assert.equal(effortScores('claude-fable-5-1').max,53,'do not mix old Index versi
 assert.equal(effortScores('muse-spark-1-3').max,48);
 assert.equal(effortScores('deepseek-v4-1-flash').max,39);
 assert.equal(effortScores('glm53').max,45);
+assert.equal(effortScores('step-5-preview')['provider default'],44);
+assert.equal(effortScores('ling-3-0-flash-fin')['provider default'],23);
+assert.equal(effortScores('ling-3-0-flash-vl')['provider default'],25);
+assert.equal(effortScores('k2-horizon-0-9b')['provider default'],3);
+assert.equal(effortScores('k2-horizon-3-7b')['provider default'],16);
+assert.equal(effortScores('k2-horizon-7b')['provider default'],21);
+assert.equal(effortScores('k2-horizon-mova-36b-a4b')['provider default'],25);
+assert.equal(effortScores('k2-horizon-375b-a23b')['provider default'],31);
+assert.equal(effortScores('minicpm5-2b')['provider default'],12);
+assert.equal(effortScores('jt-4-1-flash-236b-a21b').reasoning,34);
+assert.equal(effortScores('deepseek-v4-pro').max,36);
+assert.equal(effortScores('deepseek-v4-pro')['non-reasoning'],20);
+assert.equal(models.find(m=>m.id==='jt-4-1-flash-236b-a21b').releaseDate,null);
+assert.equal(models.find(m=>m.id==='jt-4-1-flash-236b-a21b').apiPricing.status,'unverified');
 assert(auditedAA.every(r=>r.checkedAt==='2026-10-01'&&r.evaluationDate===null&&r.benchmarkVersion.endsWith('v4.3.2')));
 assert(!auditedAA.some(r=>r.modelId==='mimo-v2-6-pro-rl'||r.modelId==='mimo-v2-6-flash-rl'));
 for(const tier of ['pro','flash']){
