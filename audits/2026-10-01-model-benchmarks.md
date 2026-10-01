@@ -3,8 +3,8 @@
 ## 범위
 
 - 기존 등록 모델 중 2026-09-01 이후 출시·프리뷰·제공 기록이 있는 44개를 공식 발표·문서·모델 카드와 대조했습니다.
-- 누락 모델 및 API/서비스 설정 15개를 추가했습니다. 설정은 `recordType: configuration`으로 구분합니다.
-- 검수 표시가 있는 최신 항목은 59개입니다. 전체 카탈로그는 190개이며, 전체 과거 모델의 모든 평가를 이번에 재검수했다는 뜻은 아닙니다.
+- 누락 모델 및 API/서비스 설정 24개를 추가했습니다. 설정은 `recordType: configuration`으로 구분합니다.
+- 검수 표시가 있는 최신 항목은 68개입니다. 추가로 과거 출시 모델 4개의 최신 AA 평가를 확인했습니다. 전체 카탈로그는 199개이며, 전체 과거 모델의 모든 평가를 이번에 재검수했다는 뜻은 아닙니다.
 - Artificial Analysis의 현재 v4.3.2 원문을 확인했습니다. 과거 기사에 나온 v4.2 점수를 현재 지표에 섞지 않았습니다.
 - 점수 미확인은 0점 또는 미평가를 뜻하지 않습니다. 이미지·영상·음성·음악·월드·3D 모델은 일반 텍스트 지능 지표 대신 해당 분야 평가를 사용합니다.
 
@@ -20,8 +20,11 @@
 - Gemini Live Extended Thinking의 음성 지표 4개를 추가했습니다. Speech to Speech Quality Index는 일반 Intelligence Index와 별도입니다.
 - Mercury Voice의 9월 29일 Enterprise GA와 128K 컨텍스트, 표준/할인 요금을 추가했습니다. 음성 파이프라인의 텍스트 LLM이며 TTFAT p50 320ms·p95 750ms는 발표의 low 설정입니다.
 - Solar Mini 4의 AA 독립 페이지 24점과 Upstage가 인용한 24.1점을 별도 지표로 표시했습니다. 가격표의 UTC 할인 기간을 기록했습니다.
-- 기본 벤치마크 화면에서 19개 등록 모델의 최고 공개 설정 점수와 Sol 6.1의 5개 설정을 먼저 표시합니다. 전체 AA 리더보드의 공식 순위로 표기하지 않습니다.
+- 기본 벤치마크 화면에서 29개 등록 모델의 최고 공개 설정 점수와 Sol 6.1의 5개 설정을 먼저 표시합니다. 전체 AA 리더보드의 공식 순위로 표기하지 않습니다.
 - 공식 그래프는 9월 22일 Sol/Luna 기사 이미지에서 9월 30일 Argon 분석의 평가별 이미지로 교체했습니다. UI/UX 이미지 그래프는 기존 출처를 유지합니다.
+
+- Step 5 Preview 44, Ling 금융 23·시각 25, K2 Horizon 0.9B/3.7B/7B/MoVA/375B의 3/16/21/25/31, MiniCPM5-2B 12를 보완했습니다.
+- 9월 새 평가인 JT-4.1 Flash 34와 DeepSeek V4 Pro 0813의 Max 36·Non-reasoning 20도 확인했습니다. JT는 7월 출시이나 정확한 출시일은 미확인입니다.
 
 ## AA 원문
 
@@ -39,64 +42,77 @@
 | 모델 / 제공 설정 | AA 지능 지표 상태 | 등록 평가 | 원문 |
 |---|---|---:|---|
 | Gemini 4 Argon | v4.3.2 점수 확인 | 21 | [원문](https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-4-argon/) |
-| Mercury Voice | 공개 v4.3.2 점수 미확인 | 2 | [원문](https://www.inceptionlabs.ai/blog/introducing-mercury-voice) |
 | GPT-6.1 Sol | v4.3.2 점수 확인 | 10 | [원문](https://developers.openai.com/api/docs/models/gpt-6.1-sol) |
+| Mercury Voice | 공개 v4.3.2 점수 미확인 | 2 | [원문](https://www.inceptionlabs.ai/blog/introducing-mercury-voice) |
 | Claude Sonnet 5.5 | v4.3.2 점수 확인 | 27 | [원문](https://platform.claude.com/docs/en/models/sonnet-5-5/overview) |
-| Qwen Decision Model Preview | 공개 v4.3.2 점수 미확인 | 0 | [원문](https://docs.qwencloud.com/changelog/models) |
 | LFM2.5-VL-3B-DSpark | 공개 v4.3.2 점수 미확인 | 6 | [원문](https://huggingface.co/LiquidAI/LFM2.5-VL-3B-DSpark) |
-| Solar Mini 4 | v4.3.2 점수 확인 | 7 | [원문](https://www.upstage.ai/blog/en/solar-mini-4) |
-| MiMo-V2.6-Pro-RL | 공개 v4.3.2 점수 미확인 | 17 | [원문](https://huggingface.co/XiaomiMiMo/MiMo-V2.6-Pro-RL) |
-| MiMo-V2.6-Flash-RL | 공개 v4.3.2 점수 미확인 | 16 | [원문](https://huggingface.co/XiaomiMiMo/MiMo-V2.6-Flash-RL) |
-| MiMo-V2.6-Distill-Qwen-9B | 공개 v4.3.2 점수 미확인 | 11 | [원문](https://huggingface.co/XiaomiMiMo/MiMo-V2.6-Distill-Qwen-9B) |
-| Gemini 3.8 Flash-Lite TTS | 전문 분야 평가 대상 | 0 | [원문](https://ai.google.dev/gemini-api/docs/models/gemini-3.8-flash-lite-tts) |
-| Gemini 3.8 Flash TTS | 전문 분야 평가 대상 | 2 | [원문](https://ai.google.dev/gemini-api/docs/models/gemini-3.8-flash-tts) |
-| GPT-6 Sol | v4.3.2 점수 확인 | 11 | [원문](https://developers.openai.com/api/docs/changelog) |
-| GPT-6 Luna | v4.3.2 점수 확인 | 8 | [원문](https://developers.openai.com/api/docs/changelog) |
+| Qwen Decision Model Preview | 공개 v4.3.2 점수 미확인 | 0 | [원문](https://docs.qwencloud.com/changelog/models) |
 | Claude Opus 5.5 | v4.3.2 점수 확인 | 9 | [원문](https://platform.claude.com/docs/en/models/opus-5-5/overview) |
-| Qwen3.8 Omni Flash Realtime | 전문 분야 평가 대상 | 0 | [원문](https://docs.qwencloud.com/changelog/models) |
-| MiMo-V2.6-Pro · API 평가 | v4.3.2 점수 확인 | 1 | [원문](https://artificialanalysis.ai/models/mimo-v2-6-pro) |
-| MiMo-V2.6-Flash · API 평가 | v4.3.2 점수 확인 | 1 | [원문](https://artificialanalysis.ai/models/mimo-v2-6-flash) |
-| Grok 4.7 | v4.3.2 점수 확인 | 6 | [원문](https://docs.x.ai/developers/grok-4-7) |
+| Gemini 3.8 Flash TTS | 전문 분야 평가 대상 | 2 | [원문](https://ai.google.dev/gemini-api/docs/models/gemini-3.8-flash-tts) |
+| Gemini 3.8 Flash-Lite TTS | 전문 분야 평가 대상 | 0 | [원문](https://ai.google.dev/gemini-api/docs/models/gemini-3.8-flash-lite-tts) |
+| GPT-6 Luna | v4.3.2 점수 확인 | 8 | [원문](https://developers.openai.com/api/docs/changelog) |
+| GPT-6 Sol | v4.3.2 점수 확인 | 11 | [원문](https://developers.openai.com/api/docs/changelog) |
+| MiMo-V2.6-Distill-Qwen-9B | 공개 v4.3.2 점수 미확인 | 11 | [원문](https://huggingface.co/XiaomiMiMo/MiMo-V2.6-Distill-Qwen-9B) |
+| MiMo-V2.6-Flash-RL | 공개 v4.3.2 점수 미확인 | 16 | [원문](https://huggingface.co/XiaomiMiMo/MiMo-V2.6-Flash-RL) |
+| MiMo-V2.6-Pro-RL | 공개 v4.3.2 점수 미확인 | 17 | [원문](https://huggingface.co/XiaomiMiMo/MiMo-V2.6-Pro-RL) |
+| Solar Mini 4 | v4.3.2 점수 확인 | 7 | [원문](https://www.upstage.ai/blog/en/solar-mini-4) |
 | Aikido Altar-1 | 공개 v4.3.2 점수 미확인 | 2 | [원문](https://huggingface.co/AikidoSec/altar-1) |
-| Qwen-Image-2.1 | 전문 분야 평가 대상 | 2 | [원문](https://huggingface.co/Qwen/Qwen-Image-2.1) |
+| Grok 4.7 | v4.3.2 점수 확인 | 6 | [원문](https://docs.x.ai/developers/grok-4-7) |
+| MiMo-V2.6-Flash · API 평가 | v4.3.2 점수 확인 | 1 | [원문](https://artificialanalysis.ai/models/mimo-v2-6-flash) |
+| MiMo-V2.6-Pro · API 평가 | v4.3.2 점수 확인 | 1 | [원문](https://artificialanalysis.ai/models/mimo-v2-6-pro) |
+| Qwen3.8 Omni Flash Realtime | 전문 분야 평가 대상 | 0 | [원문](https://docs.qwencloud.com/changelog/models) |
 | Qwen Audio 3.1 Realtime Plus | 전문 분야 평가 대상 | 0 | [원문](https://docs.qwencloud.com/changelog/models) |
-| Qwen3.8 Omni Flash | 공개 v4.3.2 점수 미확인 | 0 | [원문](https://docs.qwencloud.com/changelog/models) |
-| HappyOyster 1.0 Directing | 전문 분야 평가 대상 | 0 | [원문](https://docs.qwencloud.com/developer-guides/getting-started/world-model/happyoyster-guide) |
-| HappyOyster 1.0 Adventure | 전문 분야 평가 대상 | 0 | [원문](https://docs.qwencloud.com/developer-guides/getting-started/world-model/happyoyster-guide) |
+| Qwen-Image-2.1 | 전문 분야 평가 대상 | 2 | [원문](https://huggingface.co/Qwen/Qwen-Image-2.1) |
 | HappyOyster 1.0 Acting | 전문 분야 평가 대상 | 0 | [원문](https://docs.qwencloud.com/developer-guides/getting-started/world-model/happyoyster-guide) |
-| Qwen3.8 LiveTranslate Flash Realtime | 전문 분야 평가 대상 | 0 | [원문](https://docs.qwencloud.com/changelog/models) |
+| HappyOyster 1.0 Adventure | 전문 분야 평가 대상 | 0 | [원문](https://docs.qwencloud.com/developer-guides/getting-started/world-model/happyoyster-guide) |
+| HappyOyster 1.0 Directing | 전문 분야 평가 대상 | 0 | [원문](https://docs.qwencloud.com/developer-guides/getting-started/world-model/happyoyster-guide) |
+| Qwen3.8 Omni Flash | 공개 v4.3.2 점수 미확인 | 0 | [원문](https://docs.qwencloud.com/changelog/models) |
+| Step 5 Preview | v4.3.2 점수 확인 | 1 | [원문](https://artificialanalysis.ai/models/step-5) |
 | Astra for Law · 시스템 구성 | 공개 v4.3.2 점수 미확인 | 1 | [원문](https://openai.com/index/astra-for-law/) |
-| Gemini 3.8 Live Extended Thinking | 전문 분야 평가 대상 | 4 | [원문](https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-3-8-live-gemini-3-8-live-extended-thinking/) |
+| Qwen3.8 LiveTranslate Flash Realtime | 전문 분야 평가 대상 | 0 | [원문](https://docs.qwencloud.com/changelog/models) |
 | Gemini 3.8 Live | 전문 분야 평가 대상 | 0 | [원문](https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-3-8-live-gemini-3-8-live-extended-thinking/) |
-| Vidu Q3 Mix · QwenCloud | 전문 분야 평가 대상 | 0 | [원문](https://docs.qwencloud.com/changelog/models) |
-| Vidu Q3 Drama · QwenCloud | 전문 분야 평가 대상 | 0 | [원문](https://docs.qwencloud.com/changelog/models) |
-| Vidu Q3 Ad · QwenCloud | 전문 분야 평가 대상 | 0 | [원문](https://docs.qwencloud.com/changelog/models) |
-| Vidu Q2 Pro Fast · QwenCloud | 전문 분야 평가 대상 | 0 | [원문](https://docs.qwencloud.com/changelog/models) |
+| Gemini 3.8 Live Extended Thinking | 전문 분야 평가 대상 | 4 | [원문](https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-3-8-live-gemini-3-8-live-extended-thinking/) |
 | Vidu Image · QwenCloud | 전문 분야 평가 대상 | 0 | [원문](https://docs.qwencloud.com/changelog/models) |
-| Fugu Ultra v2 | 공개 v4.3.2 점수 미확인 | 2 | [원문](https://sakana.ai/fugu-max-release/) |
-| Fugu Max | 공개 v4.3.2 점수 미확인 | 0 | [원문](https://sakana.ai/fugu-max-release/) |
+| Vidu Q2 Pro Fast · QwenCloud | 전문 분야 평가 대상 | 0 | [원문](https://docs.qwencloud.com/changelog/models) |
+| Vidu Q3 Ad · QwenCloud | 전문 분야 평가 대상 | 0 | [원문](https://docs.qwencloud.com/changelog/models) |
+| Vidu Q3 Drama · QwenCloud | 전문 분야 평가 대상 | 0 | [원문](https://docs.qwencloud.com/changelog/models) |
+| Vidu Q3 Mix · QwenCloud | 전문 분야 평가 대상 | 0 | [원문](https://docs.qwencloud.com/changelog/models) |
 | Eleven Music v2.5 | 전문 분야 평가 대상 | 0 | [원문](https://elevenlabs.io/blog/music-v2-5-model) |
-| Meshy 7.1 | 전문 분야 평가 대상 | 3 | [원문](https://www.meshy.ai/blog/meshy-7-1-launch) |
-| GPT-Live-1 | 전문 분야 평가 대상 | 0 | [원문](https://openai.com/index/introducing-gpt-live-1-in-the-api/) |
+| Fugu Max | 공개 v4.3.2 점수 미확인 | 0 | [원문](https://sakana.ai/fugu-max-release/) |
+| Fugu Ultra v2 | 공개 v4.3.2 점수 미확인 | 2 | [원문](https://sakana.ai/fugu-max-release/) |
+| Ling-3.0-flash-Fin | v4.3.2 점수 확인 | 1 | [원문](https://huggingface.co/inclusionAI/Ling-3.0-flash-Fin) |
 | DeepSeek-V4.1-Flash | v4.3.2 점수 확인 | 22 | [원문](https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash) |
-| Suno v6 Wild | 전문 분야 평가 대상 | 0 | [원문](https://suno.com/blog/introducing-v6) |
-| Suno v6 Mini | 전문 분야 평가 대상 | 0 | [원문](https://suno.com/blog/introducing-v6) |
+| GPT-Live-1 | 전문 분야 평가 대상 | 0 | [원문](https://openai.com/index/introducing-gpt-live-1-in-the-api/) |
+| Ling-3.0-flash-VL | v4.3.2 점수 확인 | 1 | [원문](https://huggingface.co/inclusionAI/Ling-3.0-flash-VL) |
+| Meshy 7.1 | 전문 분야 평가 대상 | 3 | [원문](https://www.meshy.ai/blog/meshy-7-1-launch) |
 | Suno v6 | 전문 분야 평가 대상 | 0 | [원문](https://suno.com/blog/introducing-v6) |
-| Mercury Router Preview | 공개 v4.3.2 점수 미확인 | 0 | [원문](https://www.inceptionlabs.ai/blog/introducing-mercury-2-5) |
-| Mercury 2.5 | v4.3.2 점수 확인 | 1 | [원문](https://www.inceptionlabs.ai/blog/introducing-mercury-2-5) |
-| GPT Image 2.5 Sunburst | 전문 분야 평가 대상 | 1 | [원문](https://developers.openai.com/api/docs/models/gpt-image-2.5-sunburst) |
+| Suno v6 Mini | 전문 분야 평가 대상 | 0 | [원문](https://suno.com/blog/introducing-v6) |
+| Suno v6 Wild | 전문 분야 평가 대상 | 0 | [원문](https://suno.com/blog/introducing-v6) |
 | GPT Image 2.5 Flare | 전문 분야 평가 대상 | 1 | [원문](https://developers.openai.com/api/docs/models/gpt-image-2.5-flare) |
-| GWM Worlds 2 | 전문 분야 평가 대상 | 0 | [원문](https://runway.com/research/introducing-gwm-worlds-2) |
+| GPT Image 2.5 Sunburst | 전문 분야 평가 대상 | 1 | [원문](https://developers.openai.com/api/docs/models/gpt-image-2.5-sunburst) |
+| Mercury 2.5 | v4.3.2 점수 확인 | 1 | [원문](https://www.inceptionlabs.ai/blog/introducing-mercury-2-5) |
+| Mercury Router Preview | 공개 v4.3.2 점수 미확인 | 0 | [원문](https://www.inceptionlabs.ai/blog/introducing-mercury-2-5) |
+| MiniCPM5-2B | v4.3.2 점수 확인 | 1 | [원문](https://huggingface.co/openbmb/MiniCPM5-2B) |
 | GPT-6 Astra | v4.3.2 점수 확인 | 42 | [원문](https://openai.com/index/gpt-6-astra/) |
-| Qwen3.8 Max (0902) | v4.3.2 점수 확인 | 1 | [원문](https://docs.qwencloud.com/changelog/models) |
-| Muse Spark 1.3 | v4.3.2 점수 확인 | 14 | [원문](https://research.meta.ai/blog/introducing-muse-spark-1-3) |
-| Gemini 3.8 Flash Cyber | 공개 v4.3.2 점수 미확인 | 1 | [원문](https://blog.google/innovation-and-ai/models-and-research/gemini-models/3-8-flash-and-3-8-flash-cyber/) |
+| GWM Worlds 2 | 전문 분야 평가 대상 | 0 | [원문](https://runway.com/research/introducing-gwm-worlds-2) |
+| K2 Horizon 0.9B | v4.3.2 점수 확인 | 1 | [원문](https://huggingface.co/IFM/K2-Horizon-0.9B) |
+| K2 Horizon 3.7B | v4.3.2 점수 확인 | 1 | [원문](https://huggingface.co/IFM/K2-Horizon-3.7B) |
+| K2 Horizon 375B-A23B | v4.3.2 점수 확인 | 3 | [원문](https://huggingface.co/IFM/K2-Horizon-375B-A23B) |
+| K2 Horizon 7B | v4.3.2 점수 확인 | 1 | [원문](https://huggingface.co/IFM/K2-Horizon-7B) |
+| K2 Horizon MoVA 36B A4B | v4.3.2 점수 확인 | 1 | [원문](https://huggingface.co/IFM/K2-Horizon-MoVA-36B-A4B) |
 | Gemini 3.8 Flash | v4.3.2 점수 확인 | 6 | [원문](https://blog.google/innovation-and-ai/models-and-research/gemini-models/3-8-flash-and-3-8-flash-cyber/) |
-| Solaris | 전문 분야 평가 대상 | 0 | [원문](https://arxiv.org/abs/2609.00776) |
-| Muse Voice Transcribe | 전문 분야 평가 대상 | 2 | [원문](https://research.meta.ai/blog/introducing-muse-voice-transcribe) |
-| Claude Mythos 5.1 | 공개 v4.3.2 점수 미확인 | 0 | [원문](https://www.anthropic.com/claude-fable-and-mythos-5-1) |
-| Claude Fable 5.1 | v4.3.2 점수 확인 | 28 | [원문](https://www.anthropic.com/claude-fable-and-mythos-5-1) |
+| Gemini 3.8 Flash Cyber | 공개 v4.3.2 점수 미확인 | 1 | [원문](https://blog.google/innovation-and-ai/models-and-research/gemini-models/3-8-flash-and-3-8-flash-cyber/) |
+| Muse Spark 1.3 | v4.3.2 점수 확인 | 14 | [원문](https://research.meta.ai/blog/introducing-muse-spark-1-3) |
+| Qwen3.8 Max (0902) | v4.3.2 점수 확인 | 1 | [원문](https://docs.qwencloud.com/changelog/models) |
 | Atlas | 전문 분야 평가 대상 | 0 | [원문](https://www.worldlabs.ai/blog/atlas) |
+| Claude Fable 5.1 | v4.3.2 점수 확인 | 28 | [원문](https://www.anthropic.com/claude-fable-and-mythos-5-1) |
+| Claude Mythos 5.1 | 공개 v4.3.2 점수 미확인 | 0 | [원문](https://www.anthropic.com/claude-fable-and-mythos-5-1) |
+| Muse Voice Transcribe | 전문 분야 평가 대상 | 2 | [원문](https://research.meta.ai/blog/introducing-muse-voice-transcribe) |
+| Solaris | 전문 분야 평가 대상 | 0 | [원문](https://arxiv.org/abs/2609.00776) |
+| GLM-5.3 · AA 평가만 검수 | v4.3.2 점수 확인 | 4 | [원문](https://artificialanalysis.ai/models/glm-5-3) |
+| DeepSeek-V4-Pro · AA 평가만 검수 | v4.3.2 점수 확인 | 4 | [원문](https://artificialanalysis.ai/models/deepseek-v4-pro) |
+| Kimi K3 · AA 평가만 검수 | v4.3.2 점수 확인 | 3 | [원문](https://artificialanalysis.ai/models/kimi-k3) |
+| JT-4.1 Flash 236B A21B · AA 평가만 검수 | v4.3.2 점수 확인 | 1 | [원문](https://artificialanalysis.ai/models/jt236b) |
 
 ## 알려진 제한
 
@@ -110,6 +126,6 @@
 ## 검증
 
 - `node tests/registry.test.cjs`: 구문·중복 ID/평가·출처 메타데이터·정렬·필터·페이지 분할·재적용 안정성 통과.
-- 전체 등록 평가: 372→459개. AA v4.3.2 설정별 평가: 28→54개.
+- 전체 등록 평가: 372→471개. AA v4.3.2 설정별 평가: 28→66개.
 - 모바일 history 수정은 PR #27에 먼저 반영됐으며 390/768/1280px에서 글자 폭·페이지 가로 넘침·검색·시대 필터를 검증했습니다.
 - 벤치마크 화면은 main 배포 후 실제 브라우저에서 최신 점수·원문 이미지 로딩·모바일 가로 넘침을 확인합니다.
