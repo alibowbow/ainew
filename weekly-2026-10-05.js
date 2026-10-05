@@ -34,7 +34,7 @@ function applyWeekly20261005(models, metrics, rows, snapshots) {
     note:'9월 30일은 Gateway 제공일입니다. AA는 10월 1일 출시·1M 컨텍스트·open weights로 표시하지만 공식 가중치와 라이선스는 직접 확인하지 못했습니다. 오픈소스 필터에는 포함하지 않습니다.',
     apiPricing:{status:'provider-dependent',checkedAt,source:ling,note:'Vercel Gateway는 2026-10-13까지 무료. 일반 ID는 종료 후 과금, -free ID는 제공 중단. 영구 무료 또는 제공사 표준 단가로 표시하지 않습니다.'},
     benchmarkReview:{checkedAt,scope:'benchmark-only',source:aa+'models/ling-3-1-flash',aaStatus:'verified',note:'AA v4.3.2 41점 · 10월 3일 게시'}});
-  model({id:'minimax-m3-1-flash-preview',name:'MiniMax M3.1 Flash Preview',family:'MiniMax M3.1',provider:'MiniMax',region:'China',regionTags:['China'],category:'coding',
+  model({id:'minimax-m3-1-flash-preview',name:'MiniMax M3.1 Flash Preview',family:'MiniMax M3.1',provider:'MiniMax',region:'China',regionTags:['China'],category:'reasoning',
     access:'API 프리뷰',params:'MiniMax-M3.1-Flash-Preview',context:'1,000,000 tokens',modality:'텍스트 · 이미지 · 영상 → 텍스트 · 코드',
     highlight:'5단계 추론 강도를 지원하는 코딩·에이전트 프리뷰',source:mini,sourceLabel:'MiniMax 공식 모델 호출 문서',
     note:'API 제공은 공식 문서로 확인했습니다. 최초 프리뷰·출시·API 날짜는 미기재이며 익명 모델의 정체를 추정하지 않습니다. 기본 effort=max, thinking 비활성화 불가.',
