@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="ko"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Model Atlas 반응형 검사</title>
+<style>body{font:14px system-ui;margin:16px}main{display:flex;gap:20px;flex-wrap:wrap}iframe{border:1px solid #ccc}output{display:block;max-width:380px;margin:8px 0}.pass{color:#086}.fail{color:#b22}</style>
+<h1>카탈로그·벤치마크 반응형 검사</h1><main id="frames"></main>
+<script>
+for(const route of ['catalog','benchmarks'])for(const width of [390,768,1280]){
+ const section=document.createElement('section'),heading=document.createElement('h2'),output=document.createElement('output'),frame=document.createElement('iframe');
+ heading.textContent=route+' · '+width+'px';frame.width=width;frame.height=844;frame.title=heading.textContent;
+ frame.src='../index.html#/'+route;
+ frame.onload=()=>{try{
+  const doc=frame.contentDocument,w=frame.contentWindow,errors=[];
+  if(doc.documentElement.scrollWidth>w.innerWidth+1)errors.push('페이지 가로 넘침');
+  if(!doc.querySelector('h1'))errors.push('화면 미표시');
+  if(route==='catalog'&&!doc.querySelector('.model-card'))errors.push('모델 누락');
+  if(route==='benchmarks'&&!doc.querySelector('.aa-current-table'))errors.push('AA 점수 누락');
+  if(route==='benchmarks'&&!doc.body.textContent.includes('Ling 3.1 Flash'))errors.push('신규 평가 누락');
+  output.className=errors.length?'fail':'pass';output.textContent=errors.length?'FAIL · '+errors.join(', '):'PASS · 가로 넘침 없음 · 데이터 표시';
+ }catch(e){output.className='fail';output.textContent='FAIL · '+e.message}};
+ section.append(heading,output,frame);document.getElementById('frames').append(section);
+}
+</script></html>
