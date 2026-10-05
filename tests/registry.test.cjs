@@ -557,6 +557,8 @@ assert.equal(models.find(m=>m.id==='mai-voice-2-1').apiPricing.unit,'100만 문�
 assert.equal(models.find(m=>m.id==='mai-transcribe-2-streaming').apiPricing.rates[0].amount,0.54);
 const ling=models.find(m=>m.id==='ling-3-1-flash'),mini=models.find(m=>m.id==='minimax-m3-1-flash-preview');
 assert.equal(ling.releaseDate,null);assert.equal(ling.apiDate,'2026-09-30');assert.equal(ling.apiPricing.status,'provider-dependent');
+assert.equal(mini.category,'reasoning');
+assert(models.every(m=>get('CATEGORY_LABELS')[m.category]),'every model must have a visible category');
 assert.equal(mini.releaseDate,null);assert.equal(mini.previewDate,null);assert.equal(mini.apiDate,null);
 assert.equal(mini.apiPricing.status,'no-public-rate');
 assert.equal(models.find(m=>m.id==='solar-mini-4').context,'512K tokens');
