@@ -57,13 +57,13 @@ Benchmark scores are condition-specific snapshots. Check the linked source for e
 
 Run `node tests/registry.test.cjs` for syntax, data integrity, filter regression, and benchmark-view checks.
 
-Latest source review: [2026-10-05](reviews/2026-10-05.md). Idempotent weekly data updates are applied before UI initialization; source/evaluation dates are never replaced by the review date. Latest-evaluation shortcuts preserve score ordering and condition-specific cohorts. World models remain distinct from mesh-producing 3D models and are available in the media filter.
+Latest source review: [2026-10-12](reviews/2026-10-12.md). Idempotent weekly data updates are applied before UI initialization; source/evaluation dates are never replaced by the review date. Latest-evaluation shortcuts preserve score ordering and condition-specific cohorts. World models remain distinct from mesh-producing 3D models and are available in the media filter.
 
 Image-design review: [2026-09-27](reviews/2026-09-27-image-design.md). The benchmark home also embeds the provider-published UI/UX Design open-weight snapshot using an external `<img>` and links to its registered scores. These are separate from Artificial Analysis's current overall text-to-image leaderboard and from the September 22 Intelligence chart.
 
 ## Default benchmark view
 
-The benchmark route opens with source-linked Artificial Analysis v4.3.2 scores checked October 1–5, 2026. New Ling 3.1 Flash and Grok low results retain their own check/publication dates. Speech error-rate/latency and October 2 Text Arena snapshots are available through dedicated shortcuts. Scores with different conditions remain separate.
+The benchmark route opens with source-linked Artificial Analysis v4.3.2 scores checked October 1–12, 2026. Claude Haiku 5.5 and Mistral Large 4 Preview retain their own settings and publication dates. Harvey LAB-AA v1.1 and the October 8 Text Arena snapshot are available through dedicated shortcuts. Scores with different conditions remain separate.
 
 The provider-published September 30 Gemini 4 Argon chart is embedded using an external `<img>` and labeled as a publication snapshot. No image is uploaded or copied into this repository. The score table works independently of remote image availability.
 
