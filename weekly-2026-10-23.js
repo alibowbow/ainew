@@ -44,7 +44,8 @@ function applyWeekly20261023(models, metrics, rows, snapshots) {
 
   add({modelId:'minimax-m3-1-flash',modelVariant:'AA default',score:43,unit:'점',benchmark:'aaIntelligence432',
     cohort:'aa-v432-checked-20261023',cohortLabel:'Artificial Analysis Intelligence Index · 2026-10-19 공개',source:aaFlash,sourceLabel:'Artificial Analysis 독립 평가',
-    sourceType:'independent-leaderboard',rankMode:'reference',publishedAt:'2026-10-19',benchmarkVersion:'Artificial Analysis Intelligence Index · v4.3.2 (페이지에 버전 미표기, 기존과 동일 가정)',
+    sourceType:'independent-leaderboard',rankMode:'reference',publishedAt:'2026-10-19',benchmarkVersion:'Artificial Analysis Intelligence Index · v4.3.2',
+    comparisonNote:'AA 모델 페이지에 지수 버전이 표기되지 않아 기존 v4.3.2와 같다고 가정한 값입니다. AA의 X 게시물은 42점으로 표기합니다.',
     harness:'Artificial Analysis 독립 10개 평가 구성',tools:'평가별 AA 허용 도구',reasoningBudget:'AA default'});
 
   const snapshot={id:'review-2026-10-23-aaIntelligence432',key:'aaIntelligence432',name:metrics.aaIntelligence432?metrics.aaIntelligence432.name:'AA Intelligence Index',checkedAt,snapshotDate:null,
