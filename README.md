@@ -57,6 +57,9 @@ Open index.html directly in a browser. No npm, build step, server, or environmen
 - [NVIDIA Nemotron 3.5 Super VL official model card](https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Super-VL-120B-A12B-BF16)
 - [Jais 3 official release](https://ifm.ai/blog/jais3/)
 - [MiniMax M3.1 Flash official announcement](https://www.minimax.io/blog/minimax-m31f)
+- [Kimi K3.1 Pro official technical blog](https://www.kimi.ai/blog/kimi-k3-1-pro)
+- [Kimi API official model and pricing page](https://platform.kimi.ai/)
+- [NVIDIA Nemotron 3.5 Bolt E4B 4GB official model card](https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Bolt-E4B-4GB)
 
 Benchmark scores are condition-specific snapshots. Check the linked source for evaluation details.
 
@@ -64,13 +67,13 @@ Benchmark scores are condition-specific snapshots. Check the linked source for e
 
 Run `node tests/registry.test.cjs` for syntax, data integrity, filter regression, and benchmark-view checks.
 
-Latest source review: [2026-10-23](reviews/2026-10-23.md). Idempotent weekly data updates are applied before UI initialization; source/evaluation dates are never replaced by the review date. Latest-evaluation shortcuts preserve score ordering and condition-specific cohorts. World models remain distinct from mesh-producing 3D models and are available in the media filter.
+Latest source review: [2026-10-26](reviews/2026-10-26.md). Idempotent weekly data updates are applied before UI initialization; source/evaluation dates are never replaced by the review date. Latest-evaluation shortcuts preserve score ordering and condition-specific cohorts. World models remain distinct from mesh-producing 3D models and are available in the media filter.
 
 Image-design review: [2026-09-27](reviews/2026-09-27-image-design.md). The benchmark home also embeds the provider-published UI/UX Design open-weight snapshot using an external `<img>` and links to its registered scores. These are separate from Artificial Analysis's current overall text-to-image leaderboard and from the September 22 Intelligence chart.
 
 ## Default benchmark view
 
-The benchmark route opens with source-linked Artificial Analysis v4.3.2 scores checked October 1–23, 2026. Muse Wonder, Muse Spark Open, Reflection Beam, and Nemotron 3.5 retain their settings and publication dates. Terminal-Bench 4.0, DeepSWE 1.1, LiveCodeBench v6, and the October 8 Text Arena snapshot are available through dedicated shortcuts. Scores with different conditions remain separate.
+The benchmark route opens with source-linked Artificial Analysis v4.3.2 scores checked October 1–19, 2026, while the first shortcuts surface the October 23 Kimi K3.1 Pro and Nemotron Bolt evaluations. Muse Wonder, Muse Spark Open, Reflection Beam, and Nemotron 3.5 retain their settings and publication dates. Terminal-Bench 4.0, LiveCodeBench v6, and the October 22 Text Arena verification snapshot are available through dedicated shortcuts. Scores with different conditions remain separate; Kimi K3.1 Pro's provider-run Terminal-Bench 4.0 result is not treated as a public-board row.
 
 The provider-published September 30 Gemini 4 Argon chart is embedded using an external `<img>` and labeled as a publication snapshot. No image is uploaded or copied into this repository. The score table works independently of remote image availability.
 

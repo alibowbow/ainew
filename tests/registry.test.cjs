@@ -22,6 +22,7 @@ const get = code => {
   if(code==='applyWeekly20261012(MODELS,METRICS,BENCHMARK_ROWS,BENCHMARK_SNAPSHOTS)'){
     vm.runInContext('applyWeekly20261019(MODELS,METRICS,BENCHMARK_ROWS,BENCHMARK_SNAPSHOTS)',context);
     vm.runInContext('applyWeekly20261023(MODELS,METRICS,BENCHMARK_ROWS,BENCHMARK_SNAPSHOTS)',context);
+    vm.runInContext('applyWeekly20261026(MODELS,METRICS,BENCHMARK_ROWS,BENCHMARK_SNAPSHOTS)',context);
   }
   return value;
 };
@@ -152,11 +153,11 @@ get('state.metric="arena"');
 assert(get('benchmarkView().includes("Gemini 3.8 Flash")'));
 assert(get('benchmarkView().includes("2026-09-13")'));
 get('state.metric="mmmuPro"');
-assert(get('benchmarkView().includes("공식 출처 확인 · 2026-10-19")'));
+assert(get('benchmarkView().includes("공식 출처 확인 · 2026-10-26")'));
 get('state.metric="mmluPro"');
 assert(get('benchmarkView().includes("Solar Pro 4")'));
 assert(!get('benchmarkView().includes("NaN")'));
-assert(get('benchmarkView().includes("공식 출처 확인 · 2026-10-19")'));
+assert(get('benchmarkView().includes("공식 출처 확인 · 2026-10-26")'));
 get('state.metric="imageArena";state.benchmarkCohort="";state.benchmarkPage=1');
 assert(get('benchmarkView().includes("GPT Image 2.5 Sunburst")'));
 assert(get('benchmarkView().includes("Preliminary")'));
@@ -205,8 +206,8 @@ assert(get('comparisonBenchmarks([modelById("eleven-music-2-5")]).includes("아�
 console.log('All-source coverage, pagination, empty states and benchmark comparison: pass');
 
 // Weekly additions: no guessed dates, no open-world/open-source confusion.
-assert.equal(models.length,223);
-assert.equal(rows.length,693);
+assert.equal(models.length,225);
+assert.equal(rows.length,728);
 assert.equal(get('modelById("gpt-6-astra-law").recordType'),'configuration');
 assert.equal(get('modelById("gpt-6-astra-law").releaseDate'),null);
 assert.equal(get('modelById("gpt-6-astra-law").apiDate'),null);
@@ -298,7 +299,7 @@ for(const [id,apiId,languages] of [
   assert(m.highlight.includes(languages));
   assert(!get('isOpenModel(modelById('+JSON.stringify(id)+'))'));
 }
-assert.equal(openCount,88);
+assert.equal(openCount,89);
 get('state.route="catalog";state.catalogCategory="voice";state.catalogRegion="all";state.catalogAccess="all";state.catalogQuery=""');
 assert(get('catalogList().some(m=>m.id==="gemini-3-8-flash-tts")'));
 assert(get('catalogList().some(m=>m.id==="gemini-3-8-flash-lite-tts")'));
@@ -350,11 +351,11 @@ assert.equal(get('catalogList().length'),models.length,'weekly open filter leaks
 console.log('September 28 launches, lineage, prices, benchmark metadata and filter isolation: pass');
 
 const priceStatuses=new Set(['verified','provider-dependent','no-public-rate','unverified']);
-const firstPartyHosts=new Set(['developers.openai.com','platform.claude.com','ai.google.dev','cloud.google.com','api-docs.deepseek.com','docs.x.ai','docs.meshy.ai','docs.z.ai','docs.mistral.ai','platform.minimaxi.com','www.upstage.ai','help.aliyun.com','ideogram.ai','fal.ai','www.inceptionlabs.ai','microsoft.ai','dev.meta.ai','www.minimax.io']);
+const firstPartyHosts=new Set(['developers.openai.com','platform.claude.com','ai.google.dev','cloud.google.com','api-docs.deepseek.com','docs.x.ai','docs.meshy.ai','docs.z.ai','docs.mistral.ai','platform.minimaxi.com','www.upstage.ai','help.aliyun.com','ideogram.ai','fal.ai','www.inceptionlabs.ai','microsoft.ai','dev.meta.ai','www.minimax.io','platform.kimi.ai']);
 for(const m of models){
   const p=m.apiPricing;
   assert(p&&priceStatuses.has(p.status), 'missing price status: '+m.id);
-  assert(['2026-09-24','2026-09-27','2026-09-28','2026-09-29','2026-10-01','2026-10-05','2026-10-12','2026-10-19','2026-10-23'].includes(p.checkedAt),'unexpected price check date: '+m.id);
+  assert(['2026-09-24','2026-09-27','2026-09-28','2026-09-29','2026-10-01','2026-10-05','2026-10-12','2026-10-19','2026-10-23','2026-10-26'].includes(p.checkedAt),'unexpected price check date: '+m.id);
   if(p.status==='verified'){
     assert(firstPartyHosts.has(new URL(p.source).hostname),'unofficial price source: '+m.id);
     assert(['USD','CNY','CREDITS'].includes(p.currency) && p.unit && p.rates.length,'incomplete price: '+m.id);
@@ -560,7 +561,7 @@ assert.equal(effortScores('solar-mini-4')['provider default'],24);
 assert.equal(rows.find(r=>r.modelId==='solar-mini-4'&&r.benchmark==='aaIntelligenceQuoted432').score,24.1);
 assert.equal(models.find(m=>m.id==='mercury-voice').category,'reasoning','Mercury Voice is a text LLM in a voice pipeline');
 assert.equal(models.find(m=>m.id==='mercury-voice').releaseDate,'2026-09-29');
-assert(models.filter(m=>m.date>='2026-09-01').every(m=>m.benchmarkReview&&['2026-10-01','2026-10-05','2026-10-12','2026-10-19','2026-10-23'].includes(m.benchmarkReview.checkedAt)));
+assert(models.filter(m=>m.date>='2026-09-01').every(m=>m.benchmarkReview&&['2026-10-01','2026-10-05','2026-10-12','2026-10-19','2026-10-23','2026-10-26'].includes(m.benchmarkReview.checkedAt)));
 assert.equal(models.find(m=>m.id==='gemini-3-8-flash-lite-tts').benchmarkReview.aaStatus,'not-applicable');
 assert.equal(models.find(m=>m.id==='decision-model-preview').benchmarkReview.aaStatus,'unconfirmed');
 get('state.benchmarkViewMode="artificial-analysis"');
@@ -602,7 +603,7 @@ assert.equal(fresh.find(r=>r.modelId==='mai-transcribe-2-streaming'&&r.benchmark
 assert.equal(fresh.find(r=>r.modelId==='grok-4-7').score,42);
 get('state.route="opensource";state.catalogCategory="all";state.catalogRegion="all";state.catalogAccess="all";state.catalogQuery=""');
 assert(!get('catalogList().some(m=>["ling-3-1-flash","minimax-m3-1-flash-preview","mai-voice-2-1"].includes(m.id))'));
-get('state.route="catalog"');assert.equal(get('catalogList().length'),223);
+get('state.route="catalog"');assert.equal(get('catalogList().length'),225);
 get('state.benchmarkViewMode="registered";state.metric="aaStreamingFinalWer";state.benchmarkCohort="";state.benchmarkPage=1');
 let streaming=get('benchmarkView()');
 assert.equal(streaming.match(/class="bench-model" data-model="([^"]+)"/)[1],'mai-transcribe-2-streaming');
@@ -643,7 +644,7 @@ assert.equal(rows.filter(r=>r.benchmark==='arena'&&r.cohort==='arena-2026-10-08'
 get('state.route="opensource";state.catalogCategory="all";state.catalogRegion="all";state.catalogAccess="all";state.catalogQuery=""');
 assert(get('catalogList().some(m=>m.id==="reflection-beam")'));
 assert(!get('catalogList().some(m=>["mistral-large-4-preview","claude-haiku-5-5"].includes(m.id))'));
-get('state.route="catalog"');assert.equal(get('catalogList().length'),223);
+get('state.route="catalog"');assert.equal(get('catalogList().length'),225);
 get('state.benchmarkViewMode="artificial-analysis"');
 const weekly1210Home=get('benchmarkView()');
 assert(weekly1210Home.includes('Claude Haiku 5.5')&&weekly1210Home.includes('Mistral Large 4 Preview'));
@@ -677,7 +678,7 @@ for(const id of ['muse-spark-open','deepseek-v4-1-flash-1017','nemotron-3-5-bolt
   assert(get('catalogList().some(m=>m.id==='+JSON.stringify(id)+')'),'open model absent from filter '+id);
 }
 assert(!get('catalogList().some(m=>m.id==="muse-wonder")'));
-get('state.route="catalog"');assert.equal(get('catalogList().length'),223,'October open filter leaks into catalogue');
+get('state.route="catalog"');assert.equal(get('catalogList().length'),225,'October open filter leaks into catalogue');
 const weekly1910Before=JSON.stringify({models,rows,snapshots:get('BENCHMARK_SNAPSHOTS')});
 get('applyWeekly20261019(MODELS,METRICS,BENCHMARK_ROWS,BENCHMARK_SNAPSHOTS)');
 assert.equal(JSON.stringify({models,rows,snapshots:get('BENCHMARK_SNAPSHOTS')}),weekly1910Before);
@@ -696,8 +697,43 @@ assert.equal(rows.find(r=>r.modelId===m31.id&&r.benchmark==='deepSweV11').score,
 assert(rows.filter(r=>r.checkedAt==='2026-10-23').every(r=>r.evaluationDate===null&&r.harness&&r.reasoningBudget&&r.tools));
 get('state.route="opensource";state.catalogCategory="all";state.catalogRegion="all";state.catalogAccess="all";state.catalogQuery=""');
 assert(!get('catalogList().some(m=>m.id==="minimax-m3-1-flash")'));
-get('state.route="catalog"');assert.equal(get('catalogList().length'),223);
+get('state.route="catalog"');assert.equal(get('catalogList().length'),225);
 const weekly2310Before=JSON.stringify({models,rows,snapshots:get('BENCHMARK_SNAPSHOTS')});
 get('applyWeekly20261023(MODELS,METRICS,BENCHMARK_ROWS,BENCHMARK_SNAPSHOTS)');
 assert.equal(JSON.stringify({models,rows,snapshots:get('BENCHMARK_SNAPSHOTS')}),weekly2310Before);
 console.log('October 23 MiniMax M3.1 Flash launch, pricing, AA reference score and idempotence: pass');
+
+// October 26: Kimi hosted release vs future weights, Gemma-derived Nemotron open weights, and fresh benchmark audits.
+const k31=models.find(m=>m.id==='kimi-k3-1-pro');
+const boltE4=models.find(m=>m.id==='nemotron-3-5-bolt-e4b-4gb');
+assert(k31&&boltE4,'missing October 26 models');
+assert.equal(k31.releaseDate,'2026-10-23');assert.equal(k31.apiDate,'2026-10-23');assert.equal(k31.weightsDate,null);
+assert.equal(k31.plannedWeightsDate,'2026-11-04');assert.equal(k31.accessType,'api-only');assert.equal(get('isOpenModel(modelById("kimi-k3-1-pro"))'),false);
+assert.deepEqual(Array.from(k31.apiPricing.rates,r=>r.amount),[2,10,2,0.2,4,20,4,0.2]);
+assert.equal(boltE4.releaseDate,'2026-10-23');assert.equal(boltE4.apiDate,'2026-10-23');assert.equal(boltE4.weightsDate,'2026-10-23');
+assert.equal(boltE4.accessType,'open-weights');assert.equal(boltE4.license,'OpenMDW-1.1 · Gemma 4 기반 Apache-2.0 조건');
+assert.equal(get('isOpenModel(modelById("nemotron-3-5-bolt-e4b-4gb"))'),true);
+assert.equal(rows.find(r=>r.modelId===k31.id&&r.benchmark==='terminal4').score,65.7);
+assert.equal(rows.find(r=>r.modelId===k31.id&&r.benchmark==='mmmuPro').score,84.1);
+assert.equal(rows.find(r=>r.modelId===k31.id&&r.benchmark==='sweMarathon').benchmarkVersion,'SWE-Marathon v1.1');
+assert.equal(rows.filter(r=>r.modelId===k31.id).length,15);
+assert.equal(rows.filter(r=>r.modelId===boltE4.id).length,20);
+assert.deepEqual(Array.from(rows.filter(r=>r.modelId===boltE4.id&&r.benchmark==='multiChallenge'),r=>[r.modelVariant,r.score]),[
+  ['BF16 · reasoning',53.1],['Q4_K_M · reasoning',55.6]
+]);
+assert(rows.filter(r=>r.checkedAt==='2026-10-26').every(r=>r.evaluationDate===null&&r.harness&&r.reasoningBudget&&r.tools));
+assert.equal(get('BENCHMARK_SNAPSHOTS.filter(s=>s.id&&s.id.startsWith("review-2026-10-26-")).length'),8);
+assert.equal(get('BENCHMARK_SNAPSHOTS.find(s=>s.id==="review-2026-10-26-arena").snapshotDate'),'2026-10-22');
+get('state.route="opensource";state.catalogCategory="all";state.catalogRegion="all";state.catalogAccess="all";state.catalogQuery=""');
+assert(get('catalogList().some(m=>m.id==="nemotron-3-5-bolt-e4b-4gb")'));
+assert(!get('catalogList().some(m=>m.id==="kimi-k3-1-pro")'));
+get('state.route="catalog"');assert.equal(get('catalogList().length'),225);
+get('state.route="benchmarks";state.benchmarkViewMode="artificial-analysis"');
+const october26DefaultBench=get('benchmarkView()');
+assert(october26DefaultBench.includes('Kimi K3.1 Pro · Terminal 4'));
+assert(october26DefaultBench.includes('Nemotron Bolt · BF16/Q4'));
+assert(october26DefaultBench.indexOf('Kimi K3.1 Pro · Terminal 4')<october26DefaultBench.indexOf('AA · 10월 19일'));
+const weekly2610Before=JSON.stringify({models,rows,snapshots:get('BENCHMARK_SNAPSHOTS')});
+get('applyWeekly20261026(MODELS,METRICS,BENCHMARK_ROWS,BENCHMARK_SNAPSHOTS)');
+assert.equal(JSON.stringify({models,rows,snapshots:get('BENCHMARK_SNAPSHOTS')}),weekly2610Before);
+console.log('October 26 Kimi/Nemotron releases, access dates, benchmark cohorts, filters and idempotence: pass');
