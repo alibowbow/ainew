@@ -13,6 +13,10 @@ Model Atlas is a zero-build static catalog for AI history, models, modalities, a
 - Explicit distinction between open-source licenses, open weights, custom licenses, and entries requiring model-card verification
 - Responsive sticky top navigation, touch-sized controls, focus-visible styles, keyboard shortcuts, modal focus trapping, and light/dark theme persistence
 
+## Design
+
+Light gray canvas with white cards, a single accent color (#3182F6), large type, translucent sticky header and segmented navigation. Pretendard Variable loads from jsDelivr and falls back to system fonts offline. On narrow screens the model dialog opens as a bottom sheet. Motion is disabled under `prefers-reduced-motion`.
+
 ## Run
 
 Open index.html directly in a browser. No npm, build step, server, or environment variables are required.
@@ -60,6 +64,14 @@ Open index.html directly in a browser. No npm, build step, server, or environmen
 - [Kimi K3.1 Pro official technical blog](https://www.kimi.ai/blog/kimi-k3-1-pro)
 - [Kimi API official model and pricing page](https://platform.kimi.ai/)
 - [NVIDIA Nemotron 3.5 Bolt E4B 4GB official model card](https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Bolt-E4B-4GB)
+- [OpenAI GPT-6.1 Terra announcement](https://openai.com/index/introducing-gpt-6-1-terra/)
+- [OpenAI GPT-6.1 Terra model and pricing](https://developers.openai.com/api/docs/models/gpt-6.1-terra)
+- [Google Gemini 4 Carbon announcement](https://blog.google/innovation-and-ai/models-and-research/gemini-models/introducing-gemini-4-carbon/)
+- [Google DeepMind Genie 4 announcement](https://deepmind.google/blog/genie-4-a-new-generation-of-world-simulation/)
+- [Gemini API pricing (Gemini 4 Argon GA)](https://ai.google.dev/gemini-api/docs/pricing)
+- [Mistral Large 4 open-weight release](https://mistral.ai/news/mistral-large-4-oss/)
+- [Liquid AI LFM3 release](https://huggingface.co/blog/LiquidAI/lfm3)
+- [Artificial Analysis Intelligence Index v5](https://artificialanalysis.ai/articles/artificial-analysis-intelligence-index-v5)
 
 Benchmark scores are condition-specific snapshots. Check the linked source for evaluation details.
 
@@ -67,13 +79,13 @@ Benchmark scores are condition-specific snapshots. Check the linked source for e
 
 Run `node tests/registry.test.cjs` for syntax, data integrity, filter regression, and benchmark-view checks.
 
-Latest source review: [2026-10-26](reviews/2026-10-26.md). Idempotent weekly data updates are applied before UI initialization; source/evaluation dates are never replaced by the review date. Latest-evaluation shortcuts preserve score ordering and condition-specific cohorts. World models remain distinct from mesh-producing 3D models and are available in the media filter.
+Latest source review: [2026-10-31](reviews/2026-10-31.md). Idempotent weekly data updates are applied before UI initialization; source/evaluation dates are never replaced by the review date. Latest-evaluation shortcuts preserve score ordering and condition-specific cohorts. World models remain distinct from mesh-producing 3D models and are available in the media filter.
 
 Image-design review: [2026-09-27](reviews/2026-09-27-image-design.md). The benchmark home also embeds the provider-published UI/UX Design open-weight snapshot using an external `<img>` and links to its registered scores. These are separate from Artificial Analysis's current overall text-to-image leaderboard and from the September 22 Intelligence chart.
 
 ## Default benchmark view
 
-The benchmark route opens with source-linked Artificial Analysis v4.3.2 scores checked October 1–19, 2026, while the first shortcuts surface the October 23 Kimi K3.1 Pro and Nemotron Bolt evaluations. Muse Wonder, Muse Spark Open, Reflection Beam, and Nemotron 3.5 retain their settings and publication dates. Terminal-Bench 4.0, LiveCodeBench v6, and the October 22 Text Arena verification snapshot are available through dedicated shortcuts. Scores with different conditions remain separate; Kimi K3.1 Pro's provider-run Terminal-Bench 4.0 result is not treated as a public-board row.
+The benchmark route opens with source-linked Artificial Analysis v4.3.2 scores checked October 1–19, 2026, while the first shortcuts surface the October 27 Artificial Analysis Intelligence Index v5 excerpt (Gemini 4 Carbon), GPT-6.1 Terra, Gemini 4 Carbon and Mistral Large 4 evaluations, followed by Kimi K3.1 Pro. AA v5 scores are stored as a separate metric and never merged with v4.3.2. Muse Wonder, Muse Spark Open, Reflection Beam, and Nemotron 3.5 retain their settings and publication dates. Terminal-Bench 4.0, LiveCodeBench v6, and the October 22 Text Arena verification snapshot are available through dedicated shortcuts. Scores with different conditions remain separate; Kimi K3.1 Pro's provider-run Terminal-Bench 4.0 result is not treated as a public-board row.
 
 The provider-published September 30 Gemini 4 Argon chart is embedded using an external `<img>` and labeled as a publication snapshot. No image is uploaded or copied into this repository. The score table works independently of remote image availability.
 
