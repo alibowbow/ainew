@@ -15,7 +15,10 @@ Model Atlas is a zero-build static catalog for AI history, models, modalities, a
 
 ## Design
 
-Light gray canvas with white cards, a single accent color (#3182F6), large type, translucent sticky header and segmented navigation. Pretendard Variable loads from jsDelivr and falls back to system fonts offline. On narrow screens the model dialog opens as a bottom sheet. Motion is disabled under `prefers-reduced-motion`.
+- Liquid Glass is used only for the navigation layer: the floating header capsules, the mobile tab bar, the sheet header and the compare bar. Content sits on solid surfaces so text stays readable.
+- The overview is a bento grid built from the registry: this week's releases, the Artificial Analysis v5 excerpt, access-type rings, monthly release cadence, categories, history and benchmark totals.
+- Motion explains state changes: tapped cards morph into the detail sheet, the active tab pill slides between routes, the theme switches with a circular reveal, and tiles reveal on scroll. These use the View Transitions API and scroll-driven animations as progressive enhancements.
+- `prefers-reduced-motion`, `prefers-reduced-transparency`, `prefers-contrast` and forced colors are respected. Pretendard Variable loads from jsDelivr and falls back to system fonts offline.
 
 ## Run
 

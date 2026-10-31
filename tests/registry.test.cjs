@@ -502,7 +502,7 @@ assert(launchPanel.includes('low <b>42</b>'));
 assert(launchPanel.includes('max <b>52</b>'));
 assert(launchPanel.includes('aa-current-score\">53</td>'));
 assert(css.includes('.modal-head{position:sticky;top:0;'));
-assert(html.includes('atlas.css?v=20261031-design-v2'),'stylesheet URL must invalidate old cached CSS');
+assert(html.includes('atlas.css?v=20261031-design-2027'),'stylesheet URL must invalidate old cached CSS');
 assert(html.includes('aa-index-2026-10-01.js?v=1'),'score data URL must invalidate old cached JS');
 assert(html.includes('launches-2026-10-01.js?v=2'),'launch data URL must invalidate old cached JS');
 assert.equal((html.match(/aria-label="(?:상세|비교) 창 닫기">닫기/g)||[]).length,2);
