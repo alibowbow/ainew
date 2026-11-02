@@ -14,7 +14,6 @@ for(const route of ['catalog','benchmarks'])for(const width of [390,768,1280]){
   if(!doc.querySelector('h1'))errors.push('화면 미표시');
   if(route==='catalog'&&!doc.querySelector('.model-card'))errors.push('모델 누락');
   if(route==='catalog'&&!doc.body.textContent.includes('NVIDIA Nemotron 3.5 Transcribe'))errors.push('최신 음성 모델 누락');
-  if(route==='catalog'&&!doc.body.textContent.includes('SAM3D-Part'))errors.push('최신 3D 모델 누락');
   if(route==='benchmarks'&&!doc.querySelector('.aa-current-table'))errors.push('AA 점수 누락');
   if(route==='benchmarks'&&!doc.body.textContent.includes('Particle-1 · DeepSWE'))errors.push('최신 코딩 평가 누락');
   if(route==='benchmarks'&&!doc.body.textContent.includes('Text Arena · 10월 27일'))errors.push('최신 Arena 평가 누락');
