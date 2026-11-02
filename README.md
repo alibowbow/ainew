@@ -75,6 +75,13 @@ Open index.html directly in a browser. No npm, build step, server, or environmen
 - [Mistral Large 4 open-weight release](https://mistral.ai/news/mistral-large-4-oss/)
 - [Liquid AI LFM3 release](https://huggingface.co/blog/LiquidAI/lfm3)
 - [Artificial Analysis Intelligence Index v5](https://artificialanalysis.ai/articles/artificial-analysis-intelligence-index-v5)
+- [OpenAI GPT-6 Rosalind Research release notes](https://help.openai.com/en/articles/9624314-model-release-notes)
+- [OpenAI GPT-Rosalind-6 system card](https://deploymentsafety.openai.com/gpt-rosalind-6)
+- [Particle-1 official launch](https://particle.ai/blog/introducing-particle-1)
+- [NVIDIA Nemotron 3.5 Transcribe official model card](https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Transcribe-30B-A4B-FP8)
+- [SAM3D-Part official code and weights](https://github.com/Jiahao620/sam3d-part)
+- [Ideogram Vector official model and API pricing](https://ideogram.ai/models/vector/)
+- [Text Arena official October 27 snapshot](https://arena.ai/leaderboard/chat/text)
 
 Benchmark scores are condition-specific snapshots. Check the linked source for evaluation details.
 
@@ -82,13 +89,13 @@ Benchmark scores are condition-specific snapshots. Check the linked source for e
 
 Run `node tests/registry.test.cjs` for syntax, data integrity, filter regression, and benchmark-view checks.
 
-Latest source review: [2026-10-31](reviews/2026-10-31.md). Idempotent weekly data updates are applied before UI initialization; source/evaluation dates are never replaced by the review date. Latest-evaluation shortcuts preserve score ordering and condition-specific cohorts. World models remain distinct from mesh-producing 3D models and are available in the media filter.
+Latest source review: [2026-11-02](reviews/2026-11-02.md). Idempotent weekly data updates are applied before UI initialization; source/evaluation dates are never replaced by the review date. Latest-evaluation shortcuts preserve score ordering and condition-specific cohorts. World models remain distinct from mesh-producing 3D models and are available in the media filter.
 
 Image-design review: [2026-09-27](reviews/2026-09-27-image-design.md). The benchmark home also embeds the provider-published UI/UX Design open-weight snapshot using an external `<img>` and links to its registered scores. These are separate from Artificial Analysis's current overall text-to-image leaderboard and from the September 22 Intelligence chart.
 
 ## Default benchmark view
 
-The benchmark route opens with source-linked Artificial Analysis v4.3.2 scores checked October 1–19, 2026, while the first shortcuts surface the October 27 Artificial Analysis Intelligence Index v5 excerpt (Gemini 4 Carbon), GPT-6.1 Terra, Gemini 4 Carbon and Mistral Large 4 evaluations, followed by Kimi K3.1 Pro. AA v5 scores are stored as a separate metric and never merged with v4.3.2. Muse Wonder, Muse Spark Open, Reflection Beam, and Nemotron 3.5 retain their settings and publication dates. Terminal-Bench 4.0, LiveCodeBench v6, and the October 22 Text Arena verification snapshot are available through dedicated shortcuts. Scores with different conditions remain separate; Kimi K3.1 Pro's provider-run Terminal-Bench 4.0 result is not treated as a public-board row.
+The benchmark route opens with source-linked Artificial Analysis scores and puts the October 27 Text Arena snapshot, Google-reported Gemini 4 Carbon Terminal-Bench 4.0, Particle-1 DeepSWE 1.1, and Nemotron Transcribe BF16 WER first. AA v5 scores remain separate from v4.3.2. Provider, independent-leaderboard, benchmark-version, harness, tool, and reasoning-budget differences stay in separate cohorts; Carbon's Google 65.2% Terminal-Bench 4.0 result is not merged with the 64% Artificial Analysis Antigravity CLI row, and Particle's Terminal-Bench 2.1 is not merged with 4.0.
 
 The provider-published September 30 Gemini 4 Argon chart is embedded using an external `<img>` and labeled as a publication snapshot. No image is uploaded or copied into this repository. The score table works independently of remote image availability.
 
