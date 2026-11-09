@@ -16,7 +16,7 @@ for(const route of ['catalog','benchmarks'])for(const width of [390,768,1280]){
   if(route==='catalog'&&!doc.body.textContent.includes('NVIDIA Nemotron 3.5 Transcribe'))errors.push('최신 음성 모델 누락');
   if(route==='benchmarks'&&!doc.querySelector('.aa-current-table'))errors.push('AA 점수 누락');
   if(route==='benchmarks'&&!doc.body.textContent.includes('Particle-1 · DeepSWE'))errors.push('최신 코딩 평가 누락');
-  if(route==='benchmarks'&&!doc.body.textContent.includes('Text Arena · 10월 27일'))errors.push('최신 Arena 평가 누락');
+  if(route==='benchmarks'&&!doc.body.textContent.includes('Text Arena · 11월 8일'))errors.push('최신 Arena 평가 누락');
   output.className=errors.length?'fail':'pass';output.textContent=errors.length?'FAIL · '+errors.join(', '):'PASS · 가로 넘침 없음 · 데이터 표시';
  }catch(e){output.className='fail';output.textContent='FAIL · '+e.message}};
  section.append(heading,output,frame);document.getElementById('frames').append(section);
