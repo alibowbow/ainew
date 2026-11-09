@@ -82,6 +82,15 @@ Open index.html directly in a browser. No npm, build step, server, or environmen
 - [SAM3D-Part official code and weights](https://github.com/Jiahao620/sam3d-part)
 - [Ideogram Vector official model and API pricing](https://ideogram.ai/models/vector/)
 - [Text Arena official October 27 snapshot](https://arena.ai/leaderboard/chat/text)
+- [OpenAI GPT-6 Cyber announcement](https://openai.com/index/gpt-6-cyber/)
+- [OpenAI Images 2.6 announcement](https://openai.com/index/introducing-chatgpt-images-2-6/)
+- [Google Gemini Omni 1.2 Flash announcement](https://blog.google/innovation-and-ai/technology/developers-tools/build-with-gemini-omni-1-2-flash/)
+- [Thinking Machines Inkling 2 Small model card](https://thinkingmachines.ai/models/inkling-2-small/)
+- [Tencent Hunyuan Hy4 announcement](https://hunyuan.tencent.com/blog/hy4)
+- [Ricursive Ripple-65B Preview announcement](https://www.ricursive.com/blog/ripple-65b-preview)
+- [Kakao Kanana-2-v-decide-3b-2611 model card](https://huggingface.co/kakaocorp/kanana-2-v-decide-3b-2611)
+- [NVIDIA Cosmos 3 official announcement](https://huggingface.co/blog/nvidia/cosmos-3-world-foundation-models)
+- [Text Arena official November 8 snapshot](https://arena.ai/leaderboard/chat/text)
 
 Benchmark scores are condition-specific snapshots. Check the linked source for evaluation details.
 
@@ -89,13 +98,13 @@ Benchmark scores are condition-specific snapshots. Check the linked source for e
 
 Run `node tests/registry.test.cjs` for syntax, data integrity, filter regression, and benchmark-view checks.
 
-Latest source review: [2026-11-02](reviews/2026-11-02.md). Idempotent weekly data updates are applied before UI initialization; source/evaluation dates are never replaced by the review date. Latest-evaluation shortcuts preserve score ordering and condition-specific cohorts. World models remain distinct from mesh-producing 3D models and are available in the media filter.
+Latest source review: [2026-11-09](reviews/2026-11-09.md). Idempotent weekly data updates are applied before UI initialization; source/evaluation dates are never replaced by the review date. Latest-evaluation shortcuts preserve score ordering and condition-specific cohorts. World models remain distinct from mesh-producing 3D models and are available in the media filter.
 
 Image-design review: [2026-09-27](reviews/2026-09-27-image-design.md). The benchmark home also embeds the provider-published UI/UX Design open-weight snapshot using an external `<img>` and links to its registered scores. These are separate from Artificial Analysis's current overall text-to-image leaderboard and from the September 22 Intelligence chart.
 
 ## Default benchmark view
 
-The benchmark route opens with source-linked Artificial Analysis scores and puts the October 27 Text Arena snapshot, Google-reported Gemini 4 Carbon Terminal-Bench 4.0, Particle-1 DeepSWE 1.1, and Nemotron Transcribe BF16 WER first. AA v5 scores remain separate from v4.3.2. Provider, independent-leaderboard, benchmark-version, harness, tool, and reasoning-budget differences stay in separate cohorts; Carbon's Google 65.2% Terminal-Bench 4.0 result is not merged with the 64% Artificial Analysis Antigravity CLI row, and Particle's Terminal-Bench 2.1 is not merged with 4.0.
+The benchmark route opens with the November 8 Text Arena and Text-to-Image Arena snapshots, followed by Inkling 2 GPQA/Terminal-Bench, GPT-6 Cyber ExploitGym, and Kanana Decide. AA v5 scores remain separate from v4.3.2. Provider, independent-leaderboard, benchmark-version, harness, tool, and reasoning-budget differences stay in separate cohorts; Inkling 2's Terminal-Bench 2.1 Pi and Terminus rows are not merged with Terminal-Bench 4.0 or Science 0.1.
 
 The provider-published September 30 Gemini 4 Argon chart is embedded using an external `<img>` and labeled as a publication snapshot. No image is uploaded or copied into this repository. The score table works independently of remote image availability.
 
