@@ -106,18 +106,18 @@ Benchmark scores are condition-specific snapshots. Check the linked source for e
 
 Run `node tests/registry.test.cjs` for syntax, data integrity, filter regression, and benchmark-view checks.
 
-Latest source review: [2026-11-16](reviews/2026-11-16.md). Idempotent weekly data updates are applied before UI initialization; source/evaluation dates are never replaced by the review date. Latest-evaluation shortcuts preserve score ordering and condition-specific cohorts. World models remain distinct from mesh-producing 3D models and are available in the media filter.
+Latest source review: [2026-11-18](reviews/2026-11-18.md). Idempotent weekly data updates are applied before UI initialization; source/evaluation dates are never replaced by the review date. Latest-evaluation shortcuts preserve score ordering and condition-specific cohorts. World models remain distinct from mesh-producing 3D models and are available in the media filter.
 
 Image-design review: [2026-09-27](reviews/2026-09-27-image-design.md). The benchmark home also embeds the provider-published UI/UX Design open-weight snapshot using an external `<img>` and links to its registered scores. These are separate from Artificial Analysis's current overall text-to-image leaderboard and from the September 22 Intelligence chart.
 
 ## Default benchmark view
 
-The benchmark route opens with Terminal-Bench 4.1 and the November 11 Text Arena snapshot, followed by Fable 5.2 AA v5.0.1 and SOV-Transcribe-1 WER. Terminal-Bench 4.1 remains separate from 4.0, 2.1 and Science 0.1; AA v5.0.1 remains separate from v5.0 and v4.3.2. Provider, independent-leaderboard, benchmark-version, harness, tool, and reasoning-budget differences stay in separate cohorts.
+The benchmark route opens with the November 18 Artificial Analysis Intelligence Index v5.0.1 snapshot of the top 20 representative model configurations. The November 13 configuration-level snapshot and v4.3.2 tables remain in the archive. The latest shortcuts include AA-3D, Terminal-Bench 4.1 and the November 11 Text Arena snapshot.
 
-The provider-published September 30 Gemini 4 Argon chart is embedded using an external `<img>` and labeled as a publication snapshot. No image is uploaded or copied into this repository. The score table works independently of remote image availability.
+The Artificial Analysis GPT-6.2 release article's assessment breakdown is embedded as a publication snapshot. The score table works independently of remote image availability.
 
-Source: https://artificialanalysis.ai/articles/gemini-4-argon-google-top-three-labs
+Source: https://artificialanalysis.ai/articles/openai-has-the-2-model-in-the-intelligence-index-with-the-release-of-gpt-6-2-astra-and-gpt-6-2-sol/
 
-On future benchmark reviews, check `AA_OFFICIAL_CHART` against the publisher's latest official chart. Update its image URL, article URL, publication date, versions, and verification date together. Do not label a static article image as a live leaderboard or replace it with a generic social-preview card. Preserve the entire chart, branding, model configurations, and axes; retain the external-image error state and source link.
+On future benchmark reviews, update the chart source, image, edition, publication date and verification date together. Retain the complete publisher chart, its error fallback, and a link to the article.
 
 Responsive verification: `tests/weekly-responsive.html` renders catalog and benchmark pages in 390/768/1280px frames.
