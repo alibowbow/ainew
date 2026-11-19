@@ -40,7 +40,8 @@ for(const route of ['overview','catalog','benchmarks'])for(const width of [320,3
   output.className=errors.length?'fail':'pass';
   output.textContent=errors.length?'FAIL · '+errors.join(', '):'PASS · 콘텐츠와 레이아웃 확인';
  }catch(e){output.className='fail';output.textContent='FAIL · '+e.message}};
- frame.src='../index.html#/'+route;
+ // Carry the preview version through to the framed page after a deployment.
+ frame.src='../index.html'+location.search+'#/'+route;
  section.append(heading,output,frame);
  document.getElementById('frames').append(section);
 }
