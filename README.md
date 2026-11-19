@@ -15,9 +15,9 @@ Model Atlas is a zero-build static catalog for AI history, models, modalities, a
 
 ## Design
 
-- Liquid Glass is used only for the navigation layer: the floating header capsules, the mobile tab bar, the sheet header and the compare bar. Content sits on solid surfaces so text stays readable.
-- The overview is a bento grid built from the registry: this week's releases, the Artificial Analysis v5 excerpt, access-type rings, monthly release cadence, categories, history and benchmark totals.
-- Motion explains state changes: tapped cards morph into the detail sheet, the active tab pill slides between routes, the theme switches with a circular reveal, and tiles reveal on scroll. These use the View Transitions API and scroll-driven animations as progressive enhancements.
+- The compact masthead uses the same navigation on every route. Narrow layouts place navigation on a second row.
+- The overview puts model search, recent releases and the Intelligence Index first. Category links and the monthly release chart follow.
+- Model details and theme changes progressively enhance with the View Transitions API.
 - `prefers-reduced-motion`, `prefers-reduced-transparency`, `prefers-contrast` and forced colors are respected. Pretendard Variable loads from jsDelivr and falls back to system fonts offline.
 
 ## Run
@@ -106,13 +106,13 @@ Benchmark scores are condition-specific snapshots. Check the linked source for e
 
 Run `node tests/registry.test.cjs` for syntax, data integrity, filter regression, and benchmark-view checks.
 
-Latest source review: [2026-11-18](reviews/2026-11-18.md). Idempotent weekly data updates are applied before UI initialization; source/evaluation dates are never replaced by the review date. Latest-evaluation shortcuts preserve score ordering and condition-specific cohorts. World models remain distinct from mesh-producing 3D models and are available in the media filter.
+Latest source review: [2026-11-19](reviews/2026-11-19.md). Idempotent weekly data updates are applied before UI initialization; source/evaluation dates are never replaced by the review date. Latest-evaluation shortcuts preserve score ordering and condition-specific cohorts. World models remain distinct from mesh-producing 3D models and are available in the media filter.
 
 Image-design review: [2026-09-27](reviews/2026-09-27-image-design.md). The benchmark home also embeds the provider-published UI/UX Design open-weight snapshot using an external `<img>` and links to its registered scores. These are separate from Artificial Analysis's current overall text-to-image leaderboard and from the September 22 Intelligence chart.
 
 ## Default benchmark view
 
-The benchmark route opens with the November 18 Artificial Analysis Intelligence Index v5.0.1 snapshot of the top 20 representative model configurations. The November 13 configuration-level snapshot and v4.3.2 tables remain in the archive. The latest shortcuts include AA-3D, Terminal-Bench 4.1 and the November 11 Text Arena snapshot.
+The benchmark route opens with the November 19 Artificial Analysis Intelligence Index v5.0.1 snapshot of the top 20 representative model configurations. The November 13 configuration-level snapshot and v4.3.2 tables remain in the archive. The latest shortcuts include AA-3D, Terminal-Bench 4.1 and the November 11 Text Arena snapshot.
 
 The Artificial Analysis GPT-6.2 release article's assessment breakdown is embedded as a publication snapshot. The score table works independently of remote image availability.
 
@@ -120,4 +120,4 @@ Source: https://artificialanalysis.ai/articles/openai-has-the-2-model-in-the-int
 
 On future benchmark reviews, update the chart source, image, edition, publication date and verification date together. Retain the complete publisher chart, its error fallback, and a link to the article.
 
-Responsive verification: `tests/weekly-responsive.html` renders catalog and benchmark pages in 390/768/1280px frames.
+Responsive verification: `tests/weekly-responsive.html` renders the overview, catalog and benchmark routes in 320/390/768/1280px frames.
