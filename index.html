@@ -9,7 +9,7 @@
 <meta name="theme-color" content="#181b1a" media="(prefers-color-scheme: dark)">
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
-<link rel="stylesheet" href="atlas.css?v=20261119">
+<link rel="stylesheet" href="atlas.css?v=20261119.2">
 </head>
 <body>
 <a class="skip" href="#content">본문으로 건너뛰기</a>
@@ -283,7 +283,7 @@ function aaLatestModelReview(){
   <thead><tr><th scope="col">모델</th><th scope="col">설정</th><th scope="col">점수</th></tr></thead>
   <tbody>${aa.models.slice(start,end).map(([id,name,variant,score],index)=>`<tr${id==="gemini-4-neon"?' class="index-new"':""}>
    <th scope="row"><button type="button" data-model="${esc(id)}"><span class="index-position">${start+index+1}</span><span>${esc(name)}</span></button></th>
-   <td>${esc(variant||"—")}</td><td><span class="index-value">${score}</span>${intelligenceBar(score)}</td>
+   <td>${esc(variant||"—")}</td><td><span class="intelligence-points"><span class="index-value">${score}</span>${intelligenceBar(score)}</span></td>
   </tr>`).join("")}</tbody>
  </table>`;
  return `<section class="intelligence-panel" aria-labelledby="aa-review-title">
