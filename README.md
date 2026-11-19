@@ -112,7 +112,7 @@ Image-design review: [2026-09-27](reviews/2026-09-27-image-design.md). The bench
 
 ## Default benchmark view
 
-The benchmark route opens with the November 19 Artificial Analysis Intelligence Index v5.0.1 snapshot of the top 20 representative model configurations. The November 13 configuration-level snapshot and v4.3.2 tables remain in the archive. The latest shortcuts include AA-3D, Terminal-Bench 4.1 and the November 11 Text Arena snapshot.
+The benchmark route opens with the November 19 Artificial Analysis Intelligence Index v5.0.1 snapshot of the top 20 representative model configurations. The November 13 configuration-level snapshot and v4.3.2 tables remain in the archive. The benchmark overview links to the latest verified cohorts before the Intelligence Index. This includes Terminal-Bench 4.1, Code Arena, Vals, MathArena, image and video Arena, and AA-WER. The evaluation selector defaults to the latest checked cohort. See the [November 19 benchmark review](reviews/2026-11-19-benchmarks.md) for source dates and settings.
 
 The Artificial Analysis GPT-6.2 release article's assessment breakdown is embedded as a publication snapshot. The score table works independently of remote image availability.
 

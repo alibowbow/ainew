@@ -1,0 +1,10 @@
+# 벤치마크 갱신 · 2026-11-19 KST
+
+- Terminal-Bench 4.1 공식 보드에서 Fusion Max 71.2%, GPT-6.2 Astra Max 62.1%, Sol Max 61.5%를 비롯해 모델·하니스 조합 22개를 확인했다. Gemini 4 Neon Xhigh 65.2%는 Google 공개 문서가 인용한 Antigravity CLI 1.5.9 실행이며 공식 순위는 확인되지 않았다. [공식 순위표](https://www.tbench.ai/) · [Google 평가 문서](https://storage.googleapis.com/deepmind-media/gemini/gemini_4_neon_model_evaluation.pdf)
+- Code Arena는 11월 18일 전체 Index의 순위를 사용한다. Astra Max는 1,338점(3위), Neon High는 1,325점(5위), Sol Max는 1,288점(9위)이다. AA Coding Agent Index v2.1은 별도 지표이고 코드 에이전트의 하니스와 추론 설정을 표시한다. [Code Arena](https://arena.ai/leaderboard/agent/code) · [AA 평가 방법](https://artificialanalysis.ai/agents/coding-agents) · [하니스 비교표](https://artificialanalysis.ai/agents/coding-agents/comparisons/codex-vs-claude-code)
+- Text Arena는 11월 18일 자료의 공식 순번과 확인 가능한 점수를 등록했다. 기본 점수에서 Carbon High가 1,526점, Argon High가 1,521점이다. [Text Arena](https://arena.ai/leaderboard/chat/text?styleControl=off)
+- Vals Index 2.2에서 Neon은 70.87%(2위), Vals Science Index에서 Astra는 68.44%(1위)다. 두 보드 모두 11월 18일 자료다. [Vals Index](https://www.vals.ai/benchmarks/vals_index) · [Science Index](https://www.vals.ai/benchmarks/science_index)
+- MathArena가 11월 18일 공개한 Astra·Sol의 10월 ArXivMath·BrokenArXiv 및 9월 ArXivLean를 각각 기록했다. [Astra 공식 결과](https://matharena.ai/models/openai_gpt_62_astra) · [Sol 공식 결과](https://matharena.ai/models/openai_gpt_62_sol)
+- 이미지 생성·편집은 11월 16일 스냅샷을 반영했다. 텍스트→영상과 이미지→영상은 각 공식 페이지에서 확인 가능한 11월 8일 스냅샷을 등록했다. [이미지 생성](https://arena.ai/leaderboard/image/text-to-image) · [이미지 편집](https://arena.ai/leaderboard/image/image-edit/single-image) · [텍스트→영상](https://arena.ai/leaderboard/video/text-to-video) · [이미지→영상](https://arena.ai/leaderboard/video/image-to-video?rankBy=models)
+- AA-WER v2.2 비스트리밍은 3개 데이터셋을 합산하며 Scribe v3 1.9%와 DeepInfra의 Nemotron 3.5 Transcribe 3.4%를 확인했다. [AA 비스트리밍 음성 인식](https://artificialanalysis.ai/speech-to-text/non-streaming/)
+- SWE-bench Verified 공개 보드에서 GPT-6.2 또는 Gemini 4 Neon의 비교 가능한 신규 행을 확인하지 못했다. [SWE-bench Verified](https://www.swebench.com/verified)

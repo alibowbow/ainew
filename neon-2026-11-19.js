@@ -70,15 +70,6 @@ function applyNeon20261119(models, rows, snapshots) {
       reasoningBudget: modelVariant, comparisonNote: 'Gemini 4 Neon의 공식 추론 설정별 점수입니다.'
     }, rowKey);
   }
-  upsert(rows, {
-    ...common, modelVariant: 'Xhigh', score: 58.6, benchmark: 'aaCodingAgent15', unit: '점',
-    cohort: 'aa-neon-antigravity-20261118', cohortLabel: 'Gemini 4 Neon · AA Coding Agent Index · Antigravity CLI',
-    source: review.release, sourceLabel: 'Google 발표에 인용된 Artificial Analysis 코딩 평가',
-    benchmarkVersion: 'Artificial Analysis Coding Agent Index', harness: 'Google Antigravity CLI',
-    tools: 'Antigravity CLI 기본 도구', reasoningBudget: 'Xhigh',
-    comparisonNote: 'Google 공식 발표의 소수 첫째 자리 점수입니다. 다른 하니스의 결과는 별도입니다.'
-  }, rowKey);
-
   upsert(snapshots, {
     id: 'review-2026-11-19-aaIntelligenceV5', key: 'aaIntelligenceV5',
     name: 'Artificial Analysis Intelligence Index v5.0.1', version: 'v5.0.1',

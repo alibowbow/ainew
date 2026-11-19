@@ -27,6 +27,8 @@ for(const route of ['overview','catalog','benchmarks'])for(const width of [320,3
    check(content.textContent.includes('Gemini 4 Neon'),'최신 모델 누락');
   }
   if(route==='benchmarks'){
+   check(content.querySelector('[data-cohort="terminal41-checked-20261119"]'),'최신 Terminal-Bench 바로가기 누락');
+   check(content.querySelector('[data-cohort="vals-science-20261118"]'),'최신 Vals Science 바로가기 누락');
    const table=content.querySelector('.intelligence-table');
    const modelCell=table?.tBodies[0].rows[2]?.cells[0];
    const row=modelCell?.parentElement;
