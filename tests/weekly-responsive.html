@@ -35,6 +35,8 @@ for(const route of ['overview','catalog','benchmarks'])for(const width of [320,3
     check(modelCell.getBoundingClientRect().width>=table.getBoundingClientRect().width*0.52,'모델명 열이 너무 좁음');
     check(modelCell.textContent.includes('Gemini 4 Neon')&&row.cells[2].textContent.trim()==='61','Neon 순위 누락');
     check(row.getBoundingClientRect().height<64,'행 높이 과다');
+    const score=row.querySelector('.index-value');
+    check(score&&score.getBoundingClientRect().height<=parseFloat(w.getComputedStyle(score).lineHeight)+1,'점수가 한 줄에 표시되지 않음');
    }
   }
   output.className=errors.length?'fail':'pass';

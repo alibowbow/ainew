@@ -311,8 +311,8 @@ td .bench-note{margin-top:4px}
 .intelligence-table tbody tr:hover{background:var(--surface-2)}
 .intelligence-table tbody th button:hover{color:var(--accent-ink)}
 .intelligence-table .index-new,.intelligence-table .index-new:hover{background:var(--accent-soft)}
-.intelligence-points{display:grid;grid-template-columns:2ch minmax(0,1fr);align-items:center;gap:9px}
-.intelligence-points .index-value{font-size:1rem;text-align:left}
+.intelligence-points{display:grid;grid-template-columns:max-content minmax(0,1fr);align-items:center;gap:9px}
+.intelligence-points .index-value{min-width:2.5ch;font-size:1rem;text-align:left;white-space:nowrap}
 .intelligence-points .index-bar{height:4px}
 .intelligence-more summary{display:list-item;min-height:44px;width:fit-content;padding:11px 5px;color:var(--accent-ink);font-size:.875rem;font-weight:650}
 .benchmark-shortcuts{padding:10px 14px;margin-bottom:14px}
