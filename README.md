@@ -99,6 +99,14 @@ Open index.html directly in a browser. No npm, build step, server, or environmen
 - [Google Gemini Decisions API](https://blog.google/innovation-and-ai/technology/developers-tools/gemini-decisions-api/)
 - [Terminal-Bench 4.1 official leaderboard](https://www.tbench.ai/)
 - [Text Arena official November 11 snapshot](https://arena.ai/leaderboard/chat/text)
+- [Thinking Machines Inkling 2 Mini announcement](https://thinkingmachines.ai/news/inkling-2-mini/)
+- [Microsoft MAI Code 2 announcement](https://microsoft.ai/news/introducing-mai-code-2/)
+- [Microsoft MAI Image 2.7 announcement](https://microsoft.ai/news/introducing-mai-image-2-7/)
+- [Liquid AI d1.2 announcement](https://www.liquid.ai/blog/d1-2)
+- [Tencent WeMM-Video paper and weights](https://huggingface.co/papers/2611.26409)
+- [EmbeddingGemma 2 technical report](https://blog.google/innovation-and-ai/technology/developers-tools/embeddinggemma-2-technical-report/)
+- [Terminal-Bench 4.1 official leaderboard, November 23](https://www.tbench.ai/)
+- [Text Arena official November 22 snapshot](https://arena.ai/leaderboard/chat/text)
 
 Benchmark scores are condition-specific snapshots. Check the linked source for evaluation details.
 
@@ -106,13 +114,13 @@ Benchmark scores are condition-specific snapshots. Check the linked source for e
 
 Run `node tests/registry.test.cjs` for syntax, data integrity, filter regression, and benchmark-view checks.
 
-Latest source review: [2026-11-19](reviews/2026-11-19.md). Idempotent weekly data updates are applied before UI initialization; source/evaluation dates are never replaced by the review date. Latest-evaluation shortcuts preserve score ordering and condition-specific cohorts. World models remain distinct from mesh-producing 3D models and are available in the media filter.
+Latest source review: [2026-11-23](reviews/2026-11-23.md). Idempotent weekly data updates are applied before UI initialization; source/evaluation dates are never replaced by the review date. Latest-evaluation shortcuts preserve score ordering and condition-specific cohorts. World models remain distinct from mesh-producing 3D models and are available in the media filter.
 
 Image-design review: [2026-09-27](reviews/2026-09-27-image-design.md). The benchmark home also embeds the provider-published UI/UX Design open-weight snapshot using an external `<img>` and links to its registered scores. These are separate from Artificial Analysis's current overall text-to-image leaderboard and from the September 22 Intelligence chart.
 
 ## Default benchmark view
 
-The benchmark route opens with the November 19 Artificial Analysis Intelligence Index v5.0.1 snapshot of the top 20 representative model configurations. The November 13 configuration-level snapshot and v4.3.2 tables remain in the archive. The benchmark overview links to the latest verified cohorts before the Intelligence Index. This includes Terminal-Bench 4.1, Code Arena, Vals, MathArena, image and video Arena, and AA-WER. The evaluation selector defaults to the latest checked cohort. See the [November 19 benchmark review](reviews/2026-11-19-benchmarks.md) for source dates and settings.
+The benchmark overview now puts the November 23 Terminal-Bench 4.1 snapshot, November 22 Text Arena snapshot, Decision Index v2.1, Inkling 2 Mini, MAI Code 2 and MAI Image 2.7 cohorts before the November 19 Artificial Analysis Intelligence Index v5.0.1 snapshot. Earlier configuration-level and v4.3.2 tables remain in the archive. The evaluation selector defaults to the latest checked condition-specific cohort. See the [November 23 weekly review](reviews/2026-11-23.md) and [November 19 benchmark review](reviews/2026-11-19-benchmarks.md) for source dates and settings.
 
 The Artificial Analysis GPT-6.2 release article's assessment breakdown is embedded as a publication snapshot. The score table works independently of remote image availability.
 
