@@ -51,6 +51,7 @@ const get = code => {
     vm.runInContext('applyNeon20261119(MODELS,BENCHMARK_ROWS,BENCHMARK_SNAPSHOTS)',context);
     vm.runInContext('applyBenchmarkRefresh20261119(MODELS,METRICS,BENCHMARK_ROWS,BENCHMARK_SNAPSHOTS)',context);
     vm.runInContext('applyWeekly20261123(MODELS,METRICS,BENCHMARK_ROWS,BENCHMARK_SNAPSHOTS)',context);
+    vm.runInContext('applyUses20261126(MODELS)',context);
   }
   return value;
 };
@@ -1069,3 +1070,17 @@ const weekly2311Before=JSON.stringify({models,rows,snapshots:get('BENCHMARK_SNAP
 get('applyWeekly20261123(MODELS,METRICS,BENCHMARK_ROWS,BENCHMARK_SNAPSHOTS)');
 assert.equal(JSON.stringify({models,rows,snapshots:get('BENCHMARK_SNAPSHOTS')}),weekly2311Before);
 console.log('November 23 models, milestones, licenses, regional filters, benchmark conditions and idempotence: pass');
+
+const fableUses=get('modelById("claude-fable-5-2").uses');
+const neonUses=get('modelById("gemini-4-neon").uses');
+const astraUses=get('modelById("gpt-6-2-astra").uses');
+assert.equal(fableUses.length,5);
+assert.equal(neonUses.length,4);
+assert.equal(astraUses.length,5);
+assert(fableUses.every(item=>item.title&&item.text&&item.source.startsWith('https://')));
+assert(astraUses.some(item=>item.source.includes('AmirMushich')));
+assert(neonUses.some(item=>item.kind==='community')&&neonUses.some(item=>item.kind==='provider'));
+const usesBefore=JSON.stringify(get('MODELS').filter(model=>model.uses).map(model=>model.uses));
+get('applyUses20261126(MODELS)');
+assert.equal(JSON.stringify(get('MODELS').filter(model=>model.uses).map(model=>model.uses)),usesBefore);
+console.log('November 26 community and provider use cases: pass');
