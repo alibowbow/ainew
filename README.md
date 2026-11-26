@@ -107,6 +107,9 @@ Open index.html directly in a browser. No npm, build step, server, or environmen
 - [EmbeddingGemma 2 technical report](https://blog.google/innovation-and-ai/technology/developers-tools/embeddinggemma-2-technical-report/)
 - [Terminal-Bench 4.1 official leaderboard, November 23](https://www.tbench.ai/)
 - [Text Arena official November 22 snapshot](https://arena.ai/leaderboard/chat/text)
+- [Claude Fable 5.2 Portofino Blender test](https://x.com/MichaelGannotti/status/2120229461282955467)
+- [Gemini 4 Neon Mediterranean world](https://x.com/thebuggeddev/status/2123506487792410706)
+- [GPT-6.2 Astra browser WebGPU demo](https://x.com/pvncher/status/2122755434758967623)
 
 Benchmark scores are condition-specific snapshots. Check the linked source for evaluation details.
 
@@ -114,7 +117,7 @@ Benchmark scores are condition-specific snapshots. Check the linked source for e
 
 Run `node tests/registry.test.cjs` for syntax, data integrity, filter regression, and benchmark-view checks.
 
-Latest source review: [2026-11-23](reviews/2026-11-23.md). Idempotent weekly data updates are applied before UI initialization; source/evaluation dates are never replaced by the review date. Latest-evaluation shortcuts preserve score ordering and condition-specific cohorts. World models remain distinct from mesh-producing 3D models and are available in the media filter.
+Latest source review: [2026-11-26 use cases](reviews/2026-11-26-uses.md). Model dialogs for Fable 5.2, Gemini 4 Neon and GPT-6.2 Astra include poster-reported examples and keep them separate from benchmark scores. Prior weekly review: [2026-11-23](reviews/2026-11-23.md). Idempotent weekly data updates are applied before UI initialization; source/evaluation dates are never replaced by the review date. Latest-evaluation shortcuts preserve score ordering and condition-specific cohorts. World models remain distinct from mesh-producing 3D models and are available in the media filter.
 
 Image-design review: [2026-09-27](reviews/2026-09-27-image-design.md). The benchmark home also embeds the provider-published UI/UX Design open-weight snapshot using an external `<img>` and links to its registered scores. These are separate from Artificial Analysis's current overall text-to-image leaderboard and from the September 22 Intelligence chart.
 
